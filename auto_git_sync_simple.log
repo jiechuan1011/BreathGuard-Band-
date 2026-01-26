@@ -74,3 +74,19 @@
 2026-01-26 17:08:57,796 - __main__ - ERROR - Git操作异常: __init__() got an unexpected keyword argument 'capture_output'
 2026-01-26 17:09:10,395 - __main__ - INFO - 检测到 1 个文件变化
 2026-01-26 17:09:10,441 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\这是一个测试文件.txt
+2026-01-26 17:09:10,500 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+?? "\350\277\231\346\230\257\344\270\200\344\270\252\346\265\213\350\257\225\346\226\207\344\273\266.txt"
+
+2026-01-26 17:09:10,566 - __main__ - INFO - 成功执行 git add
+2026-01-26 17:09:10,710 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-01-26 17:09:10
+2026-01-26 17:09:13,562 - __main__ - INFO - 成功推送到远程仓库
+2026-01-26 17:09:27,828 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-26 17:09:27,829 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\这是一个测试文件.txt (deleted)
+2026-01-26 17:09:27,830 - __main__ - ERROR - Git操作异常: __init__() got an unexpected keyword argument 'capture_output'
+2026-01-26 17:09:43,581 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-26 17:09:43,581 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\这是一个测试文件.txt (deleted)
+2026-01-26 17:09:43,693 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ D "\350\277\231\346\230\257\344\270\200\344\270\252\346\265\213\350\257\225\346\226\207\344\273\266.txt"
+
