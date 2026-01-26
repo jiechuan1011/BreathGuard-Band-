@@ -47,3 +47,22 @@
  M auto_git_sync_simple.log
 ?? "\350\277\231\346\230\257\344\270\200\344\270\252\346\265\213\350\257\225\346\226\207\344\273\266.txt"
 
+2026-01-26 17:07:23,821 - __main__ - INFO - 成功执行 git add
+2026-01-26 17:07:24,097 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-01-26 17:07:23
+2026-01-26 17:07:26,293 - __main__ - ERROR - git push 失败: error: failed to push some refs to 'https://github.com/jiechuan1011/BreathGuard-Band-.git'
+
+2026-01-26 17:07:27,705 - __main__ - INFO - 检测到 2 个文件变化
+2026-01-26 17:07:27,716 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\这是一个测试文件.txt
+2026-01-26 17:07:27,717 - __main__ - INFO -   变化文件 2: E:\Diabetes_Screening_System\新建 文本文档.txt (deleted)
+2026-01-26 17:07:27,717 - __main__ - ERROR - Git操作异常: __init__() got an unexpected keyword argument 'capture_output'
+2026-01-26 17:08:07,610 - __main__ - INFO - 执行初始文件扫描...
+2026-01-26 17:08:07,620 - __main__ - INFO - 初始扫描完成，监控 39 个文件
+2026-01-26 17:08:27,760 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-26 17:08:27,760 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\这是一个测试文件.txt (deleted)
+2026-01-26 17:08:27,760 - __main__ - ERROR - Git操作异常: __init__() got an unexpected keyword argument 'capture_output'
+2026-01-26 17:08:37,630 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-26 17:08:37,632 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\这是一个测试文件.txt (deleted)
+2026-01-26 17:08:37,687 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ D "\350\277\231\346\230\257\344\270\200\344\270\252\346\265\213\350\257\225\346\226\207\344\273\266.txt"
+
