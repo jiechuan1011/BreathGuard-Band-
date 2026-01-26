@@ -1,0 +1,37 @@
+2026-01-26 17:00:57,383 - __main__ - INFO - 执行初始文件扫描...
+2026-01-26 17:00:57,391 - __main__ - INFO - 初始扫描完成，监控 38 个文件
+2026-01-26 17:02:17,309 - __main__ - INFO - 执行初始文件扫描...
+2026-01-26 17:02:17,314 - __main__ - INFO - 初始扫描完成，监控 38 个文件
+2026-01-26 17:02:27,438 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-26 17:02:27,443 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\新建 文本文档.txt
+2026-01-26 17:02:27,443 - __main__ - ERROR - Git操作异常: __init__() got an unexpected keyword argument 'capture_output'
+2026-01-26 17:02:47,337 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-26 17:02:47,337 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\这是一个测试.txt
+2026-01-26 17:02:47,340 - __main__ - ERROR - Git操作异常: __init__() got an unexpected keyword argument 'capture_output'
+2026-01-26 17:02:57,463 - __main__ - INFO - 检测到 2 个文件变化
+2026-01-26 17:02:57,467 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\这是一个测试.txt
+2026-01-26 17:02:57,468 - __main__ - INFO -   变化文件 2: E:\Diabetes_Screening_System\新建 文本文档.txt (deleted)
+2026-01-26 17:02:57,468 - __main__ - ERROR - Git操作异常: __init__() got an unexpected keyword argument 'capture_output'
+2026-01-26 17:03:17,349 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-26 17:03:17,350 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\这是一个测试.txt (deleted)
+2026-01-26 17:03:17,350 - __main__ - ERROR - Git操作异常: __init__() got an unexpected keyword argument 'capture_output'
+2026-01-26 17:03:27,487 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-26 17:03:27,488 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\这是一个测试.txt (deleted)
+2026-01-26 17:03:27,511 - __main__ - ERROR - Git操作异常: __init__() got an unexpected keyword argument 'capture_output'
+2026-01-26 17:04:57,576 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-26 17:04:57,576 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\测试修复文件.txt
+2026-01-26 17:04:57,576 - __main__ - ERROR - Git操作异常: __init__() got an unexpected keyword argument 'capture_output'
+2026-01-26 17:05:50,396 - __main__ - INFO - 执行初始文件扫描...
+2026-01-26 17:05:50,401 - __main__ - INFO - 初始扫描完成，监控 39 个文件
+2026-01-26 17:05:57,624 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-26 17:05:57,624 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\测试修复文件.txt (deleted)
+2026-01-26 17:05:57,624 - __main__ - ERROR - Git操作异常: __init__() got an unexpected keyword argument 'capture_output'
+2026-01-26 17:06:20,409 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-26 17:06:20,410 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\测试修复文件.txt (deleted)
+2026-01-26 17:06:20,452 - __main__ - INFO - 检测到未提交的更改:
+?? .gitignore
+?? .pioignore
+?? auto_git_sync_simple.log
+?? scripts/
+?? "\350\207\252\345\212\250Git\345\220\214\346\255\245\344\275\277\347\224\250\346\214\207\345\215\227.md"
+

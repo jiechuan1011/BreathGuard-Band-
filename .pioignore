@@ -1,0 +1,9 @@
+# PlatformIO 忽略文件
+# 忽略不需要编译的文件
+
+README.md
+编译检查清单.md
+编译问题解决方案.md
+*.md
+.vscode/
+.idea/
