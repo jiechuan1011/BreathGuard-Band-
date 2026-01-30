@@ -392,3 +392,14 @@ error: Please commit or stash them.
  M auto_git_sync_simple.log
  D "\346\212\200\346\234\257\345\256\236\347\216\260\346\211\213\345\206\214.docx"
 
+2026-01-30 21:02:10,913 - __main__ - INFO - 成功执行 git add
+2026-01-30 21:02:11,075 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-01-30 21:02:10
+2026-01-30 21:02:13,596 - __main__ - INFO - 成功推送到远程仓库
+2026-01-30 21:02:43,628 - __main__ - INFO - 检测到 2 个文件变化
+2026-01-30 21:02:43,628 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\ESP32-S3R8N8_完整适配说明.md
+2026-01-30 21:02:43,628 - __main__ - INFO -   变化文件 2: E:\Diabetes_Screening_System\src\main_esp32s3.cpp
+2026-01-30 21:02:43,710 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M src/main_esp32s3.cpp
+?? "ESP32-S3R8N8_\345\256\214\346\225\264\351\200\202\351\205\215\350\257\264\346\230\216.md"
+
