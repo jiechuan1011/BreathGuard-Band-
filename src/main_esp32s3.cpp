@@ -412,11 +412,14 @@ void wrist_setup() {
     display.print("   正在启动...");
     display.display();
     
-    // 初始化MAX30102（使用现有hr_driver.cpp）
+    // 初始化MAX30102（使用hr_driver_s3.cpp）
     if (!hr_init()) {
         Serial.println("[ERROR] MAX30102初始化失败，系统停止");
         while (1);
     }
+    
+    // 初始化按键
+    initButton();
     
     // 初始化丙酮传感器接口
     initAcetoneSensor();
@@ -450,6 +453,9 @@ void wrist_loop() {
         lastNotifyTime = currentTime;
         sendBLEData();
     }
+    
+    // 处理按键
+    handleButton();
     
     // 更新OLED显示
     updateDisplay();
