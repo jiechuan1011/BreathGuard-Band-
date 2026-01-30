@@ -7,7 +7,9 @@ static uint8_t buffer_pos = 0;              // uint8_t足够（HR_BUFFER_SIZE=64
 static bool buffer_filled = false;
 // 低RAM优化：BPM用uint8_t（40-180范围），SNR用uint8_t（0-255，实际SNR约0-30dB）
 static uint8_t last_bpm = 0;               // 0表示无效，40-180表示实际BPM
+static uint8_t last_spo2 = 0;              // 0表示无效，70-100表示实际SpO2
 static uint8_t last_snr = 0;               // SNR*10存储（例如15.3dB存储为153）
+static uint8_t last_correlation = 0;       // 红外/红光相关性（0-100）
 
 // ─── 私有函数 ──────────────────────────────────────────────
 
@@ -204,4 +206,127 @@ uint8_t hr_get_latest_bpm() {
 
 uint8_t hr_get_signal_quality() {
     return last_snr;  // SNR*10，例如15.3dB返回153
+}
+
+// 计算红外/红光信号相关性（用于运动干扰检测）
+static uint8_t calculate_correlation(int16_t* signal1, int16_t* signal2) {
+    int32_t sum1 = 0, sum2 = 0, sum12 = 0, sum1_sq = 0, sum2_sq = 0;
+    
+    for (uint8_t i = 0; i < HR_BUFFER_SIZE; i++) {
+        sum1 += signal1[i];
+        sum2 += signal2[i];
+        sum12 += (int32_t)signal1[i] * signal2[i];
+        sum1_sq += (int32_t)signal1[i] * signal1[i];
+        sum2_sq += (int32_t)signal2[i] * signal2[i];
+    }
+    
+    // 计算均值
+    int32_t mean1 = sum1 / HR_BUFFER_SIZE;
+    int32_t mean2 = sum2 / HR_BUFFER_SIZE;
+    
+    // 计算协方差和方差
+    int32_t cov = (sum12 / HR_BUFFER_SIZE) - (mean1 * mean2);
+    int32_t var1 = (sum1_sq / HR_BUFFER_SIZE) - (mean1 * mean1);
+    int32_t var2 = (sum2_sq / HR_BUFFER_SIZE) - (mean2 * mean2);
+    
+    if (var1 <= 0 || var2 <= 0) return 0;
+    
+    // 计算相关系数 r = cov / sqrt(var1 * var2)
+    // 使用定点数运算：先计算 var1 * var2
+    uint32_t var_product = (uint32_t)var1 * (uint32_t)var2;
+    uint32_t sqrt_var_product = fast_sqrt16((uint16_t)(var_product >> 16)) << 8; // 近似平方根
+    
+    if (sqrt_var_product == 0) return 0;
+    
+    // 计算相关系数 * 100（0-100范围）
+    int32_t correlation_x100 = (cov * 100) / (int32_t)sqrt_var_product;
+    
+    // 限制范围 0-100
+    if (correlation_x100 < 0) correlation_x100 = 0;
+    if (correlation_x100 > 100) correlation_x100 = 100;
+    
+    return (uint8_t)correlation_x100;
+}
+
+// 计算 SpO2（标准 ratio-of-ratios 算法）
+uint8_t hr_calculate_spo2(int* status) {
+    if (!buffer_filled) {
+        if (status) *status = HR_BUFFER_NOT_FULL;
+        return 0;
+    }
+    
+    // 检查信号相关性（运动干扰检测）
+    last_correlation = calculate_correlation(ir_buffer, red_buffer);
+    if (last_correlation < (uint8_t)(SPO2_CORRELATION_THRESHOLD * 100)) {
+        if (status) *status = HR_POOR_SIGNAL;
+        return 0;
+    }
+    
+    // 计算 AC 和 DC 分量
+    int32_t ir_ac_sum = 0, ir_dc_sum = 0;
+    int32_t red_ac_sum = 0, red_dc_sum = 0;
+    
+    for (uint8_t i = 0; i < HR_BUFFER_SIZE; i++) {
+        ir_dc_sum += ir_buffer[i];
+        red_dc_sum += red_buffer[i];
+    }
+    
+    int32_t ir_dc = ir_dc_sum / HR_BUFFER_SIZE;
+    int32_t red_dc = red_dc_sum / HR_BUFFER_SIZE;
+    
+    // 计算 AC 分量（信号减去 DC）
+    for (uint8_t i = 0; i < HR_BUFFER_SIZE; i++) {
+        int32_t ir_ac = ir_buffer[i] - ir_dc;
+        int32_t red_ac = red_buffer[i] - red_dc;
+        ir_ac_sum += ir_ac > 0 ? ir_ac : -ir_ac;  // 绝对值
+        red_ac_sum += red_ac > 0 ? red_ac : -red_ac;
+    }
+    
+    int32_t ir_ac_avg = ir_ac_sum / HR_BUFFER_SIZE;
+    int32_t red_ac_avg = red_ac_sum / HR_BUFFER_SIZE;
+    
+    if (red_dc == 0 || ir_dc == 0) {
+        if (status) *status = HR_POOR_SIGNAL;
+        return 0;
+    }
+    
+    // 计算 R 值 = (red_ac / red_dc) / (ir_ac / ir_dc)
+    // 使用定点数运算避免浮点
+    uint32_t red_ratio = (red_ac_avg * 1000) / red_dc;  // red_ac/red_dc * 1000
+    uint32_t ir_ratio = (ir_ac_avg * 1000) / ir_dc;     // ir_ac/ir_dc * 1000
+    
+    if (ir_ratio == 0) {
+        if (status) *status = HR_POOR_SIGNAL;
+        return 0;
+    }
+    
+    uint32_t r_value_x1000 = (red_ratio * 1000) / ir_ratio;  // R * 1000
+    
+    // 限制 R 值范围
+    if (r_value_x1000 < (uint32_t)(SPO2_RATIO_MIN * 1000)) {
+        r_value_x1000 = (uint32_t)(SPO2_RATIO_MIN * 1000);
+    }
+    if (r_value_x1000 > (uint32_t)(SPO2_RATIO_MAX * 1000)) {
+        r_value_x1000 = (uint32_t)(SPO2_RATIO_MAX * 1000);
+    }
+    
+    // 使用经验公式：SpO2 = 110 - 25 * R
+    // 转换为整数运算：SpO2 = 110 - (25 * R * 1000) / 1000
+    int32_t spo2 = 110 - (25 * (int32_t)r_value_x1000) / 1000;
+    
+    // 限制范围
+    if (spo2 < SPO2_MIN_VALUE) spo2 = SPO2_MIN_VALUE;
+    if (spo2 > SPO2_MAX_VALUE) spo2 = SPO2_MAX_VALUE;
+    
+    last_spo2 = (uint8_t)spo2;
+    if (status) *status = HR_SUCCESS;
+    return (uint8_t)spo2;
+}
+
+uint8_t hr_get_latest_spo2() {
+    return last_spo2;  // 0表示无效
+}
+
+uint8_t hr_get_correlation_quality() {
+    return last_correlation;  // 0-100，越高表示相关性越好
 }

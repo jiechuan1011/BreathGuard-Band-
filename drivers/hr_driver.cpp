@@ -171,22 +171,20 @@ bool hr_read_latest(int32_t* red, int32_t* ir) {
 
     // 如果有溢出，说明丢数据了（可记录日志）
     if (ovf > 0) {
-        // 可选：i2c_write(REG_OVF_COUNTER, 0); 清零
+        // 清除溢出计数器
+        i2c_write(REG_OVF_COUNTER, 0);
     }
 
     int samples = (wr_ptr - rd_ptr + 32) % 32;  // FIFO 深度 32
     if (samples == 0) return false;
 
     // 只读最新一个样本（跳过旧数据）
-    // 修复：每个样本是 6 字节（RED 3字节 + IR 3字节），不是 3 字节
+    // 每个样本是 6 字节（RED 3字节 + IR 3字节）
     if (samples > 1) {
-        uint8_t skip = samples - 1;
-        uint8_t dump[6];
-        while (skip--) {
-            // 每个样本 6 字节（RED 3 字节 + IR 3 字节），全部读出丢弃
-            if (!i2c_read(REG_FIFO_DATA, dump, 6)) {
-                return false;
-            }
+        // 设置读取指针到最新样本的前一个位置
+        uint8_t new_rd_ptr = (wr_ptr - 1 + 32) % 32;
+        if (!i2c_write(REG_FIFO_RD_PTR, new_rd_ptr)) {
+            return false;
         }
     }
 

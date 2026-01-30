@@ -16,6 +16,13 @@
 #define HR_MAX_BPM              180     // 合理心率上限
 #define HR_SNR_THRESHOLD        20.0    // 最低信噪比（dB），低于此值视为无效（20dB = 200）
 
+// SpO2 计算参数
+#define SPO2_MIN_VALUE          70      // 血氧最小值（%）
+#define SPO2_MAX_VALUE          100     // 血氧最大值（%）
+#define SPO2_CORRELATION_THRESHOLD 0.7  // 红外/红光相关性阈值，低于此值视为运动伪影
+#define SPO2_RATIO_MIN          0.4     // R值最小值
+#define SPO2_RATIO_MAX          3.4     // R值最大值
+
 // ──────────────────────────────────────────────
 // 返回码定义（负值为错误，便于APP处理）
 #define HR_SUCCESS              0       // 计算成功
@@ -29,9 +36,14 @@
 void hr_algorithm_init();               // 初始化缓冲区
 int hr_algorithm_update();              // 每 SAMPLE_INTERVAL_MS 调用：采集 + 缓冲更新，返回状态
 uint8_t hr_calculate_bpm(int* status);  // 计算BPM，返回uint8_t（0=无效，40-180=BPM值）；status输出详细码
+uint8_t hr_calculate_spo2(int* status); // 计算SpO2，返回uint8_t（0=无效，70-100=SpO2值）；status输出详细码
 uint8_t hr_get_latest_bpm();            // 获取最近有效BPM（0=无效，40-180=BPM值）
+uint8_t hr_get_latest_spo2();           // 获取最近有效SpO2（0=无效，70-100=SpO2值）
 
 // 可选调试：获取当前信号质量（SNR*10，例如15.3dB返回153）
 uint8_t hr_get_signal_quality();
+
+// 运动干扰检测：计算红外/红光信号相关性（0-100，越高表示相关性越好）
+uint8_t hr_get_correlation_quality();
 
 #endif

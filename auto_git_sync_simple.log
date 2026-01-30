@@ -119,3 +119,16 @@ error: Please commit or stash them.
  M config/config.h
 ?? src/main_control.cpp
 
+2026-01-30 20:20:43,223 - __main__ - INFO - 成功执行 git add
+2026-01-30 20:20:43,469 - __main__ - INFO - 成功提交: Auto-commit: 2个文件变化 - 2026-01-30 20:20:43
+2026-01-30 20:25:43,555 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Connection timed out after 300011 milliseconds
+
+2026-01-30 20:25:43,555 - __main__ - INFO - 尝试先拉取最新更改...
+2026-01-30 20:25:43,601 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-01-30 20:26:13,616 - __main__ - INFO - 检测到 4 个文件变化
+2026-01-30 20:26:13,620 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\algorithm\hr_algorithm.cpp
+2026-01-30 20:26:13,620 - __main__ - INFO -   变化文件 2: E:\Diabetes_Screening_System\algorithm\hr_algorithm.h
+2026-01-30 20:26:13,621 - __main__ - INFO -   变化文件 3: E:\Diabetes_Screening_System\drivers\hr_driver.cpp
+2026-01-30 20:26:13,621 - __main__ - INFO -   变化文件 4: E:\Diabetes_Screening_System\src\main_control.cpp
