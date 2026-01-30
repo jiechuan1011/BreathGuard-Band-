@@ -305,7 +305,7 @@ void processSample() {
         // 更新心率算法
         int hr_status = hr_algorithm_update();
         
-        // 每64个样本计算一次BPM和SpO2
+        // 每64个样本计算一次BPM和SpO2（约0.64秒）
         static uint8_t sample_count = 0;
         sample_count++;
         
@@ -327,7 +327,20 @@ void processSample() {
                 
                 Serial.printf("[HR] BPM:%d SpO2:%d SNR:%.1fdB Corr:%d%%\n",
                             bpm, spo2, snr_x10/10.0, correlation);
+            } else {
+                // 如果计算失败，设置无效状态
+                system_state_set_hr_spo2(0, 0, 0, 0, status);
+                Serial.printf("[HR] 计算失败，状态码: %d\n", status);
             }
+        }
+    } else {
+        // 读取失败，设置无效状态
+        static uint8_t read_fail_count = 0;
+        read_fail_count++;
+        if (read_fail_count >= 10) { // 连续10次读取失败
+            system_state_set_hr_spo2(0, 0, 0, 0, HR_READ_FAILED);
+            read_fail_count = 0;
+            Serial.println("[HR] MAX30102读取失败");
         }
     }
 }
