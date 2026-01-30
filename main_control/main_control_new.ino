@@ -471,4 +471,130 @@ void wrist_setup() {
     
     Serial.println("\n\n========================================");
     Serial.println("  糖尿病初筛腕带主控板 (ESP32-S3)");
-    Serial.println(" 
+    Serial.println("  BLE Peripheral 模式");
+    Serial.println("========================================\n");
+    
+    // 初始化系统状态
+    system_state_init();
+    
+    // 初始化按键引脚
+    pinMode(PIN_BTN1, INPUT_PULLUP);
+    pinMode(PIN_BTN2, INPUT_PULLUP);
+    Serial.println("[Init] 按键初始化完成");
+    
+    // 初始化I2C和OLED
+    Wire.begin(PIN_SDA, PIN_SCL);
+    if (!display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR)) {
+        Serial.println("[Init] OLED初始化失败！");
+        while (1);  // 停止运行
+    }
+    Serial.println("[Init] OLED初始化完成");
+    
+    display.clearDisplay();
+    display.setTextColor(SSD1306_WHITE);
+    display.setTextSize(1);
+    display.setCursor(0, 28);
+    display.print("   正在启动...");
+    display.display();
+    
+    // 初始化BLE
+    ble_init();
+    
+    // 初始化完成
+    lastActivityTime = millis();
+    display.clearDisplay();
+    display.setCursor(0, 28);
+    display.print("   初始化完成");
+    display.display();
+    delay(1000);
+    
+    Serial.println("[Init] 系统启动完成\n");
+}
+
+void wrist_loop() {
+    uint32_t now = millis();
+    
+    // 处理按键
+    handleButtons();
+    
+    // 检查OLED超时熄屏
+    if (oledPowerOn && (now - lastActivityTime >= SCREEN_TIMEOUT_MS)) {
+        setOLEDPower(false);
+        Serial.println("[OLED] 超时熄屏");
+    }
+    
+    // 处理BLE连接状态变化
+    if (!deviceConnected && oldDeviceConnected) {
+        // 刚刚断开连接
+        delay(500);  // 给蓝牙栈一点时间
+        #ifdef USE_NIMBLE
+        NimBLEDevice::startAdvertising();
+        #else
+        BLEDevice::startAdvertising();
+        #endif
+        Serial.println("[BLE] 重新开始广播");
+        oldDeviceConnected = deviceConnected;
+    }
+    
+    if (deviceConnected && !oldDeviceConnected) {
+        // 刚刚连接上
+        Serial.println("[BLE] 开始发送数据");
+        oldDeviceConnected = deviceConnected;
+    }
+    
+    // 定时发送数据（只在连接时发送）
+    if (deviceConnected && (now - lastNotifyTime >= BLE_NOTIFY_INTERVAL)) {
+        lastNotifyTime = now;
+        
+        // 获取系统状态
+        const SystemState* state = system_state_get();
+        
+        // 获取心率数据
+        uint8_t hr_bpm = state->hr_bpm;
+        
+        // 获取血氧数据
+        uint8_t spo2 = 0;
+        #ifdef DEVICE_ROLE_WRIST
+        spo2 = system_state_get_spo2();
+        #endif
+        
+        // 打包JSON数据
+        String json_data = ble_pack_json_data(
+            hr_bpm,
+            spo2,
+            ACETONE_INVALID_VALUE,  // 腕带无丙酮数据
+            "腕带数据"
+        );
+        
+        // 发送数据
+        ble_send_data(json_data);
+    }
+    
+    // 刷新OLED显示
+    if (oledPowerOn) {
+        display.clearDisplay();
+        
+        switch (currentMode) {
+            case MODE_CLOCK:
+                drawClockMode();
+                break;
+            case MODE_MEASUREMENT:
+                drawMeasurementMode();
+                break;
+            case MODE_BLE_STATUS:
+                drawBLEStatusMode();
+                break;
+        }
+        
+        display.display();
+    }
+    
+    // 低功耗策略：时钟模式且OLED关闭时，使用light sleep
+    if (currentMode == MODE_CLOCK && !oledPowerOn && !deviceConnected) {
+        esp_sleep_enable_timer_wakeup(1000000);  // 1秒后唤醒
+        esp_sleep_enable_ext1_wakeup((1ULL << PIN_BTN1) | (1ULL << PIN_BTN2), ESP_EXT1_WAKEUP_ANY_LOW);
+        esp_light_sleep_start();
+    } else {
+        delay(100);  // 其他模式下正常延迟
+    }
+}
