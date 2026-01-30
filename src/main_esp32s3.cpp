@@ -252,9 +252,18 @@ String generateJSONData() {
     // 计算SNR（dB）
     float snr_db = snr_x10 / 10.0;
     
+    // 检查数据有效性
+    bool hr_valid = (hr > 0 && hr >= 40 && hr <= 180);
+    bool spo2_valid = (spo2 > 0 && spo2 >= 70 && spo2 <= 100);
+    bool snr_valid = (snr_x10 >= 200); // SNR >= 20dB
+    
     // 生成JSON字符串
     char jsonBuffer[128];
-    if (acetone >= 0) {
+    if (!hr_valid || !spo2_valid || !snr_valid) {
+        // 数据无效，发送错误信息
+        snprintf(jsonBuffer, sizeof(jsonBuffer),
+                "{\"hr\":0,\"spo2\":0,\"acetone\":-1,\"note\":\"采集失败，请检查佩戴\"}");
+    } else if (acetone >= 0) {
         snprintf(jsonBuffer, sizeof(jsonBuffer),
                 "{\"hr\":%d,\"spo2\":%d,\"acetone\":%.1f,\"note\":\"腕带数据，SNR:%.1fdB\"}",
                 hr, spo2, acetone, snr_db);
