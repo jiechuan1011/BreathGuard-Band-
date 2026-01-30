@@ -151,3 +151,111 @@ uint8_t getBatteryPercent() {
   float voltage = getBatteryVoltage();
   if (voltage >= BAT_FULL_VOLTAGE) return 100;
   if (voltage <= BAT_EMPTY_VOLTAGE) return 0;
+  return (uint8_t)(((voltage - BAT_EMPTY_VOLTAGE) / (BAT_FULL_VOLTAGE - BAT_EMPTY_VOLTAGE)) * 100);
+}
+
+void drawBatteryIcon(int x, int y, uint8_t percent) {
+  // 电池外框
+  display.drawRect(x, y, 18, 9, SSD1306_WHITE);
+  display.drawRect(x + 18, y + 3, 2, 3, SSD1306_WHITE);
+  
+  // 电量条
+  int fillWidth = (percent * 14) / 100;
+  if (fillWidth > 0) {
+    display.fillRect(x + 2, y + 2, fillWidth, 5, SSD1306_WHITE);
+  }
+}
+
+// ==================== BLE初始化 ====================
+void ble_init() {
+    Serial.println("[BLE] 初始化NimBLE...");
+    
+#ifdef USE_NIMBLE
+    // 初始化NimBLE
+    NimBLEDevice::init(BLE_DEVICE_NAME);
+    
+    // 设置发射功率（低功耗）
+    NimBLEDevice::setPower(ESP_PWR_LVL_P3);
+    
+    // 创建服务器
+    pServer = NimBLEDevice::createServer();
+    pServer->setCallbacks(new ServerCallbacks());
+    
+    // 创建服务
+    pService = pServer->createService(BLE_SERVICE_UUID);
+    
+    // 创建特征值（支持read和notify）
+    pCharacteristic = pService->createCharacteristic(
+        BLE_CHARACTERISTIC_UUID,
+        NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY
+    );
+    
+    // 设置初始值
+    pCharacteristic->setValue("Initializing...");
+    
+    // 启动服务
+    pService->start();
+    
+    // 开始广播
+    NimBLEAdvertising* pAdvertising = NimBLEDevice::getAdvertising();
+    pAdvertising->addServiceUUID(BLE_SERVICE_UUID);
+    pAdvertising->setScanResponse(true);
+    pAdvertising->setMinPreferred(0x06);  // 有助于iPhone连接
+    pAdvertising->setMaxPreferred(0x12);
+    
+    // 设置广播间隔（500ms）
+    pAdvertising->setInterval(BLE_ADVERTISING_INTERVAL_MS);
+    pAdvertising->start();
+    
+    Serial.println("[BLE] NimBLE初始化完成，开始广播");
+#else
+    // 使用默认BLE库
+    BLEDevice::init(BLE_DEVICE_NAME);
+    
+    // 设置发射功率
+    BLEDevice::setPower(ESP_PWR_LVL_P3);
+    
+    // 创建服务器
+    pServer = BLEDevice::createServer();
+    pServer->setCallbacks(new ServerCallbacks());
+    
+    // 创建服务
+    pService = pServer->createService(BLE_SERVICE_UUID);
+    
+    // 创建特征值
+    pCharacteristic = pService->createCharacteristic(
+        BLE_CHARACTERISTIC_UUID,
+        BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY
+    );
+    
+    // 设置初始值
+    pCharacteristic->setValue("Initializing...");
+    
+    // 启动服务
+    pService->start();
+    
+    // 开始广播
+    BLEAdvertising* pAdvertising = BLEDevice::getAdvertising();
+    pAdvertising->addServiceUUID(BLE_SERVICE_UUID);
+    pAdvertising->setScanResponse(true);
+    pAdvertising->setMinPreferred(0x06);
+    pAdvertising->setMaxPreferred(0x12);
+    
+    // 设置广播间隔
+    pAdvertising->setInterval(BLE_ADVERTISING_INTERVAL_MS);
+    pAdvertising->start();
+    
+    Serial.println("[BLE] 默认BLE初始化完成，开始广播");
+#endif
+}
+
+// ==================== 数据打包函数 ====================
+String ble_pack_json_data(uint8_t hr_bpm, uint8_t spo2, float acetone, const char* note) {
+    char json_buffer[BLE_JSON_BUFFER_SIZE];
+    
+    // 计算SNR（从系统状态获取）
+    const SystemState* state = system_state_get();
+    float snr_db = state->hr_snr_db_x10 / 10.0;
+    
+    // 生成JSON字符串
+    snprintf(json_buffer, sizeof(json_buffer),
