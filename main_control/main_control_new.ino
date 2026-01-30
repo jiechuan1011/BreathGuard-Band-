@@ -17,3 +17,137 @@
  * BLE配置：
  *   - 设备名："DiabetesSensor"
  *   - 服务UUID："a1b2c3d4-e5f6-4789-abcd-ef0123456789"
+ *   - 特征值UUID："a1b2c3d4-e5f6-4789-abcd-ef012345678a"（支持read + notify）
+ * 
+ * 项目约束：
+ * - 总成本 ≤500元，腕带重量 <45g
+ * - 不输出任何医疗诊断相关内容
+ */
+
+#include <Arduino.h>
+#include <Wire.h>
+#include <WiFi.h>
+#include <time.h>
+#include <esp_sleep.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+// 使用NimBLE库（更省电）
+#define USE_NIMBLE
+#include "../config/ble_config.h"
+
+// 系统状态
+#include "../system/system_state.h"
+
+// ==================== OLED显示配置 ====================
+#define SCREEN_WIDTH    128
+#define SCREEN_HEIGHT   64
+#define OLED_ADDR       0x3C
+#define OLED_RESET      -1  // 无复位引脚
+
+// ==================== 引脚定义（ESP32-S3）====================
+#define PIN_SDA         21   // I2C数据线（OLED和传感器）
+#define PIN_SCL         22   // I2C时钟线（OLED和传感器）
+#define PIN_BTN1        6    // 按键1：切换界面/功能
+#define PIN_BTN2        7    // 按键2：返回/确认
+#define PIN_BAT_ADC     2    // 电池电压ADC输入
+
+// ==================== 系统参数 ====================
+#define SCREEN_TIMEOUT_MS   30000   // 30秒无操作熄屏
+#define DEBOUNCE_MS         50      // 按键消抖时间
+#define BLE_NOTIFY_INTERVAL 4000    // BLE数据发送间隔（毫秒）
+
+// ==================== 电池电压参数 ====================
+#define BAT_ADC_MAX         4095    // 12位ADC最大值
+#define BAT_REF_VOLTAGE     3.3     // ADC参考电压（V）
+#define BAT_DIVIDER_RATIO   2.0     // 分压比（2:1分压）
+#define BAT_FULL_VOLTAGE    4.2     // 满电电压
+#define BAT_EMPTY_VOLTAGE   3.3     // 空电电压
+
+// ==================== 免责声明文本 ====================
+#define DISCLAIMER_TEXT     "仅供参考，建议咨询医生"
+
+// ==================== 界面模式枚举 ====================
+enum DisplayMode {
+  MODE_CLOCK,       // 时钟模式（默认）
+  MODE_MEASUREMENT, // 测量数据显示模式
+  MODE_BLE_STATUS   // BLE状态显示模式
+};
+
+// ==================== 全局变量 ====================
+// OLED显示对象
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+// 界面状态
+DisplayMode currentMode = MODE_CLOCK;
+bool oledPowerOn = true;
+uint32_t lastActivityTime = 0;
+
+// 时间同步状态
+bool wifiConnected = false;
+bool ntpSynced = false;
+uint32_t lastNtpSyncTime = 0;
+
+// BLE状态（在ble_config.h中声明，这里定义）
+BLE_SERVER_TYPE pServer = nullptr;
+BLE_SERVICE_TYPE pService = nullptr;
+BLE_CHARACTERISTIC_TYPE pCharacteristic = nullptr;
+bool deviceConnected = false;
+bool oldDeviceConnected = false;
+
+// 数据发送定时器
+uint32_t lastNotifyTime = 0;
+
+// 按键状态
+uint8_t btn1LastState = HIGH;
+uint8_t btn2LastState = HIGH;
+
+// 星期中文字符
+const char* weekdayChinese[] = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
+
+// ==================== BLE回调类 ====================
+#ifdef USE_NIMBLE
+// NimBLE连接状态回调
+class ServerCallbacks: public NimBLEServerCallbacks {
+    void onConnect(NimBLEServer* pServer, NimBLEConnInfo& connInfo) {
+        Serial.println("[BLE] 客户端已连接");
+        deviceConnected = true;
+    };
+
+    void onDisconnect(NimBLEServer* pServer, NimBLEConnInfo& connInfo, int reason) {
+        Serial.println("[BLE] 客户端已断开连接");
+        deviceConnected = false;
+    }
+};
+#else
+// 默认BLE连接状态回调
+class ServerCallbacks: public BLEServerCallbacks {
+    void onConnect(BLEServer* pServer) {
+        Serial.println("[BLE] 客户端已连接");
+        deviceConnected = true;
+    };
+
+    void onDisconnect(BLEServer* pServer) {
+        Serial.println("[BLE] 客户端已断开连接");
+        deviceConnected = false;
+    }
+};
+#endif
+
+// ==================== OLED电源控制 ====================
+void setOLEDPower(bool on) {
+  display.ssd1306_command(on ? SSD1306_DISPLAYON : SSD1306_DISPLAYOFF);
+  oledPowerOn = on;
+}
+
+// ==================== 电池电量读取与显示 ====================
+float getBatteryVoltage() {
+  uint32_t adcValue = analogRead(PIN_BAT_ADC);
+  float voltage = (adcValue / (float)BAT_ADC_MAX) * BAT_REF_VOLTAGE * BAT_DIVIDER_RATIO;
+  return voltage;
+}
+
+uint8_t getBatteryPercent() {
+  float voltage = getBatteryVoltage();
+  if (voltage >= BAT_FULL_VOLTAGE) return 100;
+  if (voltage <= BAT_EMPTY_VOLTAGE) return 0;
