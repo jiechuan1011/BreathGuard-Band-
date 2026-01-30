@@ -103,10 +103,72 @@ static bool buttonLongPressTriggered = false;
 #define PIN_GAS_ADC     10  // AD623输出ADC引脚
 #define HEATER_DUTY     180 // 加热占空比（180/255 ≈ 70%）
 
+// ==================== 按键初始化 ====================
+void initButton() {
+    // GPIO0作为按键输入，内部上拉，低电平有效
+    pinMode(0, INPUT_PULLUP);
+    Serial.println("[Button] GPIO0按键初始化完成");
+}
+
+// ==================== 按键处理 ====================
+void handleButton() {
+    uint32_t currentTime = millis();
+    
+    // 按键消抖检查
+    if (currentTime - lastButtonCheckTime < BUTTON_DEBOUNCE_MS) {
+        return;
+    }
+    lastButtonCheckTime = currentTime;
+    
+    // 读取按键状态（低电平有效）
+    bool currentButtonState = (digitalRead(0) == LOW);
+    
+    if (currentButtonState && !buttonPressed) {
+        // 按键按下
+        buttonPressed = true;
+        buttonPressStartTime = currentTime;
+        buttonLongPressTriggered = false;
+        Serial.println("[Button] 按键按下");
+    } 
+    else if (!currentButtonState && buttonPressed) {
+        // 按键释放
+        buttonPressed = false;
+        
+        // 检查是否为短按（未触发长按）
+        if (!buttonLongPressTriggered) {
+            // 短按：唤醒/刷新屏幕
+            if (!oledPowerOn) {
+                setOLEDPower(true);
+            }
+            lastActivityTime = currentTime; // 重置屏幕超时
+            Serial.println("[Button] 短按：唤醒/刷新屏幕");
+        }
+    }
+    
+    // 检查长按
+    if (buttonPressed && !buttonLongPressTriggered && 
+        (currentTime - buttonPressStartTime >= BUTTON_LONG_PRESS_MS)) {
+        buttonLongPressTriggered = true;
+        
+        // 长按：进入BLE配对模式或重启广播
+        #ifdef USE_BLE_MODULE
+        if (!deviceConnected) {
+            NimBLEDevice::startAdvertising();
+            Serial.println("[Button] 长按：重新开始BLE广播");
+        } else {
+            Serial.println("[Button] 长按：已连接，无法重新广播");
+        }
+        #else
+        Serial.println("[Button] 长按：BLE未启用");
+        #endif
+    }
+}
+
 // ==================== OLED电源控制 ====================
 void setOLEDPower(bool on) {
     display.ssd1306_command(on ? SSD1306_DISPLAYON : SSD1306_DISPLAYOFF);
     oledPowerOn = on;
+    lastActivityTime = millis(); // 重置活动时间
     Serial.printf("[OLED] %s\n", on ? "开启" : "关闭");
 }
 
