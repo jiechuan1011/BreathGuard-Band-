@@ -54,7 +54,7 @@ void detector_loop();
 
 #ifdef DEVICE_ROLE_WRIST
 // 包含腕带主控程序
-#include "../main_control/main_control.ino"
+#include "../src/main_control.cpp"
 
 #elif defined(DEVICE_ROLE_DETECTOR)
 // 包含检测模块程序
