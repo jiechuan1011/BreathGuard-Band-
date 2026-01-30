@@ -2,16 +2,18 @@
  * main_esp32s3.cpp - 糖尿病初筛腕带主控板（ESP32-S3R8N8完整适配版）
  * 
  * 功能：完整手表功能 + BLE广播数据
- *   - MAX30102心率血氧采集（使用现有hr_driver.cpp）
+ *   - MAX30102心率血氧采集（使用现有hr_driver_s3.cpp）
  *   - SnO₂+AD623丙酮检测（腕带无此功能，数据填-1）
  *   - BLE广播JSON数据到MIT App Inventor APP
  *   - OLED显示（超时熄屏）
+ *   - 按键控制（GPIO0：短按唤醒/刷新，长按>2s进入配对模式）
  *   - 低功耗优化（ESP32-S3轻睡模式）
  * 
  * 硬件：ESP32-S3R8N8（双核240MHz，8MB Flash + 8MB PSRAM）
  *   - I2C引脚：GPIO4(SDA)/GPIO5(SCL)
  *   - MAX30102地址：0x57
  *   - OLED地址：0x3C
+ *   - 按键引脚：GPIO0（内部上拉，低电平有效）
  *   - SnO₂加热：GPIO9 PWM（占空比180/255）
  *   - AD623读取：GPIO10 ADC
  * 
@@ -19,8 +21,12 @@
  *   - Arduino-ESP32 2.0.17+
  *   - Adafruit SSD1306
  *   - NimBLE-Arduino
+ *   - SparkFun MAX30105（用于MAX30102驱动）
  * 
  * 编译：开发板选ESP32S3 Dev Module
+ * 
+ * 免责声明：本设备仅用于糖尿病初筛参考，不提供医疗诊断。
+ *           测量结果仅供参考，不能替代专业医疗检查。
  */
 
 #include <Arduino.h>
@@ -43,9 +49,11 @@
 #define OLED_RESET      -1  // 无复位引脚
 
 // ==================== 系统参数 ====================
-#define SCREEN_TIMEOUT_MS   30000   // 30秒无操作熄屏
-#define SAMPLE_INTERVAL_MS  10      // 10ms采样间隔
-#define BLE_NOTIFY_INTERVAL_MS 4000 // 4秒BLE通知间隔
+#define SCREEN_TIMEOUT_MS       30000   // 30秒无操作熄屏
+#define SAMPLE_INTERVAL_MS      10      // 10ms采样间隔（100Hz）
+#define BLE_NOTIFY_INTERVAL_MS  4000    // 4秒BLE通知间隔
+#define BUTTON_DEBOUNCE_MS      50      // 按键消抖时间
+#define BUTTON_LONG_PRESS_MS    2000    // 长按时间（2秒）
 
 // ==================== 全局变量 ====================
 // OLED显示对象
@@ -82,7 +90,13 @@ class ServerCallbacks: public NimBLEServerCallbacks {
 static uint32_t lastSampleTime = 0;
 static uint32_t lastNotifyTime = 0;
 static uint32_t lastActivityTime = 0;
+static uint32_t lastButtonCheckTime = 0;
 static bool oledPowerOn = true;
+
+// 按键状态变量
+static bool buttonPressed = false;
+static uint32_t buttonPressStartTime = 0;
+static bool buttonLongPressTriggered = false;
 
 // 丙酮检测相关（腕带无此功能，但保留接口）
 #define PIN_GAS_HEATER  9   // SnO₂加热PWM引脚
