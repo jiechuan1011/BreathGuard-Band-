@@ -274,3 +274,190 @@ String generateJSONData() {
                 hr, spo2, acetone, snr_db);
     } else {
         snprintf(jsonBuffer, sizeof(jsonBuffer),
+                "{\"hr\":%d,\"spo2\":%d,\"acetone\":-1,\"note\":\"腕带数据，SNR:%.1fdB\"}",
+                hr, spo2, snr_db);
+    }
+    
+    return String(jsonBuffer);
+}
+
+// ==================== 发送BLE数据 ====================
+#ifdef USE_BLE_MODULE
+void sendBLEData() {
+    if (!deviceConnected) {
+        return;
+    }
+    
+    String jsonData = generateJSONData();
+    pCharacteristic->setValue(jsonData.c_str());
+    pCharacteristic->notify();
+    
+    Serial.printf("[BLE] 发送数据: %s\n", jsonData.c_str());
+}
+#else
+void sendBLEData() {
+    // BLE未启用，仅打印数据
+    String jsonData = generateJSONData();
+    Serial.printf("[模拟BLE] 数据: %s\n", jsonData.c_str());
+}
+#endif
+
+// ==================== 采样处理 ====================
+void processSample() {
+    // 读取MAX30102数据
+    int32_t red, ir;
+    if (hr_read_latest(&red, &ir)) {
+        // 更新心率算法
+        int hr_status = hr_algorithm_update();
+        
+        // 每64个样本计算一次BPM和SpO2
+        static uint8_t sample_count = 0;
+        sample_count++;
+        
+        if (sample_count >= 64) {
+            sample_count = 0;
+            
+            // 计算心率
+            int status;
+            uint8_t bpm = hr_calculate_bpm(&status);
+            
+            if (status == HR_SUCCESS && bpm > 0) {
+                // 计算血氧
+                uint8_t spo2 = hr_calculate_spo2(&status);
+                uint8_t snr_x10 = hr_get_signal_quality();
+                uint8_t correlation = hr_get_correlation_quality();
+                
+                // 更新系统状态
+                system_state_set_hr_spo2(bpm, spo2, snr_x10, correlation, status);
+                
+                Serial.printf("[HR] BPM:%d SpO2:%d SNR:%.1fdB Corr:%d%%\n",
+                            bpm, spo2, snr_x10/10.0, correlation);
+            }
+        }
+    }
+}
+
+// ==================== OLED显示 ====================
+void updateDisplay() {
+    if (!oledPowerOn) return;
+    
+    display.clearDisplay();
+    display.setTextColor(SSD1306_WHITE);
+    
+    const SystemState* state = system_state_get();
+    
+    // 显示标题
+    display.setTextSize(1);
+    display.setCursor(0, 0);
+    display.print("糖尿病初筛腕带");
+    
+    // 显示心率
+    display.setCursor(0, 12);
+    display.print("心率:");
+    if (state->hr_bpm > 0) {
+        display.printf("%d bpm", state->hr_bpm);
+    } else {
+        display.print("--");
+    }
+    
+    // 显示血氧
+    display.setCursor(0, 24);
+    display.print("血氧:");
+    if (state->spo2_value > 0) {
+        display.printf("%d%%", state->spo2_value);
+    } else {
+        display.print("--");
+    }
+    
+    // 显示SNR
+    display.setCursor(0, 36);
+    display.print("信号质量:");
+    if (state->hr_snr_db_x10 > 0) {
+        display.printf("%.1f dB", state->hr_snr_db_x10 / 10.0);
+    } else {
+        display.print("--");
+    }
+    
+    // 显示BLE状态
+    display.setCursor(0, 48);
+    display.print("BLE:");
+    #ifdef USE_BLE_MODULE
+    display.print(deviceConnected ? "已连接" : "未连接");
+    #else
+    display.print("未启用");
+    #endif
+    
+    display.display();
+}
+
+// ==================== 腕带主控初始化 ====================
+void wrist_setup() {
+    Serial.begin(115200);
+    delay(500);
+    
+    Serial.println("\n\n========================================");
+    Serial.println("  糖尿病初筛腕带主控板 (ESP32-S3R8N8)");
+    Serial.println("========================================\n");
+    
+    // 初始化系统状态
+    system_state_init();
+    hr_algorithm_init();
+    
+    // 初始化OLED
+    Wire.begin(PIN_SDA, PIN_SCL);
+    if (!display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR)) {
+        Serial.println("[OLED] 初始化失败！");
+        while (1);
+    }
+    Serial.println("[OLED] 初始化成功");
+    
+    display.clearDisplay();
+    display.setTextSize(1);
+    display.setCursor(0, 28);
+    display.print("   正在启动...");
+    display.display();
+    
+    // 初始化MAX30102（使用现有hr_driver.cpp）
+    if (!hr_init()) {
+        Serial.println("[ERROR] MAX30102初始化失败，系统停止");
+        while (1);
+    }
+    
+    // 初始化丙酮传感器接口
+    initAcetoneSensor();
+    
+    // 初始化BLE
+    initBLE();
+    
+    // 初始化完成
+    lastActivityTime = millis();
+    display.clearDisplay();
+    display.setCursor(0, 28);
+    display.print("   初始化完成");
+    display.display();
+    delay(1000);
+    
+    Serial.println("[Init] 系统启动完成\n");
+}
+
+// ==================== 主循环 ====================
+void wrist_loop() {
+    uint32_t currentTime = millis();
+    
+    // 10ms采样定时器（非阻塞）
+    if (currentTime - lastSampleTime >= SAMPLE_INTERVAL_MS) {
+        lastSampleTime = currentTime;
+        processSample();
+    }
+    
+    // 4秒BLE通知定时器
+    if (currentTime - lastNotifyTime >= BLE_NOTIFY_INTERVAL_MS) {
+        lastNotifyTime = currentTime;
+        sendBLEData();
+    }
+    
+    // 更新OLED显示
+    updateDisplay();
+    
+    // 检查OLED超时熄屏
+    if (oledPowerOn && (currentTime - lastActivityTime >= SCREEN_TIMEOUT
