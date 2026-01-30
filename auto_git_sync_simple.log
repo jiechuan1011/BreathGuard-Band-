@@ -211,3 +211,14 @@ error: Please commit or stash them.
  M auto_git_sync_simple.log
 ?? config/ble_config.h
 
+2026-01-30 20:39:54,425 - __main__ - INFO - 成功执行 git add
+2026-01-30 20:39:54,653 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-01-30 20:39:54
+2026-01-30 20:40:03,593 - __main__ - INFO - 成功推送到远程仓库
+2026-01-30 20:40:33,621 - __main__ - INFO - 检测到 2 个文件变化
+2026-01-30 20:40:33,622 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\config\ble_config.h
+2026-01-30 20:40:33,622 - __main__ - INFO -   变化文件 2: E:\Diabetes_Screening_System\main_control\main_control_new.ino
+2026-01-30 20:40:33,682 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M config/ble_config.h
+?? main_control/main_control_new.ino
+
