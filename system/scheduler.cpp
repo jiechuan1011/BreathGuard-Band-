@@ -15,11 +15,13 @@ void scheduler_init() {
     // 初始化心率算法
     hr_algorithm_init();
 
-    // 初始化气体传感器
+#ifdef DEVICE_ROLE_DETECTOR
+    // 仅检测模块初始化气体传感器
     gas_init();
 
     // 初始化环境传感器
     env_init();
+#endif
 
     // 初始化系统状态
     system_state_init();
@@ -42,10 +44,21 @@ void scheduler_run() {
         int calc_status;
         uint8_t bpm = hr_calculate_bpm(&calc_status);
         uint8_t snr_x10 = hr_get_signal_quality();
+        
+#ifdef DEVICE_ROLE_WRIST
+        // 腕带模式：同时计算 SpO2
+        uint8_t spo2 = hr_calculate_spo2(&calc_status);
+        uint8_t correlation = hr_get_correlation_quality();
+        system_state_set_hr_spo2(bpm, spo2, snr_x10, correlation, (int8_t)calc_status);
+#else
+        // 检测模块模式：只设置心率
         system_state_set_hr(bpm, snr_x10, (int8_t)calc_status);
+#endif
+        
         last_hr_calc = now;
     }
 
+#ifdef DEVICE_ROLE_DETECTOR
     // ─── 气体传感器轮询（低频，1秒） ──────────────────────────────
     static unsigned long last_gas_poll = 0;
     if (now - last_gas_poll >= GAS_POLL_INTERVAL_MS) {
@@ -76,4 +89,5 @@ void scheduler_run() {
         }
         last_env_poll = now;
     }
+#endif
 }
