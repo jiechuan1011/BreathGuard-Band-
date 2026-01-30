@@ -222,3 +222,8 @@ error: Please commit or stash them.
  M config/ble_config.h
 ?? main_control/main_control_new.ino
 
+2026-01-30 20:40:33,758 - __main__ - INFO - 成功执行 git add
+2026-01-30 20:40:34,154 - __main__ - INFO - 成功提交: Auto-commit: 2个文件变化 - 2026-01-30 20:40:33
+2026-01-30 20:40:38,062 - __main__ - INFO - 成功推送到远程仓库
+2026-01-30 20:41:08,077 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-30 20:41:08,077 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\main_control\main_control_new.ino
