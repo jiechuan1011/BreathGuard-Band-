@@ -8,3 +8,179 @@
  *   - OLED显示（超时熄屏）
  *   - 低功耗优化（ESP32-S3轻睡模式）
  * 
+ * 硬件：ESP32-S3R8N8（双核240MHz，8MB Flash + 8MB PSRAM）
+ *   - I2C引脚：GPIO4(SDA)/GPIO5(SCL)
+ *   - MAX30102地址：0x57
+ *   - OLED地址：0x3C
+ *   - SnO₂加热：GPIO9 PWM（占空比180/255）
+ *   - AD623读取：GPIO10 ADC
+ * 
+ * 库依赖：
+ *   - Arduino-ESP32 2.0.17+
+ *   - Adafruit SSD1306
+ *   - NimBLE-Arduino
+ * 
+ * 编译：开发板选ESP32S3 Dev Module
+ */
+
+#include <Arduino.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+// 配置文件
+#include "../config/config.h"
+#include "../config/pin_config.h"
+#include "../config/ble_config.h"
+#include "../system/system_state.h"
+#include "../algorithm/hr_algorithm.h"
+#include "../drivers/hr_driver.h"
+
+// ==================== OLED显示配置 ====================
+#define SCREEN_WIDTH    128
+#define SCREEN_HEIGHT   64
+#define OLED_ADDR       0x3C
+#define OLED_RESET      -1  // 无复位引脚
+
+// ==================== 系统参数 ====================
+#define SCREEN_TIMEOUT_MS   30000   // 30秒无操作熄屏
+#define SAMPLE_INTERVAL_MS  10      // 10ms采样间隔
+#define BLE_NOTIFY_INTERVAL_MS 4000 // 4秒BLE通知间隔
+
+// ==================== 全局变量 ====================
+// OLED显示对象
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+// BLE相关变量（条件编译）
+#ifdef USE_BLE_MODULE
+#include <NimBLEDevice.h>
+#include <NimBLEServer.h>
+#include <NimBLEUtils.h>
+#include <NimBLE2902.h>
+
+static NimBLEServer* pServer = nullptr;
+static NimBLEService* pService = nullptr;
+static NimBLECharacteristic* pCharacteristic = nullptr;
+static bool deviceConnected = false;
+static bool oldDeviceConnected = false;
+
+// BLE回调类
+class ServerCallbacks: public NimBLEServerCallbacks {
+    void onConnect(NimBLEServer* pServer) {
+        deviceConnected = true;
+        Serial.println("[BLE] 客户端已连接");
+    }
+
+    void onDisconnect(NimBLEServer* pServer) {
+        deviceConnected = false;
+        Serial.println("[BLE] 客户端已断开");
+    }
+};
+#endif
+
+// 定时器变量
+static uint32_t lastSampleTime = 0;
+static uint32_t lastNotifyTime = 0;
+static uint32_t lastActivityTime = 0;
+static bool oledPowerOn = true;
+
+// 丙酮检测相关（腕带无此功能，但保留接口）
+#define PIN_GAS_HEATER  9   // SnO₂加热PWM引脚
+#define PIN_GAS_ADC     10  // AD623输出ADC引脚
+#define HEATER_DUTY     180 // 加热占空比（180/255 ≈ 70%）
+
+// ==================== OLED电源控制 ====================
+void setOLEDPower(bool on) {
+    display.ssd1306_command(on ? SSD1306_DISPLAYON : SSD1306_DISPLAYOFF);
+    oledPowerOn = on;
+    Serial.printf("[OLED] %s\n", on ? "开启" : "关闭");
+}
+
+// ==================== BLE初始化 ====================
+#ifdef USE_BLE_MODULE
+void initBLE() {
+    Serial.println("[BLE] 初始化NimBLE...");
+    
+    // 设置设备名称
+    NimBLEDevice::init(BLE_DEVICE_NAME);
+    
+    // 设置功耗等级
+    NimBLEDevice::setPower(ESP_PWR_LVL_P3);
+    
+    // 创建BLE服务器
+    pServer = NimBLEDevice::createServer();
+    pServer->setCallbacks(new ServerCallbacks());
+    
+    // 创建服务
+    pService = pServer->createService(BLE_SERVICE_UUID);
+    
+    // 创建特征值
+    pCharacteristic = pService->createCharacteristic(
+        BLE_CHARACTERISTIC_UUID,
+        NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY
+    );
+    
+    // 添加描述符（用于启用notify）
+    pCharacteristic->addDescriptor(new NimBLE2902());
+    
+    // 启动服务
+    pService->start();
+    
+    // 开始广播
+    NimBLEAdvertising* pAdvertising = NimBLEDevice::getAdvertising();
+    pAdvertising->addServiceUUID(BLE_SERVICE_UUID);
+    pAdvertising->setScanResponse(true);
+    pAdvertising->setMinInterval(BLE_ADV_INTERVAL_MIN);
+    pAdvertising->setMaxInterval(BLE_ADV_INTERVAL_MAX);
+    NimBLEDevice::startAdvertising();
+    
+    Serial.println("[BLE] 初始化完成，开始广播");
+}
+#else
+void initBLE() {
+    Serial.println("[BLE] BLE模块未启用");
+}
+#endif
+
+// ==================== 丙酮检测初始化（腕带无此功能，保留接口）====================
+void initAcetoneSensor() {
+    // 配置加热PWM
+    #ifdef DEVICE_ROLE_WRIST
+    // 腕带无丙酮传感器，仅初始化接口
+    pinMode(PIN_GAS_HEATER, OUTPUT);
+    digitalWrite(PIN_GAS_HEATER, LOW);
+    
+    pinMode(PIN_GAS_ADC, INPUT);
+    analogReadResolution(12); // 12位ADC
+    
+    Serial.println("[Acetone] 传感器接口初始化完成（腕带无实际传感器）");
+    #endif
+}
+
+// ==================== 读取丙酮浓度（模拟数据）====================
+float readAcetoneConcentration() {
+    // 腕带无丙酮传感器，返回-1表示无效数据
+    return -1.0;
+}
+
+// ==================== 生成JSON数据 ====================
+String generateJSONData() {
+    const SystemState* state = system_state_get();
+    
+    // 获取心率、血氧、SNR
+    uint8_t hr = state->hr_bpm;
+    uint8_t spo2 = state->spo2_value;
+    uint8_t snr_x10 = state->hr_snr_db_x10;
+    float acetone = readAcetoneConcentration(); // 腕带返回-1
+    
+    // 计算SNR（dB）
+    float snr_db = snr_x10 / 10.0;
+    
+    // 生成JSON字符串
+    char jsonBuffer[128];
+    if (acetone >= 0) {
+        snprintf(jsonBuffer, sizeof(jsonBuffer),
+                "{\"hr\":%d,\"spo2\":%d,\"acetone\":%.1f,\"note\":\"腕带数据，SNR:%.1fdB\"}",
+                hr, spo2, acetone, snr_db);
+    } else {
+        snprintf(jsonBuffer, sizeof(jsonBuffer),
