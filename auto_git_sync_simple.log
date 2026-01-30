@@ -345,3 +345,27 @@ error: Please commit or stash them.
  M scripts/auto_git_sync.py
  M scripts/auto_git_sync_simple.py
 
+2026-01-30 20:55:14,914 - __main__ - INFO - 成功执行 git add
+2026-01-30 20:55:15,221 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-01-30 20:55:14
+2026-01-30 21:00:15,390 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Connection timed out after 300054 milliseconds
+
+2026-01-30 21:00:15,392 - __main__ - INFO - 尝试先拉取最新更改...
+2026-01-30 21:00:15,438 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-01-30 21:00:45,457 - __main__ - INFO - 检测到 6 个文件变化
+2026-01-30 21:00:45,458 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\config\ble_config.h
+2026-01-30 21:00:45,458 - __main__ - INFO -   变化文件 2: E:\Diabetes_Screening_System\config\pin_config.h
+2026-01-30 21:00:45,458 - __main__ - INFO -   变化文件 3: E:\Diabetes_Screening_System\drivers\hr_driver_s3.cpp
+2026-01-30 21:00:45,458 - __main__ - INFO -   变化文件 4: E:\Diabetes_Screening_System\main_control\main_control_new.ino
+2026-01-30 21:00:45,458 - __main__ - INFO -   变化文件 5: E:\Diabetes_Screening_System\src\main_esp32s3.cpp
+2026-01-30 21:00:45,458 - __main__ - INFO -   还有 1 个文件变化未显示
+2026-01-30 21:00:45,515 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M config/ble_config.h
+ M config/pin_config.h
+ M main_control/main_control_new.ino
+?? drivers/hr_driver_s3.cpp
+?? src/main_esp32s3.cpp
+?? src/main_s3.cpp
+

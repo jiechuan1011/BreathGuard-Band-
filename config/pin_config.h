@@ -15,9 +15,9 @@
 // ==================== 通用引脚定义 ====================
 // 这些引脚在两个角色中都可能使用
 
-// I2C总线引脚（MAX30102、OLED、环境传感器）
-#define PIN_SDA         4   // I2C数据线（ESP32-C3 GPIO4）
-#define PIN_SCL         5   // I2C时钟线（ESP32-C3 GPIO5）
+// I2C总线引脚（MAX30102、OLED、环境传感器）- ESP32-S3R8N8
+#define PIN_SDA         4   // I2C数据线（ESP32-S3 GPIO4）
+#define PIN_SCL         5   // I2C时钟线（ESP32-S3 GPIO5）
 
 // 电源管理引脚
 #define PIN_BAT_ADC     2   // 电池电压ADC（ESP32-C3 GPIO2）

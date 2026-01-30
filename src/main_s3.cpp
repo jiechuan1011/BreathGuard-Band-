@@ -1,8 +1,8 @@
 /*
- * main_control_new.ino - 糖尿病初筛腕带主控板（ESP32-S3R8N8适配版）
+ * main_s3.cpp - 糖尿病初筛腕带主控板（ESP32-S3R8N8完整适配版）
  * 
  * 功能：完整手表功能 + BLE广播数据
- *   - MAX30102心率血氧采集（使用SparkFun MAX30105库）
+ *   - MAX30102心率血氧采集（使用现有hr_driver.cpp）
  *   - SnO₂+AD623丙酮检测（腕带无此功能，数据填-1）
  *   - BLE广播JSON数据到MIT App Inventor APP
  *   - OLED显示（超时熄屏）
@@ -17,7 +17,6 @@
  * 
  * 库依赖：
  *   - Arduino-ESP32 2.0.17+
- *   - SparkFun MAX30105 Library
  *   - Adafruit SSD1306
  *   - NimBLE-Arduino
  * 
@@ -26,10 +25,8 @@
 
 #include <Arduino.h>
 #include <Wire.h>
-#include <esp_timer.h>
 #include <esp_sleep.h>
 #include <driver/ledc.h>
-#include <SparkFun_MAX30105.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <NimBLEDevice.h>
@@ -59,9 +56,6 @@
 // ==================== 全局变量 ====================
 // OLED显示对象
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-
-// MAX30102传感器对象
-MAX30105 particleSensor;
 
 // BLE对象
 static NimBLEServer* pServer = nullptr;
@@ -99,36 +93,6 @@ void setOLEDPower(bool on) {
     display.ssd1306_command(on ? SSD1306_DISPLAYON : SSD1306_DISPLAYOFF);
     oledPowerOn = on;
     Serial.printf("[OLED] %s\n", on ? "开启" : "关闭");
-}
-
-// ==================== MAX30102初始化 ====================
-bool initMAX30102() {
-    Serial.println("[MAX30102] 初始化中...");
-    
-    // 初始化I2C
-    Wire.begin(PIN_SDA, PIN_SCL);
-    
-    // 初始化传感器
-    if (!particleSensor.begin(Wire, I2C_ADDR_MAX30102)) {
-        Serial.println("[MAX30102] 初始化失败，请检查连接");
-        return false;
-    }
-    
-    // 配置传感器参数
-    byte ledBrightness = 60; // 0-255
-    byte sampleAverage = 4;  // 1, 2, 4, 8, 16, 32
-    byte ledMode = 2;        // 1 = Red only, 2 = Red + IR, 3 = Red + IR + Green
-    int sampleRate = 100;    // 50, 100, 200, 400, 800, 1000, 1600, 3200
-    int pulseWidth = 411;    // 69, 118, 215, 411
-    int adcRange = 4096;     // 2048, 4096, 8192, 16384
-    
-    particleSensor.setup(ledBrightness, sampleAverage, ledMode, sampleRate, pulseWidth, adcRange);
-    
-    // 启用温度传感器（可选）
-    particleSensor.enableDIETEMPRDY();
-    
-    Serial.println("[MAX30102] 初始化成功");
-    return true;
 }
 
 // ==================== BLE初始化 ====================
@@ -235,10 +199,8 @@ void sendBLEData() {
 // ==================== 采样处理 ====================
 void processSample() {
     // 读取MAX30102数据
-    if (particleSensor.available()) {
-        int32_t red = particleSensor.getRed();
-        int32_t ir = particleSensor.getIR();
-        
+    int32_t red, ir;
+    if (hr_read_latest(&red, &ir)) {
         // 更新心率算法
         int hr_status = hr_algorithm_update();
         
@@ -266,8 +228,6 @@ void processSample() {
                             bpm, spo2, snr_x10/10.0, correlation);
             }
         }
-        
-        particleSensor.nextSample(); // 准备下一个样本
     }
 }
 
@@ -347,8 +307,8 @@ void wrist_setup() {
     display.print("   正在启动...");
     display.display();
     
-    // 初始化MAX30102
-    if (!initMAX30102()) {
+    // 初始化MAX30102（使用现有hr_driver.cpp）
+    if (!hr_init()) {
         Serial.println("[ERROR] MAX30102初始化失败，系统停止");
         while (1);
     }
@@ -408,7 +368,7 @@ void wrist_loop() {
     
     // 低功耗处理：无连接时进入轻睡模式
     if (!deviceConnected && oledPowerOn) {
-        // 使用esp_timer进行精确延时，避免delay()
+        // 使用esp_sleep进行精确延时
         esp_sleep_enable_timer_wakeup(SAMPLE_INTERVAL_MS * 1000); // 微秒
         esp_light_sleep_start();
     }

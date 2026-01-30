@@ -10,78 +10,37 @@
 // ==================== BLE UUID配置 ====================
 // MIT App Inventor APP使用的UUID
 #define BLE_SERVICE_UUID        "a1b2c3d4-e5f6-4789-abcd-ef0123456789"
-// ==============================================
-
-#ifndef BLE_CONFIG_H
-#define BLE_CONFIG_H
-
-#include <Arduino.h>
-
-// ==================== BLE UUID配置 ====================
-// 服务UUID（与APP文档一致）
-#define BLE_SERVICE_UUID        "a1b2c3d4-e5f6-4789-abcd-ef0123456789"
 #define BLE_CHARACTERISTIC_UUID "a1b2c3d4-e5f6-4789-abcd-ef012345678a"
 
-// ==================== 设备配置 ====================
-#define BLE_DEVICE_NAME         "DiabetesSensor"  // 设备广播名称
-#define BLE_ADVERTISING_INTERVAL_MS 500           // 广播间隔（毫秒）
-#define BLE_NOTIFY_INTERVAL_MS  4000              // 数据通知间隔（毫秒）
+// 设备名称
+#define BLE_DEVICE_NAME         "DiabetesSensor"
+
+// ==================== BLE参数配置 ====================
+// 广播间隔（单位：0.625ms）
+#define BLE_ADV_INTERVAL_MIN    800   // 500ms (800 * 0.625ms)
+#define BLE_ADV_INTERVAL_MAX    1600  // 1000ms (1600 * 0.625ms)
+
+// 连接参数
+#define BLE_CONN_INTERVAL_MIN   6     // 7.5ms (6 * 1.25ms)
+#define BLE_CONN_INTERVAL_MAX   12    // 15ms (12 * 1.25ms)
+#define BLE_CONN_LATENCY        0     // 无延迟
+#define BLE_CONN_TIMEOUT        400   // 4秒 (400 * 10ms)
+
+// 特征值属性
+#define BLE_CHAR_PROPERTIES     (NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY)
 
 // ==================== 数据格式配置 ====================
 // JSON数据最大长度
-#define BLE_JSON_BUFFER_SIZE    128
+#define BLE_JSON_MAX_LENGTH     128
 
-// 丙酮无效值（腕带无此数据）
-#define ACETONE_INVALID_VALUE   -99
+// 数据发送间隔（毫秒）
+#define BLE_NOTIFY_INTERVAL_MS  4000  // 4秒
 
-// ==================== 功耗优化配置 ====================
-// 使用NimBLE库（更省电）
-#ifdef USE_NIMBLE
-    #include <NimBLEDevice.h>
-    #include <NimBLEUtils.h>
-    #include <NimBLEServer.h>
-    #include <NimBLEAdvertising.h>
-    #include <NimBLECharacteristic.h>
-    
-    // NimBLE类型别名
-    #define BLE_SERVER_TYPE NimBLEServer*
-    #define BLE_SERVICE_TYPE NimBLEService*
-    #define BLE_CHARACTERISTIC_TYPE NimBLECharacteristic*
-    #define BLE_ADVERTISING_TYPE NimBLEAdvertising*
-#else
-    // 使用默认ESP32 BLE库
-    #include <BLEDevice.h>
-    #include <BLEUtils.h>
-    #include <BLEServer.h>
-    #include <BLEAdvertising.h>
-    #include <BLECharacteristic.h>
-    
-    // 默认BLE类型别名
-    #define BLE_SERVER_TYPE BLEServer*
-    #define BLE_SERVICE_TYPE BLEService*
-    #define BLE_CHARACTERISTIC_TYPE BLECharacteristic*
-    #define BLE_ADVERTISING_TYPE BLEAdvertising*
-#endif
+// ==================== 低功耗配置 ====================
+// ESP32-S3功耗等级（ESP_PWR_LVL_P3为最低功耗）
+#define BLE_POWER_LEVEL         ESP_PWR_LVL_P3
 
-// ==================== 全局变量声明 ====================
-// 这些变量在main_control.ino中定义
-extern BLE_SERVER_TYPE pServer;
-extern BLE_SERVICE_TYPE pService;
-extern BLE_CHARACTERISTIC_TYPE pCharacteristic;
-extern bool deviceConnected;
-extern bool oldDeviceConnected;
-
-// ==================== 函数声明 ====================
-// BLE初始化函数
-void ble_init();
-void ble_start_advertising();
-
-// 数据打包和发送函数
-String ble_pack_json_data(uint8_t hr_bpm, uint8_t spo2, float acetone, const char* note);
-void ble_send_data(const String& json_data);
-
-// 连接状态回调函数
-void ble_on_connect();
-void ble_on_disconnect();
+// 连接时是否启用低功耗模式
+#define BLE_LOW_POWER_MODE      1
 
 #endif // BLE_CONFIG_H
