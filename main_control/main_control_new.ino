@@ -259,3 +259,216 @@ String ble_pack_json_data(uint8_t hr_bpm, uint8_t spo2, float acetone, const cha
     
     // 生成JSON字符串
     snprintf(json_buffer, sizeof(json_buffer),
+        "{\"hr\":%d,\"spo2\":%d,\"acetone\":%.1f,\"note\":\"%s,SNR:%.1fdB\"}",
+        hr_bpm,
+        spo2,
+        acetone,
+        note,
+        snr_db
+    );
+    
+    return String(json_buffer);
+}
+
+// ==================== 数据发送函数 ====================
+void ble_send_data(const String& json_data) {
+    if (!deviceConnected) {
+        return;  // 没有连接，不发送数据
+    }
+    
+    if (json_data.length() == 0) {
+        return;  // 空数据不发送
+    }
+    
+    // 发送数据
+#ifdef USE_NIMBLE
+    pCharacteristic->setValue(json_data.c_str());
+    pCharacteristic->notify();
+#else
+    pCharacteristic->setValue(json_data.c_str());
+    pCharacteristic->notify();
+#endif
+    
+    Serial.print("[BLE] 发送数据: ");
+    Serial.println(json_data);
+}
+
+// ==================== 界面绘制：时钟模式 ====================
+void drawClockMode() {
+    struct tm timeinfo;
+    
+    if (!ntpSynced || !getLocalTime(&timeinfo)) {
+        // 时间未同步
+        display.setTextSize(1);
+        display.setCursor(10, 20);
+        display.print("时间未同步");
+        display.setCursor(10, 32);
+        display.print("BLE广播中");
+    } else {
+        // 大字体显示时间
+        char timeStr[10];
+        snprintf(timeStr, sizeof(timeStr), "%02d:%02d:%02d", 
+                 timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec);
+        display.setTextSize(2);
+        display.setCursor(16, 8);
+        display.print(timeStr);
+        
+        // 小字体显示日期
+        char dateStr[12];
+        snprintf(dateStr, sizeof(dateStr), "%04d-%02d-%02d", 
+                 timeinfo.tm_year + 1900, timeinfo.tm_mon + 1, timeinfo.tm_mday);
+        display.setTextSize(1);
+        display.setCursor(22, 28);
+        display.print(dateStr);
+        
+        // 显示星期
+        display.setCursor(46, 40);
+        display.print(weekdayChinese[timeinfo.tm_wday]);
+    }
+    
+    // 电池图标
+    uint8_t batteryPercent = getBatteryPercent();
+    drawBatteryIcon(104, 0, batteryPercent);
+    display.setCursor(90, 2);
+    display.printf("%d%%", batteryPercent);
+    
+    // 免责声明
+    display.setTextSize(1);
+    display.setCursor(0, 54);
+    display.print(DISCLAIMER_TEXT);
+}
+
+// ==================== 界面绘制：测量模式 ====================
+void drawMeasurementMode() {
+    display.setTextSize(1);
+    
+    // 获取系统状态
+    const SystemState* state = system_state_get();
+    
+    // 第一行：心率和血氧
+    display.setCursor(0, 0);
+    display.print("心率:");
+    if (state->hr_bpm > 0) {
+        display.printf("%d bpm", state->hr_bpm);
+    } else {
+        display.print("--");
+    }
+    
+    display.setCursor(0, 12);
+    display.print("血氧:");
+#ifdef DEVICE_ROLE_WRIST
+    uint8_t spo2 = system_state_get_spo2();
+    if (spo2 > 0) {
+        display.printf("%d%%", spo2);
+    } else {
+        display.print("--");
+    }
+#else
+    display.print("--");
+#endif
+    
+    // 第二行：SNR质量
+    display.setCursor(0, 24);
+    display.print("SNR:");
+    float snr_db = state->hr_snr_db_x10 / 10.0;
+    display.printf("%.1f dB", snr_db);
+    
+    // BLE连接状态
+    display.setCursor(0, 36);
+    display.print("BLE:");
+    if (deviceConnected) {
+        display.print("已连接");
+    } else {
+        display.print("广播中");
+    }
+    
+    // 数据发送状态
+    display.setCursor(0, 48);
+    display.print("数据:");
+    if (deviceConnected) {
+        display.print("发送中");
+    } else {
+        display.print("待连接");
+    }
+}
+
+// ==================== 界面绘制：BLE状态模式 ====================
+void drawBLEStatusMode() {
+    display.setTextSize(1);
+    
+    display.setCursor(0, 0);
+    display.print("=== BLE状态 ===");
+    
+    display.setCursor(0, 12);
+    display.print("设备名:");
+    display.print(BLE_DEVICE_NAME);
+    
+    display.setCursor(0, 24);
+    display.print("服务UUID:");
+    display.setCursor(0, 36);
+    display.print(BLE_SERVICE_UUID);
+    
+    display.setCursor(0, 48);
+    display.print("状态:");
+    if (deviceConnected) {
+        display.print("已连接");
+    } else {
+        display.print("广播中");
+    }
+}
+
+// ==================== 按键处理 ====================
+void handleButtons() {
+    uint32_t now = millis();
+    uint8_t btn1State = digitalRead(PIN_BTN1);
+    uint8_t btn2State = digitalRead(PIN_BTN2);
+    
+    // 按键1：切换界面模式
+    if (btn1State == LOW && btn1LastState == HIGH) {
+        delay(DEBOUNCE_MS);
+        if (digitalRead(PIN_BTN1) == LOW) {
+            lastActivityTime = now;
+            
+            // 唤醒OLED
+            if (!oledPowerOn) {
+                setOLEDPower(true);
+            } else {
+                // 切换模式
+                currentMode = (DisplayMode)((currentMode + 1) % 3);
+                Serial.printf("[按键] 切换到模式: %d\n", currentMode);
+            }
+        }
+    }
+    
+    btn1LastState = btn1State;
+    
+    // 按键2：返回时钟模式
+    if (btn2State == LOW && btn2LastState == HIGH) {
+        delay(DEBOUNCE_MS);
+        if (digitalRead(PIN_BTN2) == LOW) {
+            lastActivityTime = now;
+            
+            // 唤醒OLED
+            if (!oledPowerOn) {
+                setOLEDPower(true);
+            } else {
+                // 返回时钟模式
+                if (currentMode != MODE_CLOCK) {
+                    currentMode = MODE_CLOCK;
+                    Serial.println("[按键] 返回时钟模式");
+                }
+            }
+        }
+    }
+    
+    btn2LastState = btn2State;
+}
+
+// ==================== 腕带主控专用函数 ====================
+void wrist_setup() {
+    Serial.begin(115200);
+    delay(500);
+    
+    Serial.println("\n\n========================================");
+    Serial.println("  糖尿病初筛腕带主控板 (ESP32-S3)");
+    Serial.println(" 
