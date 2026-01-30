@@ -37,7 +37,7 @@
 // 生产版本建议关闭
 
 // ==================== 硬件平台配置 ====================
-// 通过 build_flags 定义：-DMCU_ESP32_C3 或 -DMCU_ARDUINO_UNO
+// 通过 build_flags 定义：-DMCU_ESP32_C3, -DMCU_ESP32_S3 或 -DMCU_ARDUINO_UNO
 
 // ==================== 角色相关配置 ====================
 
