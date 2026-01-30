@@ -12,6 +12,12 @@ typedef struct {
     int8_t hr_status;            // HR_SUCCESS, HR_POOR_SIGNAL 等（int8_t足够）
     uint16_t hr_timestamp_s;     // 时间戳（秒，节省2 bytes）
 
+#ifdef DEVICE_ROLE_WRIST
+    // 腕带模式：SpO2数据
+    uint8_t spo2_value;          // 0=无效，70-100=SpO2值
+    uint8_t correlation_quality; // 红外/红光相关性（0-100）
+#endif
+
     // 气体数据（低RAM优化：uint16_t代替float）
     uint16_t gas_voltage_mv;     // 电压（mV，0-5000范围）
     uint16_t gas_concentration_ppm;  // 浓度（ppm，0-1000范围，精度0.1ppm用*10存储）
@@ -34,8 +40,15 @@ typedef struct {
 void system_state_init();                                    // 初始化
 void system_state_reset_measurement();                       // 清空测量数据（开始新窗口）
 void system_state_set_hr(uint8_t bpm, uint8_t snr_x10, int8_t status);  // 更新心率
+#ifdef DEVICE_ROLE_WRIST
+void system_state_set_hr_spo2(uint8_t bpm, uint8_t spo2, uint8_t snr_x10, uint8_t correlation, int8_t status);  // 更新心率和SpO2
+#endif
 void system_state_set_gas(uint16_t voltage_mv, uint16_t conc_ppm_x10, bool valid);  // 更新气体
 void system_state_set_env(int8_t temp_c, uint8_t rh, bool valid);            // 更新环境
 const SystemState* system_state_get();                       // 获取当前状态（只读）
+#ifdef DEVICE_ROLE_WRIST
+uint8_t system_state_get_spo2();                             // 获取当前SpO2值
+uint8_t system_state_get_correlation_quality();              // 获取相关性质量
+#endif
 
 #endif
