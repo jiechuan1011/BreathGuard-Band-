@@ -29,24 +29,15 @@
 #define CONFIG_H
 
 // ==================== 硬件角色选择 ====================
-// 重要：只能选择一种角色！取消注释对应的行，另一行保持注释状态
-
-// 腕带主控角色 - 用于佩戴在手腕上的主控设备
-// #define DEVICE_ROLE_WRIST
-
-// 独立检测模块角色 - 用于独立的呼吸气体检测设备
-// #define DEVICE_ROLE_DETECTOR
+// 重要：通过 platformio.ini 的 build_flags 定义角色，不允许源代码手动注释切换
+// 例如：build_flags = -DDEVICE_ROLE_WRIST 或 -DDEVICE_ROLE_DETECTOR
 
 // ==================== 调试模式开关 ====================
-// 启用串口调试输出（会占用串口，生产版本建议关闭）
-// #define DEBUG_MODE
+// 通过 build_flags 定义：-DDEBUG_MODE=1
+// 生产版本建议关闭
 
 // ==================== 硬件平台配置 ====================
-// 根据实际使用的硬件平台进行配置
-
-// 主控芯片选择（根据实际硬件取消注释）
-// #define MCU_ARDUINO_UNO      // Arduino Uno（调试用）
-// #define MCU_ESP32_C3         // ESP32-C3 SuperMini（最终产品）
+// 通过 build_flags 定义：-DMCU_ESP32_C3 或 -DMCU_ARDUINO_UNO
 
 // ==================== 角色相关配置 ====================
 
@@ -121,25 +112,25 @@
 #endif // DEBUG_MODE
 
 // ==================== 硬件兼容性检查 ====================
-// 确保选择了硬件平台
+// 确保选择了硬件平台（通过 build_flags 定义）
 #if !defined(MCU_ARDUINO_UNO) && !defined(MCU_ESP32_C3)
-#error "请选择硬件平台：在 config.h 中取消注释 MCU_ARDUINO_UNO 或 MCU_ESP32_C3"
+#error "请选择硬件平台：在 platformio.ini 的 build_flags 中添加 -DMCU_ARDUINO_UNO 或 -DMCU_ESP32_C3"
 #endif
 
 // 确保没有同时选择两个硬件平台
 #if defined(MCU_ARDUINO_UNO) && defined(MCU_ESP32_C3)
-#error "不能同时选择两个硬件平台，请只取消注释一个平台定义"
+#error "不能同时选择两个硬件平台，请只在 platformio.ini 中选择一个平台定义"
 #endif
 
 // ==================== 角色选择检查 ====================
-// 确保至少选择了一个角色
+// 确保至少选择了一个角色（通过 build_flags 定义）
 #if !defined(DEVICE_ROLE_WRIST) && !defined(DEVICE_ROLE_DETECTOR)
-#error "请选择设备角色：在 config.h 中取消注释 DEVICE_ROLE_WRIST 或 DEVICE_ROLE_DETECTOR"
+#error "请选择设备角色：在 platformio.ini 的 build_flags 中添加 -DDEVICE_ROLE_WRIST 或 -DDEVICE_ROLE_DETECTOR"
 #endif
 
 // 确保没有同时选择两个角色
 #if defined(DEVICE_ROLE_WRIST) && defined(DEVICE_ROLE_DETECTOR)
-#error "不能同时选择两个设备角色，请只取消注释一个角色定义"
+#error "不能同时选择两个设备角色，请只在 platformio.ini 中选择一个角色定义"
 #endif
 
 // ==================== 成本与重量约束检查 ====================
