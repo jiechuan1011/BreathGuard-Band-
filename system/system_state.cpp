@@ -35,6 +35,25 @@ void system_state_set_hr(uint8_t bpm, uint8_t snr_x10, int8_t status) {
     g_state.hr_timestamp_s = (uint16_t)(millis() / 1000);
 }
 
+#ifdef DEVICE_ROLE_WRIST
+void system_state_set_hr_spo2(uint8_t bpm, uint8_t spo2, uint8_t snr_x10, uint8_t correlation, int8_t status) {
+    g_state.hr_bpm = bpm;
+    g_state.spo2_value = spo2;
+    g_state.hr_snr_db_x10 = snr_x10;
+    g_state.correlation_quality = correlation;
+    g_state.hr_status = status;
+    g_state.hr_timestamp_s = (uint16_t)(millis() / 1000);
+}
+
+uint8_t system_state_get_spo2() {
+    return g_state.spo2_value;
+}
+
+uint8_t system_state_get_correlation_quality() {
+    return g_state.correlation_quality;
+}
+#endif
+
 void system_state_set_gas(uint16_t voltage_mv, uint16_t conc_ppm_x10, bool valid) {
     g_state.gas_voltage_mv = voltage_mv;
     g_state.gas_concentration_ppm = conc_ppm_x10;
