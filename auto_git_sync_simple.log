@@ -327,3 +327,21 @@ error: Please commit or stash them.
  M "BLE\351\200\232\344\277\241\345\256\236\347\216\260\350\257\264\346\230\216.md"
  M auto_git_sync_simple.log
 
+2026-01-30 20:47:25,903 - __main__ - INFO - 成功执行 git add
+2026-01-30 20:47:26,077 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-01-30 20:47:25
+2026-01-30 20:47:47,189 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Failed to connect to github.com port 443 after 21042 ms: Could not connect to server
+
+2026-01-30 20:47:47,190 - __main__ - INFO - 尝试先拉取最新更改...
+2026-01-30 20:47:47,228 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-01-30 20:50:44,575 - __main__ - INFO - 执行初始文件扫描...
+2026-01-30 20:50:44,581 - __main__ - INFO - 初始扫描完成，监控 42 个文件
+2026-01-30 20:55:14,772 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-30 20:55:14,773 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\config\ble_config.h
+2026-01-30 20:55:14,838 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M config/ble_config.h
+ M scripts/auto_git_sync.py
+ M scripts/auto_git_sync_simple.py
+

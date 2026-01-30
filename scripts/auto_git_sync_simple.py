@@ -178,9 +178,9 @@ class SimpleGitAutoSync:
             
             logger.info(f"成功提交: {commit_message}")
             
-            # 5. 推送到远程仓库
+            # 5. 推送到远程仓库（明确指定main分支）
             push_result = subprocess.run(
-                ['git', 'push'],
+                ['git', 'push', 'origin', 'main'],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 universal_newlines=True,

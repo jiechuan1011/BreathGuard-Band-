@@ -1,15 +1,15 @@
 // config/ble_config.h
-// BLE通信配置文件 - 用于腕带主控（ESP32-S3R8N8）
+// BLE配置头文件 - ESP32-S3 NimBLE配置
 // ==============================================
-// 使用说明：
-// 1. 使用NimBLE库（更省电、RAM占用低）
-// 2. 设备作为Peripheral（服务器）广播数据
-// 3. 与MIT App Inventor APP通信
-// 4. 低功耗优化：只在连接时notify，advertising间隔500-1000ms
-//
-// 项目约束：
-// - 总成本 ≤500元，腕带重量 <45g
-// - 不输出任何医疗诊断相关内容
+
+#ifndef BLE_CONFIG_H
+#define BLE_CONFIG_H
+
+#include <Arduino.h>
+
+// ==================== BLE UUID配置 ====================
+// MIT App Inventor APP使用的UUID
+#define BLE_SERVICE_UUID        "a1b2c3d4-e5f6-4789-abcd-ef0123456789"
 // ==============================================
 
 #ifndef BLE_CONFIG_H
