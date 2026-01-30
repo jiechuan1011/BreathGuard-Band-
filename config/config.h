@@ -113,12 +113,14 @@
 
 // ==================== 硬件兼容性检查 ====================
 // 确保选择了硬件平台（通过 build_flags 定义）
-#if !defined(MCU_ARDUINO_UNO) && !defined(MCU_ESP32_C3)
-#error "请选择硬件平台：在 platformio.ini 的 build_flags 中添加 -DMCU_ARDUINO_UNO 或 -DMCU_ESP32_C3"
+#if !defined(MCU_ARDUINO_UNO) && !defined(MCU_ESP32_C3) && !defined(MCU_ESP32_S3)
+#error "请选择硬件平台：在 platformio.ini 的 build_flags 中添加 -DMCU_ARDUINO_UNO、-DMCU_ESP32_C3 或 -DMCU_ESP32_S3"
 #endif
 
 // 确保没有同时选择两个硬件平台
-#if defined(MCU_ARDUINO_UNO) && defined(MCU_ESP32_C3)
+#if (defined(MCU_ARDUINO_UNO) && defined(MCU_ESP32_C3)) || \
+    (defined(MCU_ARDUINO_UNO) && defined(MCU_ESP32_S3)) || \
+    (defined(MCU_ESP32_C3) && defined(MCU_ESP32_S3))
 #error "不能同时选择两个硬件平台，请只在 platformio.ini 中选择一个平台定义"
 #endif
 
