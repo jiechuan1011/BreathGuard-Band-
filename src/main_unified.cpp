@@ -402,3 +402,85 @@ void handle_communication() {
     
     char json_buffer[128];
     snprintf(json_buffer, sizeof(json_buffer),
+             "{\"hr\":%d,\"spo2\":%d,\"acetone\":%.1f,\"snr\":%.1f,\"battery\":%d}",
+             state->hr_bpm, state->spo2_value, acetone,
+             state->hr_snr_db_x10 / 10.0, system_status.battery_level);
+    
+    // 发送BLE数据
+    // send_ble_data(json_buffer);
+    
+#ifdef DEBUG_MODE
+    Serial.printf("[通信] BLE数据: %s\n", json_buffer);
+#endif
+#endif
+}
+
+// ==================== 用户输入处理 ====================
+void handle_user_input() {
+    // 处理按键输入
+    // 这里实现按键消抖和事件处理
+}
+
+// ==================== 错误处理 ====================
+void handle_sensor_errors() {
+    // 传感器错误恢复逻辑
+}
+
+void handle_communication_errors() {
+    // 通信错误恢复逻辑
+}
+
+void handle_power_errors() {
+    // 电源错误处理逻辑
+}
+
+// ==================== 功耗管理 ====================
+void manage_power() {
+    uint32_t current_time = millis();
+    
+    // 检查是否需要进入睡眠
+    if (should_enter_sleep()) {
+        // 30秒无活动进入深度睡眠
+        if (current_time - system_status.last_activity_time > 30000) {
+            enter_deep_sleep(60000); // 睡眠60秒
+        }
+    }
+    
+    // 检查电池电量
+    if (system_status.battery_level < 20) {
+        system_status.low_power_mode = true;
+        // 进入低功耗模式
+    }
+}
+
+bool should_enter_sleep() {
+    // 检查是否满足睡眠条件
+    // 1. 没有BLE连接
+    // 2. 没有用户活动
+    // 3. 电池电量充足
+    return true;
+}
+
+void enter_deep_sleep(uint32_t sleep_time_ms) {
+#ifdef DEBUG_MODE
+    Serial.printf("[功耗] 进入深度睡眠 %lu ms\n", sleep_time_ms);
+#endif
+    
+    // 保存系统状态
+    // 关闭外设
+    // 配置唤醒源
+    
+    // ESP32深度睡眠
+#ifdef ESP32
+    esp_sleep_enable_timer_wakeup(sleep_time_ms * 1000);
+    esp_deep_sleep_start();
+#endif
+}
+
+void enter_light_sleep() {
+    // 轻睡眠模式
+#ifdef ESP32
+    esp_sleep_enable_timer_wakeup(10000); // 10秒
+    esp_light_sleep_start();
+#endif
+}
