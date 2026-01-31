@@ -115,3 +115,149 @@ public:
     void printStats();
     
 private:
+    // 私有构造函数（单例模式）
+    UiManager();
+    ~UiManager();
+    
+    // ==================== 内部方法 ====================
+    void initComponents();
+    void cleanupComponents();
+    
+    void updateStateMachine(uint32_t delta_time);
+    void updateAnimations(uint32_t delta_time);
+    void updateScreenTimeout(uint32_t delta_time);
+    
+    void renderCurrentState();
+    void renderStatusBar();
+    void renderDebugOverlay();
+    
+    void handleButtonEvents();
+    void handleSensorEvents();
+    void handleSystemEvents();
+    
+    void transitionToState(UiState new_state);
+    void onStateEnter(UiState state);
+    void onStateExit(UiState state);
+    void onStateUpdate(UiState state, uint32_t delta_time);
+    
+    // ==================== 状态处理函数 ====================
+    void handleMainState(UiEvent event);
+    void handleTestSelectState(UiEvent event);
+    void handleAcetoneTestingState(UiEvent event);
+    void handleHeartRateTestingState(UiEvent event);
+    void handleComprehensiveTestingState(UiEvent event);
+    void handleResultDisplayState(UiEvent event);
+    void handleHistoryState(UiEvent event);
+    void handleSettingsState(UiEvent event);
+    void handleEmergencyAlertState(UiEvent event);
+    void handleBreathingGuideState(UiEvent event);
+    
+    // ==================== 成员变量 ====================
+    TFT_eSPI* display_;              // 显示对象
+    UiState current_state_;          // 当前状态
+    UiState target_state_;           // 目标状态
+    UiState previous_state_;         // 前一个状态
+    
+    Animation current_animation_;    // 当前动画
+    uint32_t state_start_time_;      // 状态开始时间
+    uint32_t last_update_time_;      // 上次更新时间
+    uint32_t last_render_time_;      // 上次渲染时间
+    uint32_t screen_timeout_timer_;  // 屏幕超时计时器
+    
+    TestResult current_result_;      // 当前测试结果
+    HistoryManager* history_manager_; // 历史记录管理器
+    
+    // 性能监控
+    uint32_t frame_count_;
+    uint32_t frame_time_total_;
+    uint32_t update_time_total_;
+    uint32_t render_time_total_;
+    uint32_t last_stat_time_;
+    
+    // 显示控制
+    uint8_t brightness_;
+    bool is_sleeping_;
+    bool needs_redraw_;
+    bool partial_update_;
+    
+    // 调试
+    bool debug_enabled_;
+    uint32_t memory_usage_;
+    
+    // 组件指针
+    UiComponent* status_bar_;
+    UiComponent* current_screen_;
+    
+    // 按键状态
+    struct {
+        bool btn1_pressed;
+        bool btn2_pressed;
+        uint32_t btn1_press_time;
+        uint32_t btn2_press_time;
+        bool btn1_long_press_detected;
+        bool btn2_long_press_detected;
+    } button_state_;
+    
+    // 事件队列
+    static const int MAX_EVENTS = 16;
+    UiEvent event_queue_[MAX_EVENTS];
+    uint8_t event_queue_head_;
+    uint8_t event_queue_tail_;
+    
+    // 添加事件到队列
+    void queueEvent(UiEvent event);
+    UiEvent dequeueEvent();
+    bool isEventQueueEmpty() const;
+    bool isEventQueueFull() const;
+    
+    // 动画辅助函数
+    float calculateAnimationProgress() const;
+    void applyAnimationTransform(float progress);
+    
+    // 显示优化
+    void applyAmoledOptimizations();
+    void shiftPixels();
+    uint32_t last_pixel_shift_time_;
+    
+    // 帧率控制
+    uint32_t target_frame_time_;
+    uint32_t last_frame_time_;
+    
+    // 医疗特性
+    bool emergency_alert_active_;
+    uint32_t alert_start_time_;
+    
+    // 测试状态
+    TestType current_test_type_;
+    uint32_t test_start_time_;
+    uint32_t test_duration_;
+    float test_progress_;
+    
+    // 呼吸引导状态
+    uint32_t breathing_start_time_;
+    bool is_inhaling_;
+    
+    // 波形数据
+    int16_t waveform_data_[WAVEFORM_SAMPLES];
+    uint8_t waveform_index_;
+};
+
+// ==================== 全局访问函数 ====================
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+UiManager* ui_manager_get_instance();
+bool ui_manager_init(void* display);
+void ui_manager_update(uint32_t delta_time);
+void ui_manager_render();
+void ui_manager_handle_event(uint8_t event);
+void ui_manager_set_brightness(uint8_t percent);
+void ui_manager_sleep();
+void ui_manager_wakeup();
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // UI_MANAGER_H
