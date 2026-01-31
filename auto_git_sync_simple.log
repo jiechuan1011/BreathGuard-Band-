@@ -1004,3 +1004,21 @@ error: Please commit or stash them.
 
 2026-01-31 10:28:24,713 - __main__ - INFO - 检测到 1 个文件变化
 2026-01-31 10:28:24,713 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\ui\tft_config.h
+2026-01-31 10:28:24,754 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M ui/tft_config.h
+
+2026-01-31 10:28:24,820 - __main__ - INFO - 成功执行 git add
+2026-01-31 10:28:25,021 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-01-31 10:28:24
+2026-01-31 10:28:46,203 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Failed to connect to github.com port 443 after 21070 ms: Could not connect to server
+
+2026-01-31 10:28:46,204 - __main__ - INFO - 尝试先拉取最新更改...
+2026-01-31 10:28:46,247 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-01-31 10:29:16,257 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-31 10:29:16,258 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\ui\UI系统开发总结.md
+2026-01-31 10:29:16,298 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+?? "ui/UI\347\263\273\347\273\237\345\274\200\345\217\221\346\200\273\347\273\223.md"
+
