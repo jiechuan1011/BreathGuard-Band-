@@ -8,6 +8,8 @@
 #define HR_SAMPLE_RATE          100     // 采样率 Hz (50/100/200/400/800/1600)
 #define HR_PULSE_WIDTH          411     // 脉宽 us (69/118/215/411)
 #define HR_LED_CURRENT          0x0A    // LED 电流档位 0x00~0xFF (约 0~51mA)
+#define MAX30102_I2C_ADDR       0x57    // MAX30102 I2C地址
+#define HR_I2C_RETRY_TIMES      3       // I2C重试次数
 
 // ──────────────────────────────────────────────
 // 函数声明
