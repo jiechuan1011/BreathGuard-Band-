@@ -303,10 +303,11 @@ uint8_t hr_calculate_spo2(int* status) {
         return 0;
     }
     
-    // 计算 AC 和 DC 分量
-    int32_t ir_ac_sum = 0, ir_dc_sum = 0;
-    int32_t red_ac_sum = 0, red_dc_sum = 0;
+    // 计算 AC 和 DC 分量（使用绝对值计算AC分量）
+    int32_t ir_dc_sum = 0, red_dc_sum = 0;
+    int32_t ir_ac_sum = 0, red_ac_sum = 0;
     
+    // 计算DC分量（平均值）
     for (uint8_t i = 0; i < HR_BUFFER_SIZE; i++) {
         ir_dc_sum += ir_buffer[i];
         red_dc_sum += red_buffer[i];
@@ -315,7 +316,7 @@ uint8_t hr_calculate_spo2(int* status) {
     int32_t ir_dc = ir_dc_sum / HR_BUFFER_SIZE;
     int32_t red_dc = red_dc_sum / HR_BUFFER_SIZE;
     
-    // 计算 AC 分量（信号减去 DC）
+    // 计算AC分量（信号减去DC的绝对值）
     for (uint8_t i = 0; i < HR_BUFFER_SIZE; i++) {
         int32_t ir_ac = ir_buffer[i] - ir_dc;
         int32_t red_ac = red_buffer[i] - red_dc;
@@ -333,31 +334,34 @@ uint8_t hr_calculate_spo2(int* status) {
     
     // 计算 R 值 = (red_ac / red_dc) / (ir_ac / ir_dc)
     // 使用定点数运算避免浮点
-    uint32_t red_ratio = (red_ac_avg * 1000) / red_dc;  // red_ac/red_dc * 1000
-    uint32_t ir_ratio = (ir_ac_avg * 1000) / ir_dc;     // ir_ac/ir_dc * 1000
+    // 先计算 red_ac/red_dc * 1000
+    uint32_t red_ratio = (red_ac_avg * 1000) / red_dc;
+    // 计算 ir_ac/ir_dc * 1000
+    uint32_t ir_ratio = (ir_ac_avg * 1000) / ir_dc;
     
     if (ir_ratio == 0) {
         if (status) *status = HR_POOR_SIGNAL;
         return 0;
     }
     
+    // 计算 R = (red_ratio / ir_ratio) * 1000
     uint32_t r_value_x1000 = (red_ratio * 1000) / ir_ratio;  // R * 1000
     
-    // 限制 R 值范围
-    if (r_value_x1000 < (uint32_t)(SPO2_RATIO_MIN * 1000)) {
-        r_value_x1000 = (uint32_t)(SPO2_RATIO_MIN * 1000);
+    // 限制 R 值范围（经验值：0.4-1.2）
+    if (r_value_x1000 < 400) {  // 0.4 * 1000
+        r_value_x1000 = 400;
     }
-    if (r_value_x1000 > (uint32_t)(SPO2_RATIO_MAX * 1000)) {
-        r_value_x1000 = (uint32_t)(SPO2_RATIO_MAX * 1000);
+    if (r_value_x1000 > 1200) {  // 1.2 * 1000
+        r_value_x1000 = 1200;
     }
     
     // 使用经验公式：SpO2 = 110 - 25 * R
     // 转换为整数运算：SpO2 = 110 - (25 * R * 1000) / 1000
     int32_t spo2 = 110 - (25 * (int32_t)r_value_x1000) / 1000;
     
-    // 限制范围
-    if (spo2 < SPO2_MIN_VALUE) spo2 = SPO2_MIN_VALUE;
-    if (spo2 > SPO2_MAX_VALUE) spo2 = SPO2_MAX_VALUE;
+    // 限制范围 70-100%
+    if (spo2 < 70) spo2 = 70;
+    if (spo2 > 100) spo2 = 100;
     
     last_spo2 = (uint8_t)spo2;
     if (status) *status = HR_SUCCESS;
