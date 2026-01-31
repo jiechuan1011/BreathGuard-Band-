@@ -35,3 +35,5 @@ bool btn2_pressed = false;
 TestResult test_results[] = {
     {.timestamp = 1706594400, .heart_rate = 75, .blood_oxygen = 98, .acetone_level = 5.2, .trend = TREND_NORMAL, .confidence = 95, .test_type = TEST_TYPE_COMPREHENSIVE},
     {.timestamp = 1706508000, .heart_rate = 72, .blood_oxygen = 97, .acetone_level = 4.8, .trend = TREND_NORMAL, .confidence = 92, .test_type = TEST_TYPE_COMPREHENSIVE},
+    {.timestamp = 1706421600, .heart_rate = 78, .blood_oxygen = 96, .acetone_level = 6.1, .trend = TREND_ATTENTION, .confidence = 88, .test_type = TEST_TYPE_COMPREHENSIVE},
+    {.timestamp = 1706335200, .heart_rate = 80, .blood_oxygen = 95, .acetone_level = 7.3, .trend = TREND_CONCERN, .confidence = 85, .test_type = TEST_TYPE_COMPREHENSIVE},

@@ -907,3 +907,8 @@ error: Please commit or stash them.
  M ui/main_screen.h
 ?? ui/example_main.cpp
 
+2026-01-31 10:20:49,510 - __main__ - INFO - 成功执行 git add
+2026-01-31 10:20:49,694 - __main__ - INFO - 成功提交: Auto-commit: 2个文件变化 - 2026-01-31 10:20:49
+2026-01-31 10:20:53,212 - __main__ - INFO - 成功推送到远程仓库
+2026-01-31 10:21:23,229 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-31 10:21:23,229 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\ui\example_main.cpp
