@@ -631,3 +631,14 @@ error: Please commit or stash them.
  D "\350\207\252\345\212\250Git\345\220\214\346\255\245\344\275\277\347\224\250\346\214\207\345\215\227.md"
  D "\351\241\271\347\233\256\347\273\223\346\236\204\346\200\273\347\273\223.md"
 
+2026-01-31 09:51:59,734 - __main__ - INFO - 成功执行 git add
+2026-01-31 09:51:59,960 - __main__ - INFO - 成功提交: Auto-commit: 7个文件变化 - 2026-01-31 09:51:59
+2026-01-31 09:52:02,295 - __main__ - INFO - 成功推送到远程仓库
+2026-01-31 09:52:32,318 - __main__ - INFO - 检测到 2 个文件变化
+2026-01-31 09:52:32,318 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\config\hardware_validation.h
+2026-01-31 09:52:32,319 - __main__ - INFO -   变化文件 2: E:\Diabetes_Screening_System\system\power_management.cpp
+2026-01-31 09:52:32,363 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M config/hardware_validation.h
+?? system/power_management.cpp
+
