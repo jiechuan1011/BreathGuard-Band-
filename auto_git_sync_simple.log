@@ -860,3 +860,12 @@ error: Please commit or stash them.
  M auto_git_sync_simple.log
  M ui/progress_ring.h
 
+2026-01-31 10:17:35,982 - __main__ - INFO - 成功执行 git add
+2026-01-31 10:17:36,176 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-01-31 10:17:35
+2026-01-31 10:17:38,543 - __main__ - INFO - 成功推送到远程仓库
+2026-01-31 10:18:08,561 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-31 10:18:08,561 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\ui\waveform_view.h
+2026-01-31 10:18:08,639 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+?? ui/waveform_view.h
+
