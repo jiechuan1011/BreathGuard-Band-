@@ -667,3 +667,19 @@ error: Please commit or stash them.
 ?? system/error_handler.cpp
 ?? system/power_management.h
 
+2026-01-31 09:55:26,698 - __main__ - INFO - 成功执行 git add
+2026-01-31 09:55:26,878 - __main__ - INFO - 成功提交: Auto-commit: 2个文件变化 - 2026-01-31 09:55:26
+2026-01-31 09:55:48,034 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Failed to connect to github.com port 443 after 21080 ms: Could not connect to server
+
+2026-01-31 09:55:48,035 - __main__ - INFO - 尝试先拉取最新更改...
+2026-01-31 09:55:48,080 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-01-31 09:57:48,150 - __main__ - INFO - 检测到 2 个文件变化
+2026-01-31 09:57:48,150 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\system\error_handler.cpp
+2026-01-31 09:57:48,150 - __main__ - INFO -   变化文件 2: E:\Diabetes_Screening_System\system\error_handler.h
+2026-01-31 09:57:48,198 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M system/error_handler.cpp
+?? system/error_handler.h
+
