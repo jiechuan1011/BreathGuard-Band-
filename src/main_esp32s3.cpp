@@ -267,11 +267,15 @@ float readAcetoneConcentration() {
 String generateJSONData() {
     const SystemState* state = system_state_get();
     
-    // 获取心率、血氧、SNR
+    // 获取心率、血氧、SNR、相关性
     uint8_t hr = state->hr_bpm;
     uint8_t spo2 = state->spo2_value;
     uint8_t snr_x10 = state->hr_snr_db_x10;
+    uint8_t correlation = state->hr_correlation_quality;
     float acetone = readAcetoneConcentration(); // 腕带返回-1
+    
+    // 读取电池电量
+    uint8_t battery_percent = readBatteryPercentage();
     
     // 计算SNR（dB）
     float snr_db = snr_x10 / 10.0;
@@ -280,21 +284,36 @@ String generateJSONData() {
     bool hr_valid = (hr > 0 && hr >= 40 && hr <= 180);
     bool spo2_valid = (spo2 > 0 && spo2 >= 70 && spo2 <= 100);
     bool snr_valid = (snr_x10 >= 200); // SNR >= 20dB
+    bool correlation_valid = (correlation >= 60); // 相关性 >= 60%
     
-    // 生成JSON字符串
-    char jsonBuffer[128];
+    // 生成note字段
+    char note_buffer[64];
+    if (!hr_valid || !spo2_valid || !snr_valid) {
+        snprintf(note_buffer, sizeof(note_buffer), "采集失败，请检查佩戴");
+    } else if (!correlation_valid) {
+        // 相关性低，添加运动干扰提示
+        snprintf(note_buffer, sizeof(note_buffer), 
+                "SNR:%.1fdB Corr:%d%% 运动干扰", snr_db, correlation);
+    } else {
+        snprintf(note_buffer, sizeof(note_buffer), 
+                "SNR:%.1fdB Corr:%d%%", snr_db, correlation);
+    }
+    
+    // 生成JSON字符串（包含电池电量）
+    char jsonBuffer[192];
     if (!hr_valid || !spo2_valid || !snr_valid) {
         // 数据无效，发送错误信息
         snprintf(jsonBuffer, sizeof(jsonBuffer),
-                "{\"hr\":0,\"spo2\":0,\"acetone\":-1,\"note\":\"采集失败，请检查佩戴\"}");
+                "{\"hr\":0,\"spo2\":0,\"acetone\":-1,\"batt\":%d,\"note\":\"%s\"}",
+                battery_percent, note_buffer);
     } else if (acetone >= 0) {
         snprintf(jsonBuffer, sizeof(jsonBuffer),
-                "{\"hr\":%d,\"spo2\":%d,\"acetone\":%.1f,\"note\":\"腕带数据，SNR:%.1fdB\"}",
-                hr, spo2, acetone, snr_db);
+                "{\"hr\":%d,\"spo2\":%d,\"acetone\":%.1f,\"batt\":%d,\"note\":\"%s\"}",
+                hr, spo2, acetone, battery_percent, note_buffer);
     } else {
         snprintf(jsonBuffer, sizeof(jsonBuffer),
-                "{\"hr\":%d,\"spo2\":%d,\"acetone\":-1,\"note\":\"腕带数据，SNR:%.1fdB\"}",
-                hr, spo2, snr_db);
+                "{\"hr\":%d,\"spo2\":%d,\"acetone\":-1,\"batt\":%d,\"note\":\"%s\"}",
+                hr, spo2, battery_percent, note_buffer);
     }
     
     return String(jsonBuffer);
