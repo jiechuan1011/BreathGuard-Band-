@@ -160,6 +160,25 @@ uint8_t hr_calculate_bpm(int* status) {
         return 0;
     }
 
+    // 计算信号相关性
+    last_correlation = calculate_correlation(ir_buffer, red_buffer);
+    
+    // 检查相关性，如果<65则使用红光通道fallback
+    if (last_correlation < 65) {
+        // 使用红光通道作为fallback计算心率
+        uint8_t bpm = calculate_bpm_from_red_channel(status);
+        if (bpm > 0) {
+            last_bpm = bpm;
+            if (status) *status = HR_SUCCESS_WITH_MOTION;
+            return bpm;
+        } else {
+            // 红光通道也失败，返回错误
+            if (status) *status = HR_POOR_SIGNAL;
+            return 0;
+        }
+    }
+
+    // 相关性足够，使用红外通道计算心率
     // 低RAM优化：直接使用ir_buffer，避免拷贝（节省128 bytes）
     // 注意：这会修改原始数据，但计算后立即使用，不影响后续采集
     high_pass_filter(ir_buffer);  // 去基线

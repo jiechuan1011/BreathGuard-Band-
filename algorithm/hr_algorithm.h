@@ -26,6 +26,7 @@
 // ──────────────────────────────────────────────
 // 返回码定义（负值为错误，便于APP处理）
 #define HR_SUCCESS              0       // 计算成功
+#define HR_SUCCESS_WITH_MOTION  1       // 计算成功但有运动干扰（使用红光通道fallback）
 #define HR_BUFFER_NOT_FULL     -1       // 缓冲未满
 #define HR_POOR_SIGNAL         -2       // 信号质量差（噪声大/无峰）
 #define HR_OUT_OF_RANGE        -3       // BPM 超出合理范围
