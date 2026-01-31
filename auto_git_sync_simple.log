@@ -729,3 +729,17 @@ error: Please commit or stash them.
  M platformio.ini
  M "\344\273\243\347\240\201\350\264\250\351\207\217\346\224\271\350\277\233\346\200\273\347\273\223.md"
 
+2026-01-31 10:00:23,917 - __main__ - INFO - 成功执行 git add
+2026-01-31 10:00:24,081 - __main__ - INFO - 成功提交: Auto-commit: 2个文件变化 - 2026-01-31 10:00:23
+2026-01-31 10:00:45,193 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Failed to connect to github.com port 443 after 21050 ms: Could not connect to server
+
+2026-01-31 10:00:45,193 - __main__ - INFO - 尝试先拉取最新更改...
+2026-01-31 10:00:45,257 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-01-31 10:09:15,513 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-31 10:09:15,514 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\platformio.ini
+2026-01-31 10:09:15,553 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M platformio.ini
+
