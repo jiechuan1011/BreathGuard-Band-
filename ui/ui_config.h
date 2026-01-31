@@ -201,3 +201,41 @@ typedef struct {
 // ==================== 工具函数宏 ====================
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define CLAMP(x, min, max) ((x) < (min) ? (min) : ((x) > (max) ? (max) : (x)))
+#define ABS(x) ((x) < 0 ? -(x) : (x))
+
+// ==================== 颜色转换函数 ====================
+static inline uint16_t rgb_to_565(uint8_t r, uint8_t g, uint8_t b) {
+    return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
+}
+
+static inline Color565 color565_to_rgb(uint16_t color) {
+    Color565 rgb;
+    rgb.r = (color >> 11) & 0x1F;
+    rgb.g = (color >> 5) & 0x3F;
+    rgb.b = color & 0x1F;
+    return rgb;
+}
+
+// ==================== 布局计算函数 ====================
+static inline Rect rect_make(int16_t x, int16_t y, uint16_t w, uint16_t h) {
+    Rect r = {x, y, w, h};
+    return r;
+}
+
+static inline bool rect_contains(const Rect* rect, int16_t x, int16_t y) {
+    return (x >= rect->x && x < rect->x + rect->width &&
+            y >= rect->y && y < rect->y + rect->height);
+}
+
+static inline Rect rect_inset(const Rect* rect, int16_t inset) {
+    Rect r = {
+        rect->x + inset,
+        rect->y + inset,
+        rect->width - 2 * inset,
+        rect->height - 2 * inset
+    };
+    return r;
+}
+
+#endif // UI_CONFIG_H
