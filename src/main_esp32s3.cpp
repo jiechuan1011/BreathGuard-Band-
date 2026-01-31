@@ -286,11 +286,14 @@ String generateJSONData() {
     bool snr_valid = (snr_x10 >= 200); // SNR >= 20dB
     bool correlation_valid = (correlation >= 60); // 相关性 >= 60%
     
+    // 检查是否触发了运动干扰（相关性<65）
+    bool motion_interference = (correlation < 65);
+    
     // 生成note字段
     char note_buffer[64];
     if (!hr_valid || !spo2_valid || !snr_valid) {
         snprintf(note_buffer, sizeof(note_buffer), "采集失败，请检查佩戴");
-    } else if (!correlation_valid) {
+    } else if (motion_interference) {
         // 相关性低，添加运动干扰提示
         snprintf(note_buffer, sizeof(note_buffer), 
                 "SNR:%.1fdB Corr:%d%% 运动干扰", snr_db, correlation);
