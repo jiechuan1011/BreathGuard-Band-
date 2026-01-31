@@ -133,3 +133,120 @@ void waveform_view_get_config(const UiComponent* view, WaveformConfig* config);
 
 // ==================== 数据管理 ====================
 bool waveform_view_add_point(UiComponent* view, float value, uint8_t channel);
+bool waveform_view_add_point_with_timestamp(UiComponent* view, float value, uint32_t timestamp, uint8_t channel);
+void waveform_view_clear_data(UiComponent* view);
+void waveform_view_set_data(UiComponent* view, const float* data, uint16_t count, uint8_t channel);
+
+// ==================== 缓冲区管理 ====================
+bool waveform_view_init_buffer(UiComponent* view, uint16_t capacity);
+void waveform_view_free_buffer(UiComponent* view);
+uint16_t waveform_view_get_data_count(UiComponent* view, uint8_t channel);
+bool waveform_view_is_buffer_full(UiComponent* view);
+
+// ==================== 显示控制 ====================
+void waveform_view_set_display_mode(UiComponent* view, DisplayMode mode);
+void waveform_view_set_grid_style(UiComponent* view, GridStyle style);
+void waveform_view_set_wave_style(UiComponent* view, WaveStyle style);
+void waveform_view_set_time_window(UiComponent* view, uint32_t window_ms);
+void waveform_view_set_sample_rate(UiComponent* view, uint32_t rate_hz);
+
+// ==================== 幅度控制 ====================
+void waveform_view_set_amplitude_range(UiComponent* view, float min, float max);
+void waveform_view_set_amplitude_scale(UiComponent* view, float scale);
+void waveform_view_auto_scale(UiComponent* view);
+void waveform_view_fit_to_data(UiComponent* view);
+
+// ==================== 颜色设置 ====================
+void waveform_view_set_grid_color(UiComponent* view, uint16_t color);
+void waveform_view_set_wave_color(UiComponent* view, uint16_t color);
+void waveform_view_set_background_color(UiComponent* view, uint16_t color);
+void waveform_view_set_axis_color(UiComponent* view, uint16_t color);
+void waveform_view_set_channel_color(UiComponent* view, uint8_t channel, uint16_t color);
+
+// ==================== 标记管理 ====================
+void waveform_view_add_marker(UiComponent* view, uint32_t timestamp, float value, 
+                             const char* label, uint16_t color);
+void waveform_view_clear_markers(UiComponent* view);
+void waveform_view_set_heartbeat_marker(UiComponent* view, uint32_t timestamp);
+void waveform_view_set_breathing_marker(UiComponent* view, uint32_t timestamp);
+
+// ==================== 可见性控制 ====================
+void waveform_view_show_grid(UiComponent* view, bool show);
+void waveform_view_show_axis(UiComponent* view, bool show);
+void waveform_view_show_markers(UiComponent* view, bool show);
+void waveform_view_show_values(UiComponent* view, bool show);
+void waveform_view_show_heartbeat(UiComponent* view, bool show);
+void waveform_view_show_breathing(UiComponent* view, bool show);
+
+// ==================== 动画控制 ====================
+void waveform_view_start_scroll(UiComponent* view, uint32_t speed_ms_per_pixel);
+void waveform_view_stop_scroll(UiComponent* view);
+void waveform_view_pause(UiComponent* view);
+void waveform_view_resume(UiComponent* view);
+void waveform_view_freeze(UiComponent* view);
+void waveform_view_unfreeze(UiComponent* view);
+
+// ==================== 性能优化 ====================
+void waveform_view_set_update_fps(UiComponent* view, uint8_t fps);
+void waveform_view_enable_double_buffer(UiComponent* view, bool enable);
+void waveform_view_set_rendering_quality(UiComponent* view, uint8_t quality);
+
+// ==================== 医疗特性 ====================
+void waveform_view_detect_heartbeat(UiComponent* view);
+void waveform_view_detect_respiration(UiComponent* view);
+void waveform_view_calculate_hrv(UiComponent* view, float* hrv);
+void waveform_view_calculate_rr_interval(UiComponent* view, float* rr_ms);
+
+// ==================== 工具函数 ====================
+float waveform_view_get_min_value(UiComponent* view, uint8_t channel);
+float waveform_view_get_max_value(UiComponent* view, uint8_t channel);
+float waveform_view_get_average_value(UiComponent* view, uint8_t channel);
+uint32_t waveform_view_get_duration(UiComponent* view);
+uint16_t waveform_view_get_points_on_screen(UiComponent* view);
+
+// ==================== 坐标转换 ====================
+int16_t waveform_view_value_to_y(UiComponent* view, float value, uint8_t channel);
+int16_t waveform_view_time_to_x(UiComponent* view, uint32_t timestamp);
+float waveform_view_y_to_value(UiComponent* view, int16_t y, uint8_t channel);
+uint32_t waveform_view_x_to_time(UiComponent* view, int16_t x);
+
+// ==================== 默认配置 ====================
+extern const WaveformConfig WAVEFORM_DEFAULT_CONFIG;
+
+// ==================== 预定义波形类型 ====================
+// 心电图视图
+UiComponent* waveform_view_create_ecg(const char* name, const Rect* bounds);
+// 血氧波形视图
+UiComponent* waveform_view_create_ppg(const char* name, const Rect* bounds);
+// 呼吸波形视图
+UiComponent* waveform_view_create_respiration(const char* name, const Rect* bounds);
+// 丙酮浓度视图
+UiComponent* waveform_view_create_acetone(const char* name, const Rect* bounds);
+
+// ==================== 医疗分析函数 ====================
+typedef struct {
+    uint32_t heartbeat_count;   // 心跳次数
+    float heart_rate;           // 心率
+    float hrv;                  // 心率变异性
+    float respiration_rate;     // 呼吸率
+    float signal_quality;       // 信号质量
+    uint8_t arrhythmia_flag;    // 心律失常标志
+} WaveformAnalysis;
+
+bool waveform_view_analyze_ecg(UiComponent* view, WaveformAnalysis* analysis);
+bool waveform_view_analyze_ppg(UiComponent* view, WaveformAnalysis* analysis);
+bool waveform_view_analyze_respiration(UiComponent* view, WaveformAnalysis* analysis);
+
+// ==================== 事件回调 ====================
+typedef void (*WaveformCallback)(UiComponent* view, uint8_t event_type, void* user_data);
+
+void waveform_view_set_heartbeat_callback(UiComponent* view, WaveformCallback callback, void* user_data);
+void waveform_view_set_respiration_callback(UiComponent* view, WaveformCallback callback, void* user_data);
+void waveform_view_set_data_ready_callback(UiComponent* view, WaveformCallback callback, void* user_data);
+void waveform_view_set_analysis_complete_callback(UiComponent* view, WaveformCallback callback, void* user_data);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // WAVEFORM_VIEW_H
