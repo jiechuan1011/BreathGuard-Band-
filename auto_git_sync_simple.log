@@ -851,3 +851,12 @@ error: Please commit or stash them.
  M ui/metric_card.h
 ?? ui/progress_ring.h
 
+2026-01-31 10:16:25,400 - __main__ - INFO - 成功执行 git add
+2026-01-31 10:16:25,650 - __main__ - INFO - 成功提交: Auto-commit: 2个文件变化 - 2026-01-31 10:16:25
+2026-01-31 10:16:35,839 - __main__ - INFO - 成功推送到远程仓库
+2026-01-31 10:17:35,873 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-31 10:17:35,874 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\ui\progress_ring.h
+2026-01-31 10:17:35,919 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M ui/progress_ring.h
+
