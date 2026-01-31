@@ -169,6 +169,8 @@ uint8_t hr_calculate_bpm(int* status) {
         uint8_t bpm = calculate_bpm_from_red_channel(status);
         if (bpm > 0) {
             last_bpm = bpm;
+            // 降权SNR*0.7（运动干扰时信号质量下降）
+            last_snr = (uint8_t)(last_snr * 0.7);
             if (status) *status = HR_SUCCESS_WITH_MOTION;
             return bpm;
         } else {
@@ -218,8 +220,6 @@ uint8_t hr_calculate_bpm(int* status) {
     if (status) *status = HR_SUCCESS;
     return (uint8_t)bpm;
 }
-
-// 使用红光通道作为fallback计算心率（当相关性低时）
 static uint8_t calculate_bpm_from_red_channel(int* status) {
     // 使用红光通道数据
     int16_t red_copy[HR_BUFFER_SIZE];
