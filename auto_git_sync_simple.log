@@ -1090,3 +1090,12 @@ error: Please commit or stash them.
  M auto_git_sync_simple.log
  M src/main_esp32s3.cpp
 
+2026-01-31 11:29:33,277 - __main__ - INFO - 成功执行 git add
+2026-01-31 11:29:33,436 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-01-31 11:29:33
+2026-01-31 11:29:36,319 - __main__ - INFO - 成功推送到远程仓库
+2026-01-31 11:30:06,338 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-31 11:30:06,339 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\心率血氧修复总结.md
+2026-01-31 11:30:06,381 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+?? "\345\277\203\347\216\207\350\241\200\346\260\247\344\277\256\345\244\215\346\200\273\347\273\223.md"
+
