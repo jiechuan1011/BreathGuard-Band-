@@ -896,3 +896,14 @@ error: Please commit or stash them.
  M auto_git_sync_simple.log
 ?? ui/main_screen.h
 
+2026-01-31 10:19:46,849 - __main__ - INFO - 成功执行 git add
+2026-01-31 10:19:47,086 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-01-31 10:19:46
+2026-01-31 10:19:49,345 - __main__ - INFO - 成功推送到远程仓库
+2026-01-31 10:20:49,374 - __main__ - INFO - 检测到 2 个文件变化
+2026-01-31 10:20:49,375 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\ui\example_main.cpp
+2026-01-31 10:20:49,376 - __main__ - INFO -   变化文件 2: E:\Diabetes_Screening_System\ui\main_screen.h
+2026-01-31 10:20:49,428 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M ui/main_screen.h
+?? ui/example_main.cpp
+
