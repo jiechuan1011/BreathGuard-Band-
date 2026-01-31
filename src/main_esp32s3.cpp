@@ -468,8 +468,8 @@ void wrist_setup() {
     display.print("   正在启动...");
     display.display();
     
-    // 初始化MAX30102（使用hr_driver_s3.cpp）
-    if (!hr_init()) {
+    // 初始化MAX30102（使用SparkFun库）
+    if (!hr_driver_init()) {
         Serial.println("[ERROR] MAX30102初始化失败，系统停止");
         while (1);
     }
