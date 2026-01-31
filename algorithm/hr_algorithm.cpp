@@ -200,46 +200,46 @@ uint8_t hr_calculate_bpm(int* status) {
     return (uint8_t)bpm;
 }
 
-uint8_t hr_get_latest_bpm() {
-    return last_bpm;  // 0表示无效
-}
-
-uint8_t hr_get_signal_quality() {
-    return last_snr;  // SNR*10，例如15.3dB返回153
-}
-
-// 计算红外/红光信号相关性（用于运动干扰检测）
-static uint8_t calculate_correlation(int16_t* signal1, int16_t* signal2) {
-    int32_t sum1 = 0, sum2 = 0, sum12 = 0, sum1_sq = 0, sum2_sq = 0;
+// 使用红光通道作为fallback计算心率（当相关性低时）
+static uint8_t calculate_bpm_from_red_channel(int* status) {
+    // 使用红光通道数据
+    int16_t red_copy[HR_BUFFER_SIZE];
+    memcpy(red_copy, red_buffer, sizeof(red_copy));
     
-    for (uint8_t i = 0; i < HR_BUFFER_SIZE; i++) {
-        sum1 += signal1[i];
-        sum2 += signal2[i];
-        sum12 += (int32_t)signal1[i] * signal2[i];
-        sum1_sq += (int32_t)signal1[i] * signal1[i];
-        sum2_sq += (int32_t)signal2[i] * signal2[i];
+    high_pass_filter(red_copy);  // 去基线
+    low_pass_filter(red_copy);   // 去高频噪声
+
+    // 计算红光通道的SNR
+    uint8_t red_snr = calculate_snr(red_copy);
+    if (red_snr < (uint8_t)(HR_SNR_THRESHOLD * 10)) {
+        if (status) *status = HR_POOR_SIGNAL;
+        return 0;
+    }
+
+    // 峰值检测
+    uint8_t peaks[8];
+    uint8_t peak_count = find_peaks(red_copy, peaks, 8);
+
+    if (peak_count < HR_MIN_PEAKS_REQUIRED) {
+        if (status) *status = HR_POOR_SIGNAL;
+        return 0;
+    }
+
+    uint16_t total_interval = 0;
+    for (uint8_t i = 1; i < peak_count; i++) {
+        total_interval += peaks[i] - peaks[i-1];
     }
     
-    // 计算均值
-    int32_t mean1 = sum1 / HR_BUFFER_SIZE;
-    int32_t mean2 = sum2 / HR_BUFFER_SIZE;
-    
-    // 计算协方差和方差
-    int32_t cov = (sum12 / HR_BUFFER_SIZE) - (mean1 * mean2);
-    int32_t var1 = (sum1_sq / HR_BUFFER_SIZE) - (mean1 * mean1);
-    int32_t var2 = (sum2_sq / HR_BUFFER_SIZE) - (mean2 * mean2);
-    
-    if (var1 <= 0 || var2 <= 0) return 0;
-    
-    // 计算相关系数 r = cov / sqrt(var1 * var2)
-    // 使用定点数运算：先计算 var1 * var2
-    uint32_t var_product = (uint32_t)var1 * (uint32_t)var2;
-    uint32_t sqrt_var_product = fast_sqrt16((uint16_t)(var_product >> 16)) << 8; // 近似平方根
-    
-    if (sqrt_var_product == 0) return 0;
-    
-    // 计算相关系数 * 100（0-100范围）
-    int32_t correlation_x100 = (cov * 100) / (int32_t)sqrt_var_product;
+    uint16_t avg_interval_samples = total_interval / (peak_count - 1);
+    uint16_t bpm = (6000 / avg_interval_samples);
+
+    if (bpm < HR_MIN_BPM || bpm > HR_MAX_BPM) {
+        if (status) *status = HR_OUT_OF_RANGE;
+        return 0;
+    }
+
+    return (uint8_t)bpm;
+}
     
     // 限制范围 0-100
     if (correlation_x100 < 0) correlation_x100 = 0;
