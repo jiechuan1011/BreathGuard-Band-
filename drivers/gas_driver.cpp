@@ -105,8 +105,10 @@ bool gas_read(float* voltage_mv, float* conc_ppm) {
     GAS_DEBUG_PRINTF("[GAS] 采集完成: %.1f mV -> %.2f ppm\n", *voltage_mv, *conc_ppm);
     return true;
 #else
-    // 非检测模块角色，返回false
-    return false;
+    // 腕带主控角色：返回0.0表示无效数据（数据一致性）
+    *voltage_mv = 0.0;
+    *conc_ppm = 0.0;
+    return true; // 返回true表示接口可用，但数据为0.0
 #endif
 }
 
