@@ -45,8 +45,12 @@ bool gas_init() {
     GAS_DEBUG_PRINTLN("[GAS] 气体传感器初始化完成，开始预热");
     return true;
 #else
-    // 非检测模块角色，返回false
-    return false;
+    // 腕带主控角色：初始化丙酮传感器接口，但返回true表示接口可用
+    // 腕带没有实际传感器，但接口存在用于数据一致性
+    GAS_DEBUG_PRINTLN("[GAS] 腕带模式：丙酮传感器接口初始化（无实际传感器）");
+    warmup_complete = true; // 腕带不需要预热
+    heater_duty_cycle = 0;  // 腕带没有加热
+    return true;
 #endif
 }
 
