@@ -1045,3 +1045,12 @@ error: Please commit or stash them.
  M auto_git_sync_simple.log
  M drivers/hr_driver.cpp
 
+2026-01-31 11:26:20,297 - __main__ - INFO - 成功执行 git add
+2026-01-31 11:26:20,466 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-01-31 11:26:20
+2026-01-31 11:26:22,835 - __main__ - INFO - 成功推送到远程仓库
+2026-01-31 11:27:22,872 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-31 11:27:22,873 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\drivers\hr_driver.cpp
+2026-01-31 11:27:22,913 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M drivers/hr_driver.cpp
+
