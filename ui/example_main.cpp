@@ -287,3 +287,146 @@ void switch_to_acetone_test() {
 }
 
 void switch_to_heart_rate_test() {
+    ui.setState(UI_STATE_HEART_RATE_TESTING, ANIMATION_FADE_IN);
+    Serial.println("[界面] 切换到心率检测界面");
+}
+
+void switch_to_results() {
+    ui.setState(UI_STATE_RESULT_DISPLAY, ANIMATION_SLIDE_RIGHT);
+    Serial.println("[界面] 切换到结果展示界面");
+}
+
+// ==================== 测试进度回调 ====================
+void on_test_progress(UiComponent* ring, uint8_t event_type, void* user_data) {
+    switch (event_type) {
+        case 1: // 测试开始
+            Serial.println("[测试] 测试开始");
+            break;
+        case 2: // 测试进度更新
+            Serial.printf("[测试] 进度更新: %.1f%%\n", *(float*)user_data * 100);
+            break;
+        case 3: // 测试完成
+            Serial.println("[测试] 测试完成");
+            switch_to_results();
+            break;
+        case 4: // 测试错误
+            Serial.println("[测试] 测试错误");
+            break;
+    }
+}
+
+// ==================== 紧急警告处理 ====================
+void handle_emergency_alert() {
+    Serial.println("[警告] 检测到异常值，切换到紧急警告界面");
+    ui.setState(UI_STATE_EMERGENCY_ALERT, ANIMATION_SCALE);
+    
+    // 闪烁红色警告
+    for (int i = 0; i < 5; i++) {
+        ui.setBrightness(100);
+        delay(200);
+        ui.setBrightness(50);
+        delay(200);
+    }
+    ui.setBrightness(80);
+}
+
+// ==================== 呼吸引导回调 ====================
+void on_breathing_guide(UiComponent* guide, uint8_t event_type, void* user_data) {
+    switch (event_type) {
+        case 1: // 开始吸气
+            Serial.println("[呼吸] 吸气...");
+            break;
+        case 2: // 开始呼气
+            Serial.println("[呼吸] 呼气...");
+            break;
+        case 3: // 引导完成
+            Serial.println("[呼吸] 呼吸引导完成");
+            break;
+    }
+}
+
+// ==================== 历史记录示例 ====================
+void display_history() {
+    Serial.println("\n[历史] 显示测试历史记录");
+    Serial.println("时间戳\t\t心率\t血氧\t丙酮\t趋势");
+    Serial.println("------------------------------------------------");
+    
+    for (int i = 0; i < 5; i++) {
+        TestResult* result = &test_results[i];
+        struct tm* timeinfo = localtime((time_t*)&result->timestamp);
+        
+        char time_str[20];
+        strftime(time_str, sizeof(time_str), "%Y-%m-%d %H:%M", timeinfo);
+        
+        const char* trend_str = "正常";
+        if (result->trend == TREND_ATTENTION) trend_str = "注意";
+        else if (result->trend == TREND_CONCERN) trend_str = "建议关注";
+        
+        Serial.printf("%s\t%d\t%d\t%.1f\t%s\n", 
+                     time_str, result->heart_rate, result->blood_oxygen,
+                     result->acetone_level, trend_str);
+    }
+    Serial.println();
+}
+
+// ==================== 性能测试 ====================
+void run_performance_test() {
+    Serial.println("\n[性能] 开始性能测试...");
+    
+    uint32_t start_time = millis();
+    uint32_t frame_count = 0;
+    
+    // 运行10秒性能测试
+    while (millis() - start_time < 10000) {
+        ui.update(16); // 模拟60fps
+        ui.render();
+        frame_count++;
+        delay(16);
+    }
+    
+    uint32_t total_time = millis() - start_time;
+    float avg_fps = (float)frame_count / (total_time / 1000.0);
+    
+    Serial.printf("[性能] 测试完成: %u 帧, %.1f fps\n", frame_count, avg_fps);
+    Serial.printf("[性能] 平均帧时间: %.1f ms\n", (float)total_time / frame_count);
+    
+    if (avg_fps > 55) {
+        Serial.println("[性能] 性能优秀 (>55 fps)");
+    } else if (avg_fps > 30) {
+        Serial.println("[性能] 性能良好 (30-55 fps)");
+    } else {
+        Serial.println("[性能] 性能需要优化 (<30 fps)");
+    }
+}
+
+// ==================== 内存使用报告 ====================
+void report_memory_usage() {
+    uint32_t ui_memory = ui.getMemoryUsage();
+    uint32_t heap_free = ESP.getFreeHeap();
+    uint32_t heap_total = ESP.getHeapSize();
+    
+    Serial.println("\n[内存] 内存使用报告:");
+    Serial.printf("  UI内存: %u bytes (限制: %u bytes)\n", ui_memory, UI_MEMORY_LIMIT);
+    Serial.printf("  堆内存: %u / %u bytes (%.1f%% 使用率)\n", 
+                 heap_total - heap_free, heap_total,
+                 (float)(heap_total - heap_free) / heap_total * 100);
+    
+    if (ui_memory > UI_MEMORY_LIMIT) {
+        Serial.println("[警告] UI内存超过限制!");
+    }
+    
+    if (heap_free < 10240) { // 少于10KB
+        Serial.println("[警告] 堆内存不足!");
+    }
+}
+
+// ==================== 系统信息 ====================
+void print_system_info() {
+    Serial.println("\n[系统] 系统信息:");
+    Serial.printf("  MCU: ESP32-S3R8N8\n");
+    Serial.printf("  CPU频率: %d MHz\n", ESP.getCpuFreqMHz());
+    Serial.printf("  Flash大小: %u MB\n", ESP.getFlashChipSize() / 1024 / 1024);
+    Serial.printf("  PSRAM: %s\n", ESP.getPsramSize() ? "可用" : "不可用");
+    Serial.printf("  SDK版本: %s\n", ESP.getSdkVersion());
+    Serial.printf("  编译时间: %s %s\n", __DATE__, __TIME__);
+}

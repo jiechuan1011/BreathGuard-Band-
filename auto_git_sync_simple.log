@@ -925,3 +925,14 @@ error: Please commit or stash them.
  M auto_git_sync_simple.log
  M ui/example_main.cpp
 
+2026-01-31 10:21:56,031 - __main__ - INFO - 成功执行 git add
+2026-01-31 10:21:56,235 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-01-31 10:21:56
+2026-01-31 10:21:58,571 - __main__ - INFO - 成功推送到远程仓库
+2026-01-31 10:22:58,606 - __main__ - INFO - 检测到 2 个文件变化
+2026-01-31 10:22:58,606 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\ui\example_main.cpp
+2026-01-31 10:22:58,606 - __main__ - INFO -   变化文件 2: E:\Diabetes_Screening_System\ui\README.md
+2026-01-31 10:22:58,676 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M ui/example_main.cpp
+?? ui/README.md
+
