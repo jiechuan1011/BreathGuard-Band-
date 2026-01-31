@@ -598,3 +598,16 @@ error: Please commit or stash them.
 2026-01-31 09:49:53,732 - __main__ - INFO - 成功推送到远程仓库
 2026-01-31 09:50:23,756 - __main__ - INFO - 检测到 1 个文件变化
 2026-01-31 09:50:23,756 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\drivers\gas_driver.cpp
+2026-01-31 09:50:23,818 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M drivers/gas_driver.cpp
+
+2026-01-31 09:50:23,895 - __main__ - INFO - 成功执行 git add
+2026-01-31 09:50:24,098 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-01-31 09:50:23
+2026-01-31 09:50:26,878 - __main__ - INFO - 成功推送到远程仓库
+2026-01-31 09:50:56,889 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-31 09:50:56,889 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\config\hardware_validation.h
+2026-01-31 09:50:56,930 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+?? config/hardware_validation.h
+
