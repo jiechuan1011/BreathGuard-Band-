@@ -220,6 +220,8 @@ uint8_t hr_calculate_bpm(int* status) {
     if (status) *status = HR_SUCCESS;
     return (uint8_t)bpm;
 }
+
+// 使用红光通道作为fallback计算心率（当相关性低时）
 static uint8_t calculate_bpm_from_red_channel(int* status) {
     // 使用红光通道数据
     int16_t red_copy[HR_BUFFER_SIZE];
