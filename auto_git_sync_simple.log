@@ -1258,3 +1258,12 @@ error: Please commit or stash them.
  M auto_git_sync_simple.log
  M src/main_esp32s3.cpp
 
+2026-01-31 14:43:17,816 - __main__ - INFO - 成功执行 git add
+2026-01-31 14:43:17,980 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-01-31 14:43:17
+2026-01-31 14:43:20,264 - __main__ - INFO - 成功推送到远程仓库
+2026-01-31 14:43:50,271 - __main__ - INFO - 检测到 1 个文件变化
+2026-01-31 14:43:50,272 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\示例BLE_JSON和MIT_App_Inventor方案.md
+2026-01-31 14:43:50,308 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+?? "\347\244\272\344\276\213BLE_JSON\345\222\214MIT_App_Inventor\346\226\271\346\241\210.md"
+
