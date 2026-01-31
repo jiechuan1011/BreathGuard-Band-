@@ -45,100 +45,43 @@ float hr_read_temperature() {
 #else
 
 // ──────────────────────────────────────────────
-// 真实 MAX30102 驱动
+// 真实 MAX30102 驱动（使用SparkFun_MAX3010x库兼容接口）
 
-static bool i2c_write(uint8_t reg, uint8_t val) {
-    for (uint8_t retry = 0; retry < HR_I2C_RETRY_TIMES; retry++) {
-        Wire.beginTransmission(MAX30102_I2C_ADDR);
-        Wire.write(reg);
-        Wire.write(val);
-        if (Wire.endTransmission() == 0) {
-            return true;
-        }
-        delay(2);
-    }
-    return false;
-}
+#include <SparkFun_MAX3010x.h>  // 使用SparkFun库简化驱动
 
-static bool i2c_read(uint8_t reg, uint8_t* buf, uint8_t len) {
-    for (uint8_t retry = 0; retry < HR_I2C_RETRY_TIMES; retry++) {
-        Wire.beginTransmission(MAX30102_I2C_ADDR);
-        Wire.write(reg);
-        if (Wire.endTransmission(false) != 0) {
-            delay(2);
-            continue;
-        }
-
-        Wire.requestFrom(MAX30102_I2C_ADDR, len);
-        if (Wire.available() >= len) {
-            for (uint8_t i = 0; i < len; i++) {
-                buf[i] = Wire.read();
-            }
-            return true;
-        }
-        delay(2);
-    }
-    return false;
-}
+static MAX30105 max30102;  // 使用MAX30105类，兼容MAX30102
+static bool sensor_initialized = false;
 
 bool hr_init() {
     Wire.begin();
-
-    // 1. 复位芯片
-    if (!i2c_write(REG_MODE_CONFIG, 0x40)) return false;
-    delay(100);
-
-    // 2. 验证芯片 ID（可选，但强烈推荐）
-    uint8_t part_id;
-    if (!i2c_read(REG_PART_ID, &part_id, 1) || part_id != 0x15) {
+    
+    // 初始化MAX30102传感器
+    if (!max30102.begin(Wire, I2C_SPEED_FAST)) {
+        Serial.println("[HR] MAX30102初始化失败，请检查连接");
         return false;
     }
-
-    // 3. 配置 FIFO
-    //    A_FULL = 0 (不产生几乎满中断)
-    //    FIFO_ROLL = 1 (溢出后覆盖旧数据)
-    uint8_t fifo_cfg = (HR_FIFO_AVERAGE << 5) | (1 << 4);  // avg + rollover
-    if (!i2c_write(REG_FIFO_CONFIG, fifo_cfg)) return false;
-
-    // 4. 模式：SpO2 + HR 模式 (0x03)
-    if (!i2c_write(REG_MODE_CONFIG, 0x03)) return false;
-
-    // 5. SpO2 配置
-    //    SPO2_ADC_RGE = 00 (±2048nA, 18bit)
-    //    SPO2_SR    = 根据 HR_SAMPLE_RATE 设置
-    //    LED_PW     = 根据 HR_PULSE_WIDTH 设置
-    uint8_t sr_code;
-    switch (HR_SAMPLE_RATE) {
-        case  50: sr_code = 0; break;
-        case 100: sr_code = 1; break;
-        case 200: sr_code = 2; break;
-        case 400: sr_code = 3; break;
-        default:  sr_code = 1; break;  // 默认 100Hz
-    }
-
-    uint8_t pw_code;
-    switch (HR_PULSE_WIDTH) {
-        case  69: pw_code = 0; break;
-        case 118: pw_code = 1; break;
-        case 215: pw_code = 2; break;
-        case 411: pw_code = 3; break;
-        default:  pw_code = 3; break;
-    }
-
-    uint8_t spo2_cfg = (0 << 5) | (sr_code << 2) | pw_code;
-    if (!i2c_write(REG_SPO2_CONFIG, spo2_cfg)) return false;
-
-    // 6. LED 电流（RED 和 IR）
-    if (!i2c_write(REG_LED1_PA, HR_LED_CURRENT)) return false;
-    if (!i2c_write(REG_LED2_PA, HR_LED_CURRENT)) return false;
-
-    // 7. 清除 FIFO 指针
-    if (!i2c_write(REG_FIFO_WR_PTR, 0x00)) return false;
-    if (!i2c_write(REG_FIFO_RD_PTR, 0x00)) return false;
-
-    // 可选：启用新 FIFO 数据中断（如果接了 INT 引脚）
-    // i2c_write(REG_INTR_ENABLE_1, 0x40);  // A_FULL_EN = 0, PPG_RDY_EN = 1
-
+    
+    // 配置传感器参数
+    max30102.setup();  // 使用默认配置
+    
+    // 设置采样率100Hz
+    max30102.setSampleRate(100);
+    
+    // 设置脉宽411us（推荐值）
+    max30102.setPulseWidth(411);
+    
+    // 设置LED电流（适中值）
+    max30102.setPulseAmplitudeRed(0x24);  // 红光LED电流
+    max30102.setPulseAmplitudeIR(0x24);   // 红外LED电流
+    
+    // 启用SpO2模式
+    max30102.setMode(MAX30105_MODE_SPO2);
+    
+    // 清除FIFO
+    max30102.clearFIFO();
+    
+    sensor_initialized = true;
+    Serial.println("[HR] MAX30102初始化成功");
     return true;
 }
 
