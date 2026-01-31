@@ -233,6 +233,30 @@ void initAcetoneSensor() {
     #endif
 }
 
+// ==================== 电池电压读取 ====================
+// 假设GPIO1为分压输入，1:1分压，ADC参考电压3.3V
+#define PIN_BATTERY_ADC 1
+#define ADC_REF_VOLTAGE 3.3
+#define ADC_RESOLUTION 4095  // 12位ADC
+#define VOLTAGE_DIVIDER_RATIO 2.0  // 1:1分压，实际电压=ADC读数*2
+
+uint8_t readBatteryPercentage() {
+    // 读取ADC值
+    int adc_value = analogRead(PIN_BATTERY_ADC);
+    
+    // 计算实际电压（mV）
+    float voltage_mv = (adc_value * ADC_REF_VOLTAGE * 1000.0 / ADC_RESOLUTION) * VOLTAGE_DIVIDER_RATIO;
+    
+    // 粗略估算电池百分比
+    // >4200mV=100%，<3400mV=0%
+    if (voltage_mv >= 4200) return 100;
+    if (voltage_mv <= 3400) return 0;
+    
+    // 线性插值
+    uint8_t percentage = (uint8_t)((voltage_mv - 3400) * 100 / (4200 - 3400));
+    return percentage;
+}
+
 // ==================== 读取丙酮浓度（模拟数据）====================
 float readAcetoneConcentration() {
     // 腕带无丙酮传感器，返回-1表示无效数据
