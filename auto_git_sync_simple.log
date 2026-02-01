@@ -1478,3 +1478,17 @@ error: Please commit or stash them.
  M src/main_wrist_upgraded.cpp
 ?? "\347\263\226\345\260\277\347\227\205\345\210\235\347\255\233\350\205\225\345\270\246\345\215\207\347\272\247\350\257\264\346\230\216.md"
 
+2026-02-01 09:31:48,756 - __main__ - INFO - 成功执行 git add
+2026-02-01 09:31:49,001 - __main__ - INFO - 成功提交: Auto-commit: 2个文件变化 - 2026-02-01 09:31:48
+2026-02-01 09:32:10,146 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Failed to connect to github.com port 443 after 21067 ms: Could not connect to server
+
+2026-02-01 09:32:10,146 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-01 09:32:10,190 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-02-01 09:32:40,216 - __main__ - INFO - 检测到 1 个文件变化
+2026-02-01 09:32:40,231 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\糖尿病初筛腕带升级说明.md
+2026-02-01 09:32:40,278 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M "\347\263\226\345\260\277\347\227\205\345\210\235\347\255\233\350\205\225\345\270\246\345\215\207\347\272\247\350\257\264\346\230\216.md"
+
