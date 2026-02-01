@@ -160,9 +160,28 @@ int hr_algorithm_update() {
     if (!hr_read_latest(&red, &ir)) {
         return HR_READ_FAILED;
     }
+    
     // 转换int32_t到int16_t（MAX30102数据右对齐后范围适合int16_t）
-    ir_buffer[buffer_pos] = (int16_t)(ir >> 2);   // 保留高16位
-    red_buffer[buffer_pos] = (int16_t)(red >> 2);
+    int16_t ir_raw = (int16_t)(ir >> 2);   // 保留高16位
+    int16_t red_raw = (int16_t)(red >> 2);
+    
+    // 应用运动干扰校正
+    int16_t ir_filtered, red_filtered;
+    
+    if (use_kalman) {
+        // 使用Kalman滤波
+        ir_filtered = kalman_update(&kalman_ir_state, ir_raw);
+        red_filtered = kalman_update(&kalman_red_state, red_raw);
+    } else {
+        // 使用TSSD滤波
+        ir_filtered = tssd_update(&tssd_ir_state, ir_raw);
+        red_filtered = tssd_update(&tssd_red_state, red_raw);
+    }
+    
+    // 存储滤波后的数据
+    ir_buffer[buffer_pos] = ir_filtered;
+    red_buffer[buffer_pos] = red_filtered;
+    
     buffer_pos = (buffer_pos + 1) % HR_BUFFER_SIZE;
     if (buffer_pos == 0) {
         buffer_filled = true;
