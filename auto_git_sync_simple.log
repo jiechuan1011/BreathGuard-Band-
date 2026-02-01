@@ -1323,3 +1323,19 @@ error: Please commit or stash them.
  M auto_git_sync_simple.log
  M "\345\256\214\346\225\264\345\256\236\347\216\260\346\261\207\346\200\273.md"
 
+2026-01-31 14:47:37,346 - __main__ - INFO - 成功执行 git add
+2026-01-31 14:47:37,528 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-01-31 14:47:37
+2026-01-31 14:47:58,650 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Failed to connect to github.com port 443 after 21055 ms: Could not connect to server
+
+2026-01-31 14:47:58,650 - __main__ - INFO - 尝试先拉取最新更改...
+2026-01-31 14:47:58,701 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-02-01 09:22:17,754 - __main__ - INFO - 执行初始文件扫描...
+2026-02-01 09:22:18,557 - __main__ - INFO - 初始扫描完成，监控 63 个文件
+2026-02-01 09:23:18,573 - __main__ - INFO - 检测到 1 个文件变化
+2026-02-01 09:23:18,573 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\drivers\sno2_driver.h
+2026-02-01 09:23:18,604 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+?? drivers/sno2_driver.h
+
