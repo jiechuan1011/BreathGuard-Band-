@@ -237,3 +237,51 @@ void monitor_system_status() {
         SchedulerStats stats = wrist_scheduler_get_stats();
         
         DEBUG_PRINTF("[监控] HR采样: %lu, 计算: %lu\n", stats.hr_samples, stats.hr_calcs);
+        DEBUG_PRINTF("[监控] SnO2采样: %lu, 计算: %lu\n", stats.sno2_samples, stats.sno2_calcs);
+        DEBUG_PRINTF("[监控] 最后心率: %lu BPM, 最后丙酮: %lu ppm\n",
+                    stats.last_hr_bpm, stats.last_sno2_ppm);
+        
+        // 获取剩余时间
+        uint32_t hr_remaining = wrist_scheduler_get_hr_sample_remaining();
+        uint32_t sno2_remaining = wrist_scheduler_get_sno2_sample_remaining();
+        
+        DEBUG_PRINTF("[监控] 下次HR采样: %lu ms, 下次SnO2采样: %lu ms\n",
+                    hr_remaining, sno2_remaining);
+        
+        last_monitor_time = now;
+    }
+}
+
+// ──────────────────────────────────────────────
+// 主循环扩展（可选）
+// ──────────────────────────────────────────────
+
+// 如果需要更复杂的任务调度，可以扩展loop()函数
+/*
+void loop() {
+    // 主调度循环
+    wrist_scheduler_update();
+    process_scheduler_tasks();
+    
+    // 其他周期性任务
+    static uint32_t last_system_monitor = 0;
+    uint32_t now = millis();
+    
+    if (now - last_system_monitor > 5000) {
+        monitor_system_status();
+        last_system_monitor = now;
+    }
+    
+    // 用户界面任务
+    handle_user_input();
+    update_display();
+    
+    // 通信任务
+    send_data_via_ble();
+    
+    // 电源管理（如果有）
+    // power_management_update();
+    
+    delay(1);
+}
+*/
