@@ -75,4 +75,4 @@ uint32_t wrist_scheduler_get_hr_calc_remaining();
 // 获取下一次SnO₂计算剩余时间（ms）
 uint32_t wrist_scheduler_get_sno2_calc_remaining();
 
-
+#endif // WRIST_SCHEDULER_H

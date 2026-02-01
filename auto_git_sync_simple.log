@@ -1416,3 +1416,19 @@ error: Please commit or stash them.
  M auto_git_sync_simple.log
 ?? system/wrist_scheduler.h
 
+2026-02-01 09:28:22,545 - __main__ - INFO - 成功执行 git add
+2026-02-01 09:28:22,725 - __main__ - INFO - 成功提交: Auto-commit: 2个文件变化 - 2026-02-01 09:28:22
+2026-02-01 09:28:43,899 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Failed to connect to github.com port 443 after 21092 ms: Could not connect to server
+
+2026-02-01 09:28:43,901 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-01 09:28:43,992 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-02-01 09:29:14,004 - __main__ - INFO - 检测到 2 个文件变化
+2026-02-01 09:29:14,004 - __main__ - INFO -   变化文件 1: E:\Diabetes_Screening_System\system\wrist_scheduler.cpp
+2026-02-01 09:29:14,004 - __main__ - INFO -   变化文件 2: E:\Diabetes_Screening_System\system\wrist_scheduler.h
+2026-02-01 09:29:14,058 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M system/wrist_scheduler.h
+?? system/wrist_scheduler.cpp
+
