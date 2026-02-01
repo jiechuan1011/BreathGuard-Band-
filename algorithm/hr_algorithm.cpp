@@ -1,4 +1,5 @@
 #include "hr_algorithm.h"
+#include "motion_correction.h"
 
 // 低RAM优化：使用int16_t代替int32_t（MAX30102 18-bit右对齐后范围-32768~32767，int16_t足够）
 static int16_t ir_buffer[HR_BUFFER_SIZE];   // 主通道缓冲（IR对心率敏感）
@@ -10,6 +11,13 @@ static uint8_t last_bpm = 0;               // 0表示无效，40-180表示实际
 static uint8_t last_spo2 = 0;              // 0表示无效，70-100表示实际SpO2
 static uint8_t last_snr = 0;               // SNR*10存储（例如15.3dB存储为153）
 static uint8_t last_correlation = 0;       // 红外/红光相关性（0-100）
+
+// 运动干扰校正状态
+static KalmanState kalman_ir_state;        // IR通道Kalman滤波器
+static KalmanState kalman_red_state;       // Red通道Kalman滤波器
+static TssdState tssd_ir_state;            // IR通道TSSD滤波器
+static TssdState tssd_red_state;           // Red通道TSSD滤波器
+static uint8_t use_kalman = 1;             // 使用Kalman滤波（1）或TSSD（0）
 
 // ─── 私有函数 ──────────────────────────────────────────────
 
@@ -136,6 +144,15 @@ void hr_algorithm_init() {
     buffer_filled = false;
     last_bpm = 0;  // 0表示无效
     last_snr = 0;
+    
+    // 初始化运动干扰校正滤波器
+    kalman_init(&kalman_ir_state, 0);
+    kalman_init(&kalman_red_state, 0);
+    tssd_init(&tssd_ir_state);
+    tssd_init(&tssd_red_state);
+    
+    // 默认使用Kalman滤波
+    use_kalman = 1;
 }
 
 int hr_algorithm_update() {
