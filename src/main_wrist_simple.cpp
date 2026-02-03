@@ -52,7 +52,7 @@
 
 // ==================== 系统参数 ====================
 #define SCREEN_TIMEOUT_MS       30000   // 30秒无操作熄屏
-#define SAMPLE_INTERVAL_MS      50      // 50ms采样间隔
+#define SAMPLE_INTERVAL_MS      10      // 10ms采样间隔，匹配hr_algorithm.h中的HR_SAMPLE_INTERVAL_MS
 #define BLE_NOTIFY_INTERVAL_MS  4000    // 4秒BLE通知间隔
 #define BLE_ADV_INTERVAL_MIN    800     // 500ms广播间隔
 #define BLE_ADV_INTERVAL_MAX    1600    // 1000ms广播间隔
@@ -202,11 +202,11 @@ void processSample() {
         // 更新心率算法
         int hr_status = hr_algorithm_update();
         
-        // 每64个样本计算一次BPM和SpO2（50ms间隔，64个样本≈3.2秒）
+        // 每128个样本计算一次BPM和SpO2（10ms间隔，128个样本≈1.28秒），匹配hr_algorithm.h中的HR_BUFFER_SIZE
         static uint8_t sample_count = 0;
         sample_count++;
         
-        if (sample_count >= 64) {
+        if (sample_count >= 128) {
             sample_count = 0;
             
             // 计算心率
@@ -302,8 +302,9 @@ void wrist_setup() {
     system_state_init();
     hr_algorithm_init();
     
-    // 初始化电池ADC
+    // 初始化电池ADC（ESP32-S3）
     analogReadResolution(12);
+    analogSetAttenuation(ADC_11db);  // 设置11dB衰减，测量范围0-3.3V
     pinMode(PIN_BAT_ADC, INPUT);
     
     // 初始化OLED
@@ -320,10 +321,20 @@ void wrist_setup() {
     display.print("   正在启动...");
     display.display();
     
-    // 初始化MAX30102
-    if (!hr_init()) {
-        Serial.println("[ERROR] MAX30102初始化失败，系统停止");
-        while (1);
+    // 初始化MAX30102（带重试机制）
+    const uint8_t max_retries = 3;
+    bool max30102_ok = false;
+    for (uint8_t retry = 0; retry < max_retries; retry++) {
+        if (hr_driver_init()) {
+            max30102_ok = true;
+            break;
+        }
+        Serial.printf("[ERROR] MAX30102初始化失败，重试 %d/%d\n", retry + 1, max_retries);
+        delay(1000);
+    }
+    if (!max30102_ok) {
+        Serial.println("[ERROR] MAX30102初始化彻底失败，系统继续运行但心率功能不可用");
+        // 不停止系统，允许其他功能（如BLE、显示）继续工作
     }
     
     // 初始化BLE
@@ -344,7 +355,7 @@ void wrist_setup() {
 void wrist_loop() {
     uint32_t currentTime = millis();
     
-    // 50ms采样定时器（非阻塞）
+    // 10ms采样定时器（非阻塞），匹配hr_algorithm.h中的HR_SAMPLE_INTERVAL_MS
     if (currentTime - lastSampleTime >= SAMPLE_INTERVAL_MS) {
         lastSampleTime = currentTime;
         processSample();
@@ -378,9 +389,11 @@ void wrist_loop() {
     
     // 低功耗处理：无连接且OLED关闭时进入轻睡眠
     if (!deviceConnected && !oledPowerOn) {
-        // 设置唤醒定时器（50ms后唤醒）
-        esp_sleep_enable_timer_wakeup(SAMPLE_INTERVAL_MS * 1000); // 微秒
+        // 设置唤醒定时器（100ms后唤醒），降低唤醒频率以节省功耗
+        esp_sleep_enable_timer_wakeup(100 * 1000); // 100ms，微秒
         esp_light_sleep_start();
+        // 睡眠唤醒后，更新时间戳以避免立即再次睡眠
+        lastSampleTime = millis();
     } else {
         // 正常模式，使用非阻塞延时
         uint32_t elapsed = millis() - currentTime;

@@ -6,10 +6,10 @@
 
 // ──────────────────────────────────────────────
 // 配置参数（低RAM优化版本）
-// 原值500占用4000 bytes，改为64仅占用512 bytes（节省3488 bytes）
-#define HR_BUFFER_SIZE          64      // ≈0.64秒 @100Hz（低RAM优化，仍足够峰值检测）
+// 原值500占用4000 bytes，改为128占用1024 bytes（仍节省内存）
+#define HR_BUFFER_SIZE          128     // ≈1.28秒 @100Hz（提高低心率检测可靠性）
 #define HR_SAMPLE_INTERVAL_MS   10      // 与 hr_driver 采样率匹配
-#define HR_MIN_PEAKS_REQUIRED   2       // 至少需要几个峰才计算（低RAM优化，64样本约2-3个峰）
+#define HR_MIN_PEAKS_REQUIRED   3       // 至少需要几个峰才计算（128样本约4-6个峰）
 #define HR_MOVING_AVG_WINDOW    9       // 滑动平均窗口（奇数，噪声抑制）
 #define HR_PEAK_THRESHOLD_BASE  0.5     // 自适应阈值基础倍数（信号标准差）
 #define HR_MIN_BPM              40      // 合理心率下限
