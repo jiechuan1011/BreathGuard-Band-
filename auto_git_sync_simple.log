@@ -1528,3 +1528,5 @@ error: Please commit or stash them.
 2026-02-01 09:35:10,907 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
 error: Please commit or stash them.
 
+2026-02-03 10:19:13,325 - __main__ - INFO - 执行初始文件扫描...
+2026-02-03 10:19:13,332 - __main__ - INFO - 初始扫描完成，监控 72 个文件
