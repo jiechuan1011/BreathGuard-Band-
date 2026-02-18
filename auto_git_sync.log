@@ -77,3 +77,11 @@ error: Please commit or stash them.
 2026-02-18 11:43:10,048 - __main__ - INFO - 成功执行 git add
 2026-02-18 11:43:10,226 - __main__ - INFO - 成功提交: Auto-commit: 测试.py - 2026-02-18 11:43:10
 2026-02-18 11:43:13,427 - __main__ - INFO - 成功推送到远程仓库
+2026-02-18 11:43:45,904 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\测试.py
+2026-02-18 11:43:46,025 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ D "\346\265\213\350\257\225.py"
+
+2026-02-18 11:43:46,148 - __main__ - INFO - 成功执行 git add
+2026-02-18 11:43:46,332 - __main__ - INFO - 成功提交: Auto-commit: 测试.py - 2026-02-18 11:43:46
+2026-02-18 11:43:49,327 - __main__ - INFO - 成功推送到远程仓库
