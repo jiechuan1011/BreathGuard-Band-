@@ -282,3 +282,11 @@ error: Please commit or stash them.
 2026-02-18 11:51:05,864 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-18 11:51:06,108 - __main__ - INFO - 成功执行 git add
+2026-02-18 11:51:06,337 - __main__ - INFO - 成功提交: Auto-commit: build_exe.py - 2026-02-18 11:51:06
+2026-02-18 11:51:09,757 - __main__ - INFO - 成功推送到远程仓库
+2026-02-18 11:52:19,692 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\lib\algorithm\include\hr_algorithm.h
+2026-02-18 11:52:19,825 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+?? lib/algorithm/
+
