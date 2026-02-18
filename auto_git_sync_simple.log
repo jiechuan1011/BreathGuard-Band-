@@ -1732,3 +1732,21 @@ error: Please commit or stash them.
  M platformio.ini
  M src/sensor_collector_final.h
 
+2026-02-18 11:15:36,827 - __main__ - INFO - 成功执行 git add
+2026-02-18 11:15:37,026 - __main__ - INFO - 成功提交: Auto-commit: 3个文件变化 - 2026-02-18 11:15:36
+2026-02-18 11:15:39,518 - __main__ - ERROR - git push 失败: git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+2026-02-18 11:15:39,519 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-18 11:15:39,644 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-02-18 11:16:09,653 - __main__ - INFO - 检测到 1 个文件变化
+2026-02-18 11:16:09,653 - __main__ - INFO -   变化文件 1: D:\大创\Diabetes_Screening_System\config\version.h
+2026-02-18 11:16:09,774 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M config/version.h
+

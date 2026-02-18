@@ -22,4 +22,9 @@ void hr_wakeup();                       // 从关断唤醒
 // 可选：获取芯片温度（用于校准或调试）
 float hr_read_temperature();
 
+// 兼容性别名：一些源码使用 `hr_init()` 作为初始化入口，提供内联别名以保持兼容
+static inline bool hr_init() {
+	return hr_driver_init();
+}
+
 #endif

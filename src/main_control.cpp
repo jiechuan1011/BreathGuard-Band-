@@ -30,7 +30,6 @@
 #include <BLEUtils.h>
 #include <BLEServer.h>
 #include <BLE2902.h>
-#include <ESP32AnalogRead.h>
 #include "../config/config.h"
 #include "../config/pin_config.h"
 #include "../algorithm/hr_algorithm.h"
