@@ -32,3 +32,13 @@ and the repository exists.
 2026-02-18 11:35:20,991 - __main__ - ERROR - git pull ʧ��: error: cannot pull with rebase: You have unstaged changes.
 error: Please commit or stash them.
 
+2026-02-18 11:41:07,452 - __main__ - INFO - watchdog 库已安装
+2026-02-18 11:41:23,083 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\1.txt
+2026-02-18 11:41:23,203 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M scripts/auto_git_sync.py
+ M scripts/auto_git_sync_simple.py
+ D "\346\226\260\345\273\272 \346\226\207\346\234\254\346\226\207\346\241\243.txt"
+?? scripts/switch_remote_to_https.bat
+?? scripts/switch_remote_to_https.py
+
