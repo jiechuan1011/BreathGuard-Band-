@@ -17,7 +17,7 @@ typedef struct {
 } HRData;
 
 // Sno2Data 定义已集中在 drivers/sno2_driver.h 中，避免重复定义
-#include "../drivers/sno2_driver.h"
+#include "sno2_driver.h"
 
 typedef struct {
     uint16_t voltage_mv;

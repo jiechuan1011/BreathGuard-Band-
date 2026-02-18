@@ -2,7 +2,7 @@
 #define HR_ALGORITHM_H
 
 #include <Arduino.h>
-#include "../drivers/hr_driver.h"   // 路径根据你的工程调整
+#include "hr_driver.h"   // 使用 LDF 可解析的头名
 
 // ──────────────────────────────────────────────
 // 配置参数（低RAM优化版本）
