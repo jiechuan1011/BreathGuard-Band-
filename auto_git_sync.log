@@ -42,3 +42,11 @@ error: Please commit or stash them.
 ?? scripts/switch_remote_to_https.bat
 ?? scripts/switch_remote_to_https.py
 
+2026-02-18 11:41:23,331 - __main__ - INFO - 成功执行 git add
+2026-02-18 11:41:23,524 - __main__ - INFO - 成功提交: Auto-commit: 1.txt - 2026-02-18 11:41:23
+2026-02-18 11:41:41,851 - __main__ - INFO - 成功推送到远程仓库
+2026-02-18 11:42:14,409 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\新建 DOC 文档.doc
+2026-02-18 11:42:14,524 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+?? "\346\226\260\345\273\272 DOC \346\226\207\346\241\243.doc"
+
