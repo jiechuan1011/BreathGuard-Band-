@@ -8,7 +8,7 @@
 #include <Arduino.h>
 #include "../system/wrist_scheduler.h"
 #include "../algorithm/hr_algorithm.h"
-#include "../drivers/sno2_driver.h"
+#include "sno2_driver.h"
 #include "../system/system_state.h"
 #include "../config/pin_config.h"
 

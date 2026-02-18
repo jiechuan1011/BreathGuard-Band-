@@ -5,7 +5,7 @@
 #include <Arduino.h>
 #include "../system/wrist_scheduler.h"
 #include "../algorithm/hr_algorithm.h"
-#include "../drivers/sno2_driver.h"
+#include "sno2_driver.h"
 
 // ──────────────────────────────────────────────
 // 简化调试输出（避免printf问题）

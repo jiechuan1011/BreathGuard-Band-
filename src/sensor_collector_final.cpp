@@ -15,8 +15,8 @@
 
 #include <Arduino.h>
 #include "../config/system_config.h"
-#include "../drivers/hr_driver.h"
-#include "../drivers/sno2_driver.h"
+#include "hr_driver.h"
+#include "sno2_driver.h"
 #include "sensor_collector_final.h"
 
 // ==================== 引脚定义（用户确认） ====================

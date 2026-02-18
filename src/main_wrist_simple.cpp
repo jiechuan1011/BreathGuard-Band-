@@ -36,7 +36,7 @@
 #include "../config/pin_config.h"
 #include "../system/system_state.h"
 #include "../algorithm/hr_algorithm.h"
-#include "../drivers/hr_driver.h"
+#include "hr_driver.h"
 
 // ==================== OLED显示配置 ====================
 #define SCREEN_WIDTH    128
