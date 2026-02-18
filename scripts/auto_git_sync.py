@@ -237,8 +237,11 @@ def main():
         print("\n请先安装依赖: pip install watchdog")
         sys.exit(1)
     
-    # 获取仓库路径（默认为当前目录）
-    repo_path = os.getcwd()
+    # 获取仓库路径：打包成 exe 时使用 exe 所在目录，否则使用当前工作目录
+    if getattr(sys, 'frozen', False):
+        repo_path = os.path.dirname(os.path.abspath(sys.executable))
+    else:
+        repo_path = os.getcwd()
     print(f"\n监控目录: {repo_path}")
     
     # 检查是否是Git仓库

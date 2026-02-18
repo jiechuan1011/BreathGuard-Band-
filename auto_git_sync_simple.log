@@ -1789,3 +1789,33 @@ error: Please commit or stash them.
  M auto_git_sync_simple.log
 ?? lib/
 
+2026-02-18 11:18:46,116 - __main__ - INFO - 成功执行 git add
+2026-02-18 11:18:46,326 - __main__ - INFO - 成功提交: Auto-commit: 2个文件变化 - 2026-02-18 11:18:46
+2026-02-18 11:18:48,686 - __main__ - ERROR - git push 失败: git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+2026-02-18 11:18:48,686 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-18 11:18:48,804 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-02-18 11:19:18,814 - __main__ - INFO - 检测到 1 个文件变化
+2026-02-18 11:19:18,815 - __main__ - INFO -   变化文件 1: D:\大创\Diabetes_Screening_System\lib\drivers\src\hr_driver.cpp
+2026-02-18 11:19:18,938 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+?? lib/drivers/src/
+
+2026-02-18 11:19:19,062 - __main__ - INFO - 成功执行 git add
+2026-02-18 11:19:19,273 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-02-18 11:19:19
+2026-02-18 11:19:21,592 - __main__ - ERROR - git push 失败: git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+2026-02-18 11:19:21,592 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-18 11:19:21,727 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
