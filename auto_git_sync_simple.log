@@ -1722,3 +1722,13 @@ and the repository exists.
 2026-02-18 11:11:36,494 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
 error: Please commit or stash them.
 
+2026-02-18 11:15:36,575 - __main__ - INFO - 检测到 3 个文件变化
+2026-02-18 11:15:36,575 - __main__ - INFO -   变化文件 1: D:\大创\Diabetes_Screening_System\platformio.ini
+2026-02-18 11:15:36,576 - __main__ - INFO -   变化文件 2: D:\大创\Diabetes_Screening_System\config\version.h
+2026-02-18 11:15:36,576 - __main__ - INFO -   变化文件 3: D:\大创\Diabetes_Screening_System\src\sensor_collector_final.h
+2026-02-18 11:15:36,699 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M config/version.h
+ M platformio.ini
+ M src/sensor_collector_final.h
+
