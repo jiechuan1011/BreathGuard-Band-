@@ -2,8 +2,8 @@
 #include "system_state.h"
 #include <Arduino.h>
 #include "../algorithm/hr_algorithm.h"
-#include "../drivers/gas_driver.h"
-#include "../drivers/env_driver.h"
+#include "gas_driver.h"
+#include "env_driver.h"
 
 // ──────────────────────────────────────────────
 // 调度周期配置

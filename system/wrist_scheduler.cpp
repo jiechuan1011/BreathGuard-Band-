@@ -1,6 +1,6 @@
 #include "wrist_scheduler.h"
 #include "../algorithm/hr_algorithm.h"
-#include "../drivers/sno2_driver.h"
+#include "sno2_driver.h"
 #include "system_state.h"
 
 // ──────────────────────────────────────────────
