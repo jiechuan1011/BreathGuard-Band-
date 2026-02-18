@@ -1540,3 +1540,21 @@ error: Please commit or stash them.
 ?? SCH_Schematic2_2026-02-18.pdf
 ?? STEP11_STEP12_COMPLETE_GUIDE.md
 
+2026-02-18 09:03:13,086 - __main__ - INFO - 成功执行 git add
+2026-02-18 09:03:13,286 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-02-18 09:03:13
+2026-02-18 09:03:15,889 - __main__ - ERROR - git push 失败: git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+2026-02-18 09:03:15,897 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-18 09:03:16,006 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-02-18 09:04:16,027 - __main__ - INFO - 检测到 1 个文件变化
+2026-02-18 09:04:16,027 - __main__ - INFO -   变化文件 1: D:\大创\Diabetes_Screening_System\FINAL_SUMMARY_AND_QUICK_START.md
+2026-02-18 09:04:16,136 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+?? FINAL_SUMMARY_AND_QUICK_START.md
+
