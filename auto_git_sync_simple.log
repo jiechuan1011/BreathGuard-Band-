@@ -1782,3 +1782,10 @@ and the repository exists.
 2026-02-18 11:16:45,804 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
 error: Please commit or stash them.
 
+2026-02-18 11:18:45,847 - __main__ - INFO - 检测到 2 个文件变化
+2026-02-18 11:18:45,847 - __main__ - INFO -   变化文件 1: D:\大创\Diabetes_Screening_System\lib\drivers\include\hr_driver.h
+2026-02-18 11:18:45,847 - __main__ - INFO -   变化文件 2: D:\大创\Diabetes_Screening_System\lib\drivers\include\sno2_driver.h
+2026-02-18 11:18:45,983 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+?? lib/
+
