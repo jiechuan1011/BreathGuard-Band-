@@ -33,7 +33,7 @@
 #include "../config/config.h"
 #include "../config/pin_config.h"
 #include "../algorithm/hr_algorithm.h"
-#include "../drivers/hr_driver.h"
+#include "hr_driver.h"
 #include "../system/scheduler.h"
 
 // ==================== 引脚定义（ESP32-C3 SuperMini）====================

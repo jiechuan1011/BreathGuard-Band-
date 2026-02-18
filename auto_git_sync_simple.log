@@ -1894,3 +1894,28 @@ and the repository exists.
 2026-02-18 11:21:01,062 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
 error: Please commit or stash them.
 
+2026-02-18 11:21:31,076 - __main__ - INFO - 检测到 4 个文件变化
+2026-02-18 11:21:31,076 - __main__ - INFO -   变化文件 1: D:\大创\Diabetes_Screening_System\.gitignore
+2026-02-18 11:21:31,076 - __main__ - INFO -   变化文件 2: D:\大创\Diabetes_Screening_System\src\main_esp32s3_final.cpp
+2026-02-18 11:21:31,077 - __main__ - INFO -   变化文件 3: D:\大创\Diabetes_Screening_System\src\main_minimal.cpp
+2026-02-18 11:21:31,077 - __main__ - INFO -   变化文件 4: D:\大创\Diabetes_Screening_System\src\main_s3.cpp
+2026-02-18 11:21:31,216 - __main__ - INFO - 检测到未提交的更改:
+ M .gitignore
+ M auto_git_sync_simple.log
+ M scripts/README.md
+ M src/main_esp32s3_final.cpp
+ M src/main_minimal.cpp
+ M src/main_s3.cpp
+
+2026-02-18 11:21:31,368 - __main__ - INFO - 成功执行 git add
+2026-02-18 11:21:31,617 - __main__ - INFO - 成功提交: Auto-commit: 4个文件变化 - 2026-02-18 11:21:31
+2026-02-18 11:21:34,347 - __main__ - ERROR - git push 失败: git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+2026-02-18 11:21:34,347 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-18 11:21:34,469 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
