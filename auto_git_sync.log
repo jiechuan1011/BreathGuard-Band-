@@ -61,3 +61,8 @@ error: Please commit or stash them.
 2026-02-18 11:42:24,321 - __main__ - INFO - 成功执行 git add
 2026-02-18 11:42:24,511 - __main__ - INFO - 成功提交: Auto-commit: 测试.doc - 2026-02-18 11:42:24
 2026-02-18 11:42:27,503 - __main__ - INFO - 成功推送到远程仓库
+2026-02-18 11:42:49,800 - __main__ - INFO - watchdog 库已安装
+2026-02-18 11:43:02,978 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\测试.txt
+2026-02-18 11:43:03,096 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
