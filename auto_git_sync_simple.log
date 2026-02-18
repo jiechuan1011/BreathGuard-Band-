@@ -1532,3 +1532,11 @@ error: Please commit or stash them.
 2026-02-03 10:19:13,332 - __main__ - INFO - 初始扫描完成，监控 72 个文件
 2026-02-18 08:50:42,515 - __main__ - INFO - 执行初始文件扫描...
 2026-02-18 08:50:42,538 - __main__ - INFO - 初始扫描完成，监控 74 个文件
+2026-02-18 09:03:12,782 - __main__ - INFO - 检测到 1 个文件变化
+2026-02-18 09:03:12,784 - __main__ - INFO -   变化文件 1: D:\大创\Diabetes_Screening_System\STEP11_STEP12_COMPLETE_GUIDE.md
+2026-02-18 09:03:12,914 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+?? SCH_Schematic1_2026-02-18.pdf
+?? SCH_Schematic2_2026-02-18.pdf
+?? STEP11_STEP12_COMPLETE_GUIDE.md
+
