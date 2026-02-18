@@ -1702,3 +1702,23 @@ error: Please commit or stash them.
 
 2026-02-18 11:05:02,705 - __main__ - INFO - 执行初始文件扫描...
 2026-02-18 11:05:02,719 - __main__ - INFO - 初始扫描完成，监控 77 个文件
+2026-02-18 11:11:32,850 - __main__ - INFO - 检测到 2 个文件变化
+2026-02-18 11:11:32,851 - __main__ - INFO -   变化文件 1: D:\大创\Diabetes_Screening_System\platformio.ini
+2026-02-18 11:11:32,852 - __main__ - INFO -   变化文件 2: D:\大创\Diabetes_Screening_System\src\sensor_collector_final.h
+2026-02-18 11:11:33,060 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M platformio.ini
+ M src/sensor_collector_final.h
+
+2026-02-18 11:11:33,210 - __main__ - INFO - 成功执行 git add
+2026-02-18 11:11:33,454 - __main__ - INFO - 成功提交: Auto-commit: 2个文件变化 - 2026-02-18 11:11:33
+2026-02-18 11:11:36,362 - __main__ - ERROR - git push 失败: git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+2026-02-18 11:11:36,362 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-18 11:11:36,494 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
