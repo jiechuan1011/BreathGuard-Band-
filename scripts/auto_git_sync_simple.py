@@ -11,6 +11,7 @@ import time
 import subprocess
 import logging
 import hashlib
+import argparse
 from datetime import datetime
 from pathlib import Path
 
@@ -288,8 +289,13 @@ class SimpleGitAutoSync:
 
 def main():
     """主函数"""
-    # 获取仓库路径：打包成 exe 时使用 exe 所在目录，否则使用当前工作目录
-    if getattr(sys, 'frozen', False):
+    parser = argparse.ArgumentParser(description="简化版自动Git同步")
+    parser.add_argument("--path", type=str, default=None, help="要监控的 Git 仓库目录（默认：当前目录或 exe 所在目录）")
+    args = parser.parse_args()
+
+    if args.path and os.path.isdir(args.path):
+        repo_path = os.path.abspath(args.path)
+    elif getattr(sys, 'frozen', False):
         repo_path = os.path.dirname(os.path.abspath(sys.executable))
     else:
         repo_path = os.getcwd()

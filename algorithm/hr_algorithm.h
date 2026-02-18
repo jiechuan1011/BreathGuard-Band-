@@ -7,7 +7,9 @@
 // ──────────────────────────────────────────────
 // 配置参数（低RAM优化版本）
 // 原值500占用4000 bytes，改为128占用1024 bytes（仍节省内存）
+#ifndef HR_BUFFER_SIZE
 #define HR_BUFFER_SIZE          128     // ≈1.28秒 @100Hz（提高低心率检测可靠性）
+#endif
 #define HR_SAMPLE_INTERVAL_MS   10      // 与 hr_driver 采样率匹配
 #define HR_MIN_PEAKS_REQUIRED   3       // 至少需要几个峰才计算（128样本约4-6个峰）
 #define HR_MOVING_AVG_WINDOW    9       // 滑动平均窗口（奇数，噪声抑制）

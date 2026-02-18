@@ -10,6 +10,7 @@ import sys
 import time
 import subprocess
 import logging
+import argparse
 from datetime import datetime
 from pathlib import Path
 from watchdog.observers import Observer
@@ -227,6 +228,10 @@ def check_dependencies():
 
 def main():
     """主函数"""
+    parser = argparse.ArgumentParser(description="自动Git同步脚本（完整版）")
+    parser.add_argument("--path", type=str, default=None, help="要监控的 Git 仓库目录（默认：当前目录或 exe 所在目录）")
+    args = parser.parse_args()
+
     print("=" * 60)
     print("自动Git同步脚本")
     print("监控文件变化并自动提交到GitHub")
@@ -237,8 +242,9 @@ def main():
         print("\n请先安装依赖: pip install watchdog")
         sys.exit(1)
     
-    # 获取仓库路径：打包成 exe 时使用 exe 所在目录，否则使用当前工作目录
-    if getattr(sys, 'frozen', False):
+    if args.path and os.path.isdir(args.path):
+        repo_path = os.path.abspath(args.path)
+    elif getattr(sys, 'frozen', False):
         repo_path = os.path.dirname(os.path.abspath(sys.executable))
     else:
         repo_path = os.getcwd()

@@ -20,8 +20,8 @@ BUILD_DIR = SCRIPT_DIR / "build"
 SPEC_DIR = SCRIPT_DIR / "spec"
 
 
-def run_pyinstaller(script_name: str, exe_name: str, add_data: list = None, hidden_imports: list = None):
-    """调用 PyInstaller 打包单个脚本"""
+def run_pyinstaller(script_name: str, exe_name: str, add_data: list = None, hidden_imports: list = None, console: bool = True):
+    """调用 PyInstaller 打包单个脚本。console=False 为图形界面程序（不显示控制台）。"""
     script_path = SCRIPT_DIR / script_name
     if not script_path.exists():
         print(f"错误: 找不到脚本 {script_path}")
@@ -29,8 +29,8 @@ def run_pyinstaller(script_name: str, exe_name: str, add_data: list = None, hidd
 
     cmd = [
         sys.executable, "-m", "PyInstaller",
-        "--onefile",           # 单文件 exe
-        "--console",           # 控制台程序
+        "--onefile",
+        "--noconsole" if not console else "--console",
         "--name", exe_name,
         "--distpath", str(DIST_DIR),
         "--workpath", str(BUILD_DIR),
@@ -92,12 +92,26 @@ def main():
         print("完整版打包失败")
         sys.exit(1)
 
+    # 3. 图形界面（无控制台窗口）
+    ok_gui = run_pyinstaller(
+        "auto_git_sync_gui.py",
+        "AutoGitSync_GUI",
+        hidden_imports=["tkinter"],
+        console=False,
+    )
+    if not ok_gui:
+        print("图形界面版打包失败")
+        sys.exit(1)
+
     print("\n" + "=" * 60)
     print("打包完成！")
     print(f"输出目录: {DIST_DIR}")
     print("  - AutoGitSync_Local.exe   (本地版/简化版，轮询监控)")
-    print("  - AutoGitSync_Full.exe    (完整版，实时监控，需 watchdog)")
-    print("\n使用方式: 将对应 exe 放到 Git 仓库根目录，双击运行即可。")
+    print("  - AutoGitSync_Full.exe    (完整版，实时监控)")
+    print("  - AutoGitSync_GUI.exe     (图形界面，需与上面两个 exe 同目录使用)")
+    print("\n使用方式:")
+    print("  - 命令行版: 将 AutoGitSync_Local.exe 或 Full.exe 放到仓库根目录双击运行。")
+    print("  - 图形版: 将 dist 目录下三个 exe 放在同一文件夹，运行 AutoGitSync_GUI.exe 选择目录后开始同步。")
     print("=" * 60)
 
 

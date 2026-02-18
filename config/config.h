@@ -28,6 +28,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include "version.h"
+
 // ==================== 硬件角色选择 ====================
 // 重要：通过 platformio.ini 的 build_flags 定义角色，不允许源代码手动注释切换
 // 例如：build_flags = -DDEVICE_ROLE_WRIST 或 -DDEVICE_ROLE_DETECTOR
@@ -45,10 +47,18 @@
 // 腕带主控专用配置
 
 // 传感器启用标志
+#ifndef USE_MAX30102
 #define USE_MAX30102           // MAX30102 心率血氧传感器
+#endif
+#ifndef USE_OLED_DISPLAY
 #define USE_OLED_DISPLAY       // OLED 显示屏
+#endif
+#ifndef USE_BLE_MODULE
 #define USE_BLE_MODULE         // BLE 蓝牙模块
+#endif
+#ifndef USE_MOTION_CORRECTION
 #define USE_MOTION_CORRECTION  // 运动干扰校正（需要MPU6050）
+#endif
 
 // 腕带重量限制（单位：克）
 #define WRISTBAND_MAX_WEIGHT 45
@@ -62,10 +72,18 @@
 // 独立检测模块专用配置
 
 // 传感器启用标志
+#ifndef USE_SNO2_SENSOR
 #define USE_SNO2_SENSOR        // SnO₂ 气敏传感器
+#endif
+#ifndef USE_HKG07_SENSOR
 #define USE_HKG07_SENSOR       // HKG-07 呼吸传感器
+#endif
+#ifndef USE_AD623_AMP
 #define USE_AD623_AMP          // AD623 运放电路
+#endif
+#ifndef USE_HEATING_CONTROL
 #define USE_HEATING_CONTROL    // 加热控制（MOSFET）
+#endif
 
 // 检测模块成本限制（单位：元）
 #define DETECTOR_MAX_COST 200  // 检测模块部分成本

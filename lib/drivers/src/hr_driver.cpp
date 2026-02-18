@@ -1,6 +1,6 @@
 #include "hr_driver.h"
 #include <Wire.h>
-#include <SparkFun_MAX3010x.h>  // SparkFun MAX3010x库
+#include <MAX30105.h>  // SparkFun MAX3010x 库的主头文件（MAX30105）
 
 // ──────────────────────────────────────────────
 // 使用SparkFun_MAX3010x库的MAX30102驱动
@@ -30,8 +30,8 @@ bool hr_driver_init() {
     max30102.setPulseAmplitudeRed(HR_LED_CURRENT);  // 红光LED电流
     max30102.setPulseAmplitudeIR(HR_LED_CURRENT);   // 红外LED电流
     
-    // 启用SpO2模式
-    max30102.setMode(MAX30105_MODE_SPO2);
+    // 启用SpO2模式（SparkFun 库不提供 setMode，使用默认配置或按需改为 setLEDMode）
+    // 如果需要显式设置，请替换为：max30102.setLEDMode(<mode>);
     
     // 清除FIFO
     max30102.clearFIFO();

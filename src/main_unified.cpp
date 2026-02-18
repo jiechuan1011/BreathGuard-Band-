@@ -101,8 +101,8 @@ void setup() {
     Serial.println("硬件平台：ESP32-C3 SuperMini");
 #endif
     
-    Serial.println("版本：" SOFTWARE_VERSION_STRING);
-    Serial.println("构建日期：" BUILD_DATE_STRING);
+    Serial.println(String("版本：") + SOFTWARE_VERSION_STRING);
+    Serial.println(String("构建日期：") + BUILD_DATE_STRING);
     Serial.println();
     Serial.println("免责声明：");
     Serial.println(DISCLAIMER);

@@ -90,8 +90,8 @@ void setup() {
     Serial.println(F("电池：200mAh锂电池"));
 #endif
     
-    Serial.println(F("版本：") SOFTWARE_VERSION_STRING);
-    Serial.println(F("构建日期：") BUILD_DATE_STRING);
+    Serial.println(String("版本：") + SOFTWARE_VERSION_STRING);
+    Serial.println(String("构建日期：") + BUILD_DATE_STRING);
     Serial.println();
     
     // 输出项目约束

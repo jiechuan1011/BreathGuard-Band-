@@ -37,11 +37,21 @@
 #include "../system/scheduler.h"
 
 // ==================== 引脚定义（ESP32-C3 SuperMini）====================
+#ifndef PIN_SDA
 #define PIN_SDA         4   // I2C数据线（OLED + MAX30102）
+#endif
+#ifndef PIN_SCL
 #define PIN_SCL         5   // I2C时钟线（OLED + MAX30102）
+#endif
+#ifndef PIN_BTN1
 #define PIN_BTN1        6   // 按键1：切换显示/重置测量
+#endif
+#ifndef PIN_BTN2
 #define PIN_BTN2        7   // 按键2：开关OLED
+#endif
+#ifndef PIN_BAT_ADC
 #define PIN_BAT_ADC     2   // 电池电压ADC输入（需2:1分压）
+#endif
 
 // ==================== OLED显示配置 ====================
 #define SCREEN_WIDTH    128

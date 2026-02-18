@@ -18,16 +18,18 @@
 scripts/
 ├── auto_git_sync.py          # 主脚本文件（需要watchdog）- 完整版
 ├── auto_git_sync_simple.py   # 简化版脚本（无需额外依赖）- 本地版
+├── auto_git_sync_gui.py      # 图形界面（选择目录、启停、看日志）
 ├── build_exe.py              # 打包 exe 的构建脚本
 ├── build_exe.bat             # Windows 一键打包批处理
-├── requirements-build.txt    # 打包所需依赖（pyinstaller、watchdog）
+├── requirements-build.txt   # 打包所需依赖（pyinstaller、watchdog）
 ├── start_sync.bat            # Windows启动脚本
 ├── start_sync.sh             # Mac/Linux启动脚本
 ├── README.md                 # 说明文档
 ├── requirements.txt         # Python依赖（仅主脚本需要）
 └── dist/                     # 打包后生成的 exe 输出目录
+    ├── AutoGitSync_Local.exe # 本地版 exe（轮询监控）
     ├── AutoGitSync_Full.exe  # 完整版 exe（实时监控）
-    └── AutoGitSync_Local.exe # 本地版 exe（轮询监控）
+    └── AutoGitSync_GUI.exe   # 图形界面 exe（需与上两个 exe 同目录）
 ```
 
 ## 打包为 exe（Windows）
@@ -52,12 +54,33 @@ scripts/
    ```
 
 3. **输出**：生成的 exe 位于 `scripts/dist/` 目录：
-   - **AutoGitSync_Full.exe**（完整版）：内含 watchdog，实时监控文件变化，响应更快。
-   - **AutoGitSync_Local.exe**（本地版）：无额外依赖，使用轮询方式（约 30 秒间隔），体积更小。
+   - **AutoGitSync_Local.exe**（本地版）：无额外依赖，轮询方式（约 30 秒间隔），体积小。
+   - **AutoGitSync_Full.exe**（完整版）：内含 watchdog，实时监控，响应更快。
+   - **AutoGitSync_GUI.exe**（图形界面）：桌面图形程序，需与上面两个 exe 放在同一文件夹使用。
 
 ### 使用 exe
 
-将对应 exe 复制到 **Git 仓库根目录**，双击运行即可开始监控。日志会生成在同一目录下（`auto_git_sync.log` / `auto_git_sync_simple.log`）。
+- **命令行版**：将 `AutoGitSync_Local.exe` 或 `AutoGitSync_Full.exe` 复制到 **Git 仓库根目录**，双击运行即可。日志会生成在同一目录。
+- **图形界面版**：将 `dist` 目录下 **三个 exe 放在同一文件夹**，双击 `AutoGitSync_GUI.exe`，在界面中选择仓库目录、选择“本地版/完整版”，点击“开始同步”即可；日志在窗口内显示。
+
+## 图形界面（GUI）
+
+在电脑上以桌面软件方式使用“上传到 GitHub”的同步功能，可运行图形界面：
+
+### 直接运行（无需打包）
+
+已安装 Python 时，在项目根目录执行：
+
+```bash
+python scripts/auto_git_sync_gui.py
+```
+
+界面中可：
+1. **浏览** 选择要同步的 Git 仓库目录；
+2. 选择 **本地版**（轮询）或 **完整版**（实时，需已安装 watchdog）；
+3. 点击 **开始同步** / **停止同步**，在下方查看运行日志。
+
+使用 Python 自带的 tkinter，无需额外安装依赖（完整版模式需先 `pip install watchdog`）。
 
 ## 快速开始
 

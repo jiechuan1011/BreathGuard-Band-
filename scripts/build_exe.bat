@@ -20,12 +20,12 @@ if errorlevel 1 (
     exit /b 1
 )
 
-REM 安装打包依赖（若未安装）
+REM 安装打包依赖（若未安装，使用 python -m pip 避免 pip 未在 PATH 的问题）
 echo.
 echo 检查/安装打包依赖...
-pip install pyinstaller watchdog -q
+python -m pip install pyinstaller watchdog -q
 if errorlevel 1 (
-    echo 安装依赖失败，可手动执行: pip install -r scripts/requirements-build.txt
+    echo 安装依赖失败，可手动执行: python -m pip install -r scripts/requirements-build.txt
     pause
     exit /b 1
 )
