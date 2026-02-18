@@ -16,11 +16,8 @@ typedef struct {
     int32_t ir;
 } HRData;
 
-typedef struct {
-    uint16_t voltage_mv;
-    uint16_t concentration_ppm;
-    uint8_t heater_on;
-} Sno2Data;
+// Sno2Data 定义已集中在 drivers/sno2_driver.h 中，避免重复定义
+#include "sno2_driver.h"
 
 typedef struct {
     uint16_t voltage_mv;
