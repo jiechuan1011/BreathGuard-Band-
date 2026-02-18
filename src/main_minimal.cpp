@@ -5,7 +5,7 @@
  */
 
 #include <Arduino.h>
-#include "../drivers/hr_driver.h"
+#include "hr_driver.h"
 
 // 极简配置
 #define SAMPLE_INTERVAL_MS  10

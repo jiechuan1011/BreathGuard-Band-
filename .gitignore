@@ -16,3 +16,8 @@
 # 系统文件
 .DS_Store
 Thumbs.db
+
+# scripts 打包产物
+scripts/dist/
+scripts/build/
+scripts/spec/

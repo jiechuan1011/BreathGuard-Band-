@@ -1869,3 +1869,28 @@ and the repository exists.
 2026-02-18 11:20:27,816 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
 error: Please commit or stash them.
 
+2026-02-18 11:20:57,828 - __main__ - INFO - 检测到 4 个文件变化
+2026-02-18 11:20:57,828 - __main__ - INFO -   变化文件 1: D:\大创\Diabetes_Screening_System\src\main_wrist_simple.cpp
+2026-02-18 11:20:57,828 - __main__ - INFO -   变化文件 2: D:\大创\Diabetes_Screening_System\src\main_wrist_simple_upgraded.cpp
+2026-02-18 11:20:57,828 - __main__ - INFO -   变化文件 3: D:\大创\Diabetes_Screening_System\src\main_wrist_upgraded.cpp
+2026-02-18 11:20:57,828 - __main__ - INFO -   变化文件 4: D:\大创\Diabetes_Screening_System\src\sensor_collector_final.cpp
+2026-02-18 11:20:57,945 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+ M src/main_wrist_simple.cpp
+ M src/main_wrist_simple_upgraded.cpp
+ M src/main_wrist_upgraded.cpp
+ M src/sensor_collector_final.cpp
+?? scripts/build_exe.bat
+
+2026-02-18 11:20:58,082 - __main__ - INFO - 成功执行 git add
+2026-02-18 11:20:58,291 - __main__ - INFO - 成功提交: Auto-commit: 4个文件变化 - 2026-02-18 11:20:58
+2026-02-18 11:21:00,883 - __main__ - ERROR - git push 失败: git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+2026-02-18 11:21:00,883 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-18 11:21:01,062 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+

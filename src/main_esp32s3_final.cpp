@@ -24,8 +24,8 @@
 #include "../config/ble_config.h"
 
 // 驱动层
-#include "../drivers/hr_driver.h"
-#include "../drivers/sno2_driver.h"
+#include "hr_driver.h"
+#include "sno2_driver.h"
 
 // 算法层
 #include "../algorithm/hr_algorithm.h"

@@ -16,13 +16,48 @@
 
 ```
 scripts/
-├── auto_git_sync.py          # 主脚本文件（需要watchdog）
-├── auto_git_sync_simple.py   # 简化版脚本（无需额外依赖）
-├── start_sync.bat           # Windows启动脚本
-├── start_sync.sh            # Mac/Linux启动脚本
-├── README.md                # 说明文档
-└── requirements.txt         # Python依赖（仅主脚本需要）
+├── auto_git_sync.py          # 主脚本文件（需要watchdog）- 完整版
+├── auto_git_sync_simple.py   # 简化版脚本（无需额外依赖）- 本地版
+├── build_exe.py              # 打包 exe 的构建脚本
+├── build_exe.bat             # Windows 一键打包批处理
+├── requirements-build.txt    # 打包所需依赖（pyinstaller、watchdog）
+├── start_sync.bat            # Windows启动脚本
+├── start_sync.sh             # Mac/Linux启动脚本
+├── README.md                 # 说明文档
+├── requirements.txt         # Python依赖（仅主脚本需要）
+└── dist/                     # 打包后生成的 exe 输出目录
+    ├── AutoGitSync_Full.exe  # 完整版 exe（实时监控）
+    └── AutoGitSync_Local.exe # 本地版 exe（轮询监控）
 ```
+
+## 打包为 exe（Windows）
+
+可将两个版本分别打包成独立 exe，无需安装 Python 即可在 Windows 上运行。
+
+### 构建步骤
+
+1. **安装打包依赖**（仅构建时需要）：
+   ```bash
+   pip install -r scripts/requirements-build.txt
+   ```
+
+2. **执行打包**（在项目根目录或 `scripts` 目录下）：
+   ```bash
+   # 方式一：双击运行
+   scripts\build_exe.bat
+
+   # 方式二：命令行
+   cd scripts
+   python build_exe.py
+   ```
+
+3. **输出**：生成的 exe 位于 `scripts/dist/` 目录：
+   - **AutoGitSync_Full.exe**（完整版）：内含 watchdog，实时监控文件变化，响应更快。
+   - **AutoGitSync_Local.exe**（本地版）：无额外依赖，使用轮询方式（约 30 秒间隔），体积更小。
+
+### 使用 exe
+
+将对应 exe 复制到 **Git 仓库根目录**，双击运行即可开始监控。日志会生成在同一目录下（`auto_git_sync.log` / `auto_git_sync_simple.log`）。
 
 ## 快速开始
 
