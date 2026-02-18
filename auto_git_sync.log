@@ -1,1 +1,34 @@
 2026-02-18 11:33:53,675 - __main__ - INFO - watchdog 库已安装
+2026-02-18 11:35:17,765 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\新建 文本文档.txt
+2026-02-18 11:35:17,888 - __main__ - INFO - 检测到未提交的更改:
+ M algorithm/hr_algorithm.h
+ M auto_git_sync_simple.log
+ M config/config.h
+ M lib/drivers/include/sno2_driver.h
+ M lib/drivers/src/hr_driver.cpp
+ M platformio.ini
+ M scripts/README.md
+ M scripts/auto_git_sync.py
+ M scripts/auto_git_sync_simple.py
+ M scripts/build_exe.bat
+ M scripts/build_exe.py
+ M src/main.cpp
+ M src/main_control.cpp
+ M src/main_unified.cpp
+?? auto_git_sync.log
+?? scripts/auto_git_sync_gui.py
+?? scripts/start_gui.bat
+?? "\346\226\260\345\273\272 \346\226\207\346\234\254\346\226\207\346\241\243.txt"
+
+2026-02-18 11:35:18,045 - __main__ - INFO - 成功执行 git add
+2026-02-18 11:35:18,274 - __main__ - INFO - 成功提交: Auto-commit: 新建 文本文档.txt - 2026-02-18 11:35:18
+2026-02-18 11:35:20,876 - __main__ - ERROR - git push 失败: git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+2026-02-18 11:35:20,876 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-18 11:35:20,991 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+

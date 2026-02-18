@@ -16,12 +16,18 @@ from pathlib import Path
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
+# 被 GUI 或管道调用时强制使用 UTF-8，避免 Windows 下乱码
+if hasattr(sys.stdout, "buffer") and (not getattr(sys.stdout, "encoding", None) or sys.stdout.encoding.upper() != "UTF-8"):
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace", line_buffering=True)
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace", line_buffering=True)
+
 # 配置日志
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('auto_git_sync.log'),
+        logging.FileHandler('auto_git_sync.log', encoding='utf-8'),
         logging.StreamHandler()
     ]
 )
@@ -174,9 +180,18 @@ class GitAutoSyncHandler(FileSystemEventHandler):
             
             if push_result.returncode != 0:
                 logger.error(f"git push 失败: {push_result.stderr}")
-                
-                # 尝试先拉取最新更改
+                if "Permission denied (publickey)" in push_result.stderr or "Could not read from remote" in push_result.stderr:
+                    logger.error("提示: 请检查 SSH 密钥是否已配置并加入 ssh-agent，或改用 HTTPS 远程地址。")
+                # 尝试先拉取最新更改（有未提交更改时先暂存再 pull）
                 logger.info("尝试先拉取最新更改...")
+                stashed = False
+                stash_result = subprocess.run(
+                    ['git', 'stash', 'push', '-u', '-m', 'auto-sync-before-pull'],
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                    universal_newlines=True, encoding='utf-8'
+                )
+                if stash_result.returncode == 0 and "No local changes" not in stash_result.stderr:
+                    stashed = True
                 pull_result = subprocess.run(
                     ['git', 'pull', '--rebase'],
                     stdout=subprocess.PIPE,
@@ -184,7 +199,9 @@ class GitAutoSyncHandler(FileSystemEventHandler):
                     universal_newlines=True,
                     encoding='utf-8'
                 )
-                
+                if stashed:
+                    subprocess.run(['git', 'stash', 'pop'], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                   universal_newlines=True, encoding='utf-8')
                 if pull_result.returncode == 0:
                     logger.info("成功拉取最新更改，重新尝试推送...")
                     push_result = subprocess.run(
@@ -194,7 +211,6 @@ class GitAutoSyncHandler(FileSystemEventHandler):
                         universal_newlines=True,
                         encoding='utf-8'
                     )
-                    
                     if push_result.returncode != 0:
                         logger.error(f"重新推送失败: {push_result.stderr}")
                     else:
