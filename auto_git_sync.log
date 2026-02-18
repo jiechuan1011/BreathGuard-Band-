@@ -301,3 +301,12 @@ error: Please commit or stash them.
 2026-02-18 11:52:28,049 - __main__ - INFO - 成功执行 git add
 2026-02-18 11:52:28,368 - __main__ - INFO - 成功提交: Auto-commit: hr_algorithm.cpp - 2026-02-18 11:52:28
 2026-02-18 11:52:31,891 - __main__ - INFO - 成功推送到远程仓库
+2026-02-18 11:54:43,416 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\scripts\VERSION
+2026-02-18 11:54:43,555 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-18 11:54:43,721 - __main__ - INFO - 成功执行 git add
+2026-02-18 11:54:43,928 - __main__ - INFO - 成功提交: Auto-commit: VERSION - 2026-02-18 11:54:43
+2026-02-18 11:55:20,163 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Recv failure: Connection was reset
+
+2026-02-18 11:55:20,163 - __main__ - INFO - 尝试先拉取最新更改...
