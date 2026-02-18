@@ -290,3 +290,14 @@ error: Please commit or stash them.
  M auto_git_sync.log
 ?? lib/algorithm/
 
+2026-02-18 11:52:19,968 - __main__ - INFO - 成功执行 git add
+2026-02-18 11:52:20,207 - __main__ - INFO - 成功提交: Auto-commit: hr_algorithm.h - 2026-02-18 11:52:19
+2026-02-18 11:52:23,592 - __main__ - INFO - 成功推送到远程仓库
+2026-02-18 11:52:27,179 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\lib\algorithm\src\hr_algorithm.cpp
+2026-02-18 11:52:27,381 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+?? lib/algorithm/src/
+
+2026-02-18 11:52:28,049 - __main__ - INFO - 成功执行 git add
+2026-02-18 11:52:28,368 - __main__ - INFO - 成功提交: Auto-commit: hr_algorithm.cpp - 2026-02-18 11:52:28
+2026-02-18 11:52:31,891 - __main__ - INFO - 成功推送到远程仓库
