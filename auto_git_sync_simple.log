@@ -1558,3 +1558,21 @@ error: Please commit or stash them.
  M auto_git_sync_simple.log
 ?? FINAL_SUMMARY_AND_QUICK_START.md
 
+2026-02-18 09:04:16,303 - __main__ - INFO - 成功执行 git add
+2026-02-18 09:04:16,494 - __main__ - INFO - 成功提交: Auto-commit: 1个文件变化 - 2026-02-18 09:04:16
+2026-02-18 09:04:19,000 - __main__ - ERROR - git push 失败: git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+2026-02-18 09:04:19,000 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-18 09:04:19,114 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-02-18 09:06:49,162 - __main__ - INFO - 检测到 1 个文件变化
+2026-02-18 09:06:49,164 - __main__ - INFO -   变化文件 1: D:\大创\Diabetes_Screening_System\src\sensor_collector_final.cpp
+2026-02-18 09:06:49,274 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync_simple.log
+?? src/sensor_collector_final.cpp
+
