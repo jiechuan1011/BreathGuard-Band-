@@ -23,6 +23,7 @@
 #include <ArduinoJson.h>
 #include "ble_peripheral_final.h"
 #include "algorithm_manager_final.h"
+#include "sensor_collector_final.h"
 
 // ==================== BLE GATT定义 ====================
 
@@ -55,8 +56,7 @@ static BlePeripheralState g_ble = {0};
 class MyServerCallbacks : public NimBLEServerCallbacks {
     void onConnect(NimBLEServer* pServer, ble_gap_conn_desc* desc) {
         g_ble.is_connected = 1;
-        Serial.printf("[BLE] 连接成功 - RSSI: %d, 地址: %s\n", 
-                     desc->rssi, NimBLEAddress(desc->peer_addr).toString().c_str());
+        Serial.println("[BLE] 连接成功");
         
         // 更新连接参数（降低延迟）
         pServer->updateConnParams(desc->conn_handle, 40, 80, 0, 400);

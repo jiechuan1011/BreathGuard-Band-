@@ -1271,3 +1271,11 @@ error: Please commit or stash them.
  M auto_git_sync.log
  M system/system_state.h
 
+2026-02-23 20:43:25,015 - __main__ - INFO - 成功执行 git add
+2026-02-23 20:43:25,196 - __main__ - INFO - 成功提交: Auto-commit: system_state.h - 2026-02-23 20:43:25
+2026-02-23 20:43:28,368 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 20:43:54,635 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\lib\system\include\system_state.h
+2026-02-23 20:43:54,758 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M lib/system/include/system_state.h
+
