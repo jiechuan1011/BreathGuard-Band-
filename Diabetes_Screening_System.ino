@@ -14,9 +14,9 @@
  * - 输出风险初筛报告
  */
 
-#include "system/scheduler.h"
-#include "system/system_state.h"
-#include "algorithm/hr_algorithm.h"  // 包含HR_SUCCESS等常量定义
+#include "scheduler.h"
+#include "system_state.h"
+#include "hr_algorithm.h"  // 包含HR_SUCCESS等常量定义
 
 // ──────────────────────────────────────────────
 // 状态机定义

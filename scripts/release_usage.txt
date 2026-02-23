@@ -1,0 +1,27 @@
+========================================
+  Auto Git Sync - 发布包使用说明
+========================================
+
+【包含程序】
+  AutoGitSync_Local.exe  - 本地版（轮询约30秒，无需额外依赖）
+  AutoGitSync_Full.exe   - 完整版（实时监控）
+  AutoGitSync_GUI.exe    - 图形界面（请与上面两个 exe 同目录使用）
+
+【方式一：图形界面（推荐）】
+  1. 双击运行 AutoGitSync_GUI.exe
+  2. 点击「浏览」选择你的 Git 仓库目录
+  3. 选择「本地版」或「完整版」
+  4. 点击「开始同步」即可
+
+【方式二：命令行】
+  将 AutoGitSync_Local.exe 或 AutoGitSync_Full.exe 复制到仓库根目录，双击运行。
+
+【首次推送】
+  若使用 HTTPS 远程地址，首次 push 时需输入：
+  - 用户名：GitHub 用户名
+  - 密码：Personal Access Token（在 GitHub → Settings → Developer settings → Personal access tokens 创建）
+
+【停止同步】
+  图形版点「停止同步」；命令行版在窗口按 Ctrl+C。
+
+========================================
