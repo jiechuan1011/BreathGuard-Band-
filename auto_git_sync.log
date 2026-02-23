@@ -451,3 +451,18 @@ error: Please commit or stash them.
 
 2026-02-18 11:59:30,124 - __main__ - INFO - 成功执行 git add
 2026-02-18 11:59:30,376 - __main__ - INFO - 成功提交: Auto-commit: Diabetes_Screening_System.ino - 2026-02-18 11:59:30
+2026-02-23 19:39:09,979 - __main__ - INFO - watchdog 库已安装
+2026-02-23 19:39:33,028 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\lib\algorithm\src\motion_correction.cpp
+2026-02-23 19:39:33,155 - __main__ - INFO - 检测到未提交的更改:
+ M Diabetes_Screening_System.ino
+ M auto_git_sync.log
+ M platformio.ini
+ M scripts/build_exe.py
+?? build_verbose.log
+?? lib/algorithm/src/motion_correction.cpp
+?? lib/system/
+?? scripts/__pycache__/build_exe.cpython-314.pyc
+?? scripts/build_release.bat
+?? scripts/build_release.py
+?? scripts/release_usage.txt
+
