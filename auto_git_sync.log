@@ -1945,3 +1945,10 @@ error: Please commit or stash them.
 2026-02-23 21:41:09,484 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-23 21:41:09,595 - __main__ - INFO - 成功执行 git add
+2026-02-23 21:41:09,778 - __main__ - INFO - 成功提交: Auto-commit: power_management.h - 2026-02-23 21:41:09
+2026-02-23 21:41:14,599 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 21:41:14,599 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\system\wrist_scheduler.cpp
+2026-02-23 21:41:14,713 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
