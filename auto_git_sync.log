@@ -1069,3 +1069,11 @@ error: Please commit or stash them.
 error: Please commit or stash them.
 
 2026-02-23 20:24:27,859 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\utils\debug.cpp
+2026-02-23 20:24:27,992 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-23 20:24:28,112 - __main__ - INFO - 成功执行 git add
+2026-02-23 20:24:28,295 - __main__ - INFO - 成功提交: Auto-commit: debug.cpp - 2026-02-23 20:24:28
+2026-02-23 20:24:49,597 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Failed to connect to github.com port 443 after 21066 ms: Could not connect to server
+
+2026-02-23 20:24:49,597 - __main__ - INFO - 尝试先拉取最新更改...
