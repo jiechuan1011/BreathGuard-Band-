@@ -1919,3 +1919,15 @@ error: Please commit or stash them.
 2026-02-23 21:40:34,987 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Failed to connect to github.com port 443 after 21128 ms: Could not connect to server
 
 2026-02-23 21:40:34,987 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-23 21:40:35,701 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-02-23 21:40:35,701 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\ui\example_main.cpp
+2026-02-23 21:40:35,839 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-23 21:40:35,974 - __main__ - INFO - 成功执行 git add
+2026-02-23 21:40:36,206 - __main__ - INFO - 成功提交: Auto-commit: example_main.cpp - 2026-02-23 21:40:35
+2026-02-23 21:40:57,570 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Failed to connect to github.com port 443 after 21071 ms: Could not connect to server
+
+2026-02-23 21:40:57,570 - __main__ - INFO - 尝试先拉取最新更改...
