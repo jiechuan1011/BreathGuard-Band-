@@ -48,6 +48,9 @@ void init_hardware();
 void init_sensors();
 void init_communication();
 void init_power_management();
+// 部分平台在其它源文件中实现以下函数，提供前向声明以便统一入口可调用
+void initBLE();
+void setOLEDPower(bool on);
 
 // ==================== 主循环函数声明 ====================
 void process_sensors();

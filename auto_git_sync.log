@@ -1287,3 +1287,18 @@ error: Please commit or stash them.
  M auto_git_sync.log
  M src/ble_peripheral_final.cpp
 
+2026-02-23 20:45:04,878 - __main__ - INFO - 成功执行 git add
+2026-02-23 20:45:05,056 - __main__ - INFO - 成功提交: Auto-commit: ble_peripheral_final.cpp - 2026-02-23 20:45:04
+2026-02-23 20:45:08,681 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 20:46:09,194 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\lib\algorithm\src\motion_correction.cpp
+2026-02-23 20:46:09,337 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-23 20:46:09,471 - __main__ - INFO - 成功执行 git add
+2026-02-23 20:46:09,672 - __main__ - INFO - 成功提交: Auto-commit: motion_correction.cpp - 2026-02-23 20:46:09
+2026-02-23 20:46:40,980 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Recv failure: Connection was reset
+
+2026-02-23 20:46:40,980 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-23 20:46:41,580 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
