@@ -1060,3 +1060,12 @@ error: Please commit or stash them.
 2026-02-23 20:23:59,128 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-23 20:23:59,260 - __main__ - INFO - 成功执行 git add
+2026-02-23 20:23:59,502 - __main__ - INFO - 成功提交: Auto-commit: debug.h - 2026-02-23 20:23:59
+2026-02-23 20:24:27,204 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Recv failure: Connection was reset
+
+2026-02-23 20:24:27,205 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-23 20:24:27,858 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-02-23 20:24:27,859 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\utils\debug.cpp
