@@ -32,6 +32,12 @@
 #include "../config/system_config.h"
 #include "../config/ble_config.h"
 #include "../system/system_state.h"
+// I2C (Wire) used when display or MAX30102 enabled
+#if defined(USE_OLED_DISPLAY) || defined(USE_MAX30102)
+#include <Wire.h>
+#endif
+// Heart-rate algorithm API
+#include "../algorithm/hr_algorithm.h"
 
 // ==================== 免责声明 ====================
 const char DISCLAIMER[] PROGMEM = "本设备仅用于生理参数趋势监测，不用于医疗诊断，请咨询专业医生";
@@ -196,7 +202,7 @@ void init_hardware() {
 #endif
 
     // 初始化I2C总线
-#ifdef USE_OLED_DISPLAY || USE_MAX30102
+#if defined(USE_OLED_DISPLAY) || defined(USE_MAX30102)
     Wire.begin(PIN_SDA, PIN_SCL);
 #ifdef DEBUG_MODE
     Serial.println("[硬件] I2C总线初始化完成");
