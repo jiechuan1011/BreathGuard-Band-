@@ -833,3 +833,10 @@ error: Please commit or stash them.
 2026-02-23 20:08:21,404 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-23 20:08:21,509 - __main__ - INFO - 成功执行 git add
+2026-02-23 20:08:21,675 - __main__ - INFO - 成功提交: Auto-commit: .gitignore - 2026-02-23 20:08:21
+2026-02-23 20:08:25,169 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 20:09:50,008 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\system\scheduler.h
+2026-02-23 20:09:50,119 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
