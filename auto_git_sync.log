@@ -1279,3 +1279,11 @@ error: Please commit or stash them.
  M auto_git_sync.log
  M lib/system/include/system_state.h
 
+2026-02-23 20:43:54,905 - __main__ - INFO - 成功执行 git add
+2026-02-23 20:43:55,090 - __main__ - INFO - 成功提交: Auto-commit: system_state.h - 2026-02-23 20:43:54
+2026-02-23 20:43:58,502 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 20:45:04,583 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\src\ble_peripheral_final.cpp
+2026-02-23 20:45:04,694 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M src/ble_peripheral_final.cpp
+
