@@ -614,3 +614,15 @@ error: Please commit or stash them.
  M auto_git_sync.log
  M platformio.ini
 
+2026-02-23 19:50:00,310 - __main__ - INFO - 成功执行 git add
+2026-02-23 19:50:00,502 - __main__ - INFO - 成功提交: Auto-commit: platformio.ini - 2026-02-23 19:50:00
+2026-02-23 19:50:03,640 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 19:53:29,573 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\platformio.ini
+2026-02-23 19:53:29,710 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-23 19:53:29,868 - __main__ - INFO - 成功执行 git add
+2026-02-23 19:53:30,046 - __main__ - INFO - 成功提交: Auto-commit: platformio.ini - 2026-02-23 19:53:29
+2026-02-23 19:58:30,332 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': SSL connection timeout
+
+2026-02-23 19:58:30,332 - __main__ - INFO - 尝试先拉取最新更改...
