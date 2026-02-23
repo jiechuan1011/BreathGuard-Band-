@@ -1952,3 +1952,11 @@ error: Please commit or stash them.
 2026-02-23 21:41:14,713 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-23 21:41:14,827 - __main__ - INFO - 成功执行 git add
+2026-02-23 21:41:15,015 - __main__ - INFO - 成功提交: Auto-commit: wrist_scheduler.cpp - 2026-02-23 21:41:14
+2026-02-23 21:41:18,432 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 21:45:59,612 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\platformio.ini
+2026-02-23 21:45:59,809 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M platformio.ini
+
