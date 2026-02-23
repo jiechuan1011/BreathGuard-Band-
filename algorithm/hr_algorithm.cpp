@@ -12,6 +12,12 @@ static uint8_t last_spo2 = 0;              // 0表示无效，70-100表示实际
 static uint8_t last_snr = 0;               // SNR*10存储（例如15.3dB存储为153）
 static uint8_t last_correlation = 0;       // 红外/红光相关性（0-100）
 
+// 前向声明：某些构建配置会把多个算法源合并到同一翻译单元，
+// 导致在函数定义出现之前使用这些静态辅助函数而编译失败。
+// 在文件顶部添加前向声明以确保可见性。
+static uint8_t calculate_correlation(int16_t* signal1, int16_t* signal2);
+static uint8_t calculate_bpm_from_red_channel(int* status);
+
 // 运动干扰校正状态
 static KalmanState kalman_ir_state;        // IR通道Kalman滤波器
 static KalmanState kalman_red_state;       // Red通道Kalman滤波器

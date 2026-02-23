@@ -1240,3 +1240,13 @@ error: Please commit or stash them.
 2026-02-23 20:29:40,315 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-23 20:29:40,418 - __main__ - INFO - 成功执行 git add
+2026-02-23 20:29:40,587 - __main__ - INFO - 成功提交: Auto-commit: STEP11_STEP12_COMPLETE_GUIDE.md - 2026-02-23 20:29:40
+2026-02-23 20:29:59,963 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 20:29:59,964 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\system\power_management.h
+2026-02-23 20:30:00,067 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-23 20:30:00,176 - __main__ - INFO - 成功执行 git add
+2026-02-23 20:30:00,346 - __main__ - INFO - 成功提交: Auto-commit: power_management.h - 2026-02-23 20:30:00
+2026-02-23 20:30:03,387 - __main__ - INFO - 成功推送到远程仓库
