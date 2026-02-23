@@ -1708,3 +1708,11 @@ error: Please commit or stash them.
  M auto_git_sync.log
  M src/main_esp32s3.cpp
 
+2026-02-23 21:14:22,428 - __main__ - INFO - 成功执行 git add
+2026-02-23 21:14:22,623 - __main__ - INFO - 成功提交: Auto-commit: main_esp32s3.cpp - 2026-02-23 21:14:22
+2026-02-23 21:14:25,727 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 21:14:39,759 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\src\main_esp32s3.cpp
+2026-02-23 21:14:39,899 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M src/main_esp32s3.cpp
+
