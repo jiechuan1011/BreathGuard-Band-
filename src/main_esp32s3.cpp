@@ -42,6 +42,9 @@
 #include "../algorithm/hr_algorithm.h"
 #include "hr_driver.h"
 
+// 前置声明：确保在被先使用的函数（如按键处理）中可见
+void setOLEDPower(bool on);
+
 // ==================== OLED显示配置 ====================
 #define SCREEN_WIDTH    128
 #define SCREEN_HEIGHT   64
