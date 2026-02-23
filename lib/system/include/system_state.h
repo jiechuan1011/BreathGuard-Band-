@@ -46,6 +46,8 @@ void system_state_set_hr_spo2(uint8_t bpm, uint8_t spo2, uint8_t snr_x10, uint8_
 #endif
 void system_state_set_gas(uint16_t voltage_mv, uint16_t conc_ppm_x10, bool valid);  // 更新气体
 void system_state_set_env(int8_t temp_c, uint8_t rh, bool valid);            // 更新环境
+// SnO2 兼容函数声明，便于 LDF 可见性
+void system_state_set_sno2(uint16_t voltage_mv, uint16_t conc_ppm, bool valid);
 const SystemState* system_state_get();                       // 获取当前状态（只读）
 #ifdef DEVICE_ROLE_WRIST
 uint8_t system_state_get_spo2();                             // 获取当前SpO2值
