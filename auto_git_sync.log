@@ -826,3 +826,10 @@ error: Please commit or stash them.
 2026-02-23 20:07:57,809 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-23 20:07:57,913 - __main__ - INFO - 成功执行 git add
+2026-02-23 20:07:58,090 - __main__ - INFO - 成功提交: Auto-commit: NimBLE2902.h - 2026-02-23 20:07:57
+2026-02-23 20:08:21,302 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 20:08:21,305 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\.gitignore
+2026-02-23 20:08:21,404 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
