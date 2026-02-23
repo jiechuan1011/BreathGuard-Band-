@@ -1960,3 +1960,10 @@ error: Please commit or stash them.
  M auto_git_sync.log
  M platformio.ini
 
+2026-02-23 21:45:59,977 - __main__ - INFO - 成功执行 git add
+2026-02-23 21:46:00,221 - __main__ - INFO - 成功提交: Auto-commit: platformio.ini - 2026-02-23 21:45:59
+2026-02-23 21:46:03,686 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 23:22:52,064 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\scripts\dist\AutoGitSync_GUI.exe
+2026-02-23 23:22:52,216 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
