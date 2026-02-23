@@ -1967,3 +1967,10 @@ error: Please commit or stash them.
 2026-02-23 23:22:52,216 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-23 23:22:52,359 - __main__ - INFO - 成功执行 git add
+2026-02-23 23:22:52,586 - __main__ - INFO - 成功提交: Auto-commit: AutoGitSync_GUI.exe - 2026-02-23 23:22:52
+2026-02-23 23:22:56,689 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 00:07:41,600 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\platformio.ini
+2026-02-24 00:07:41,766 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
