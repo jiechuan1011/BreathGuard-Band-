@@ -1938,3 +1938,10 @@ error: Please commit or stash them.
 2026-02-23 21:40:58,311 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-23 21:40:58,424 - __main__ - INFO - 成功执行 git add
+2026-02-23 21:40:58,610 - __main__ - INFO - 成功提交: Auto-commit: error_handler.cpp - 2026-02-23 21:40:58
+2026-02-23 21:41:09,365 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 21:41:09,365 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\system\power_management.h
+2026-02-23 21:41:09,484 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
