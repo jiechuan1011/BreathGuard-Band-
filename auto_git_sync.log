@@ -1744,3 +1744,14 @@ error: Please commit or stash them.
 2026-02-23 21:32:14,959 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-23 21:32:15,104 - __main__ - INFO - 成功执行 git add
+2026-02-23 21:32:15,314 - __main__ - INFO - 成功提交: Auto-commit: .pioignore - 2026-02-23 21:32:15
+2026-02-23 21:32:18,986 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 21:34:15,590 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\scripts\dist\AutoGitSync_GUI.exe
+2026-02-23 21:34:15,710 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-23 21:34:15,850 - __main__ - INFO - 成功执行 git add
+2026-02-23 21:34:16,036 - __main__ - INFO - 成功提交: Auto-commit: AutoGitSync_GUI.exe - 2026-02-23 21:34:15
+2026-02-23 21:34:19,413 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 21:35:11,405 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\utils\debug.h
