@@ -473,3 +473,16 @@ error: Please commit or stash them.
 2026-02-23 19:39:39,472 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-23 19:39:39,584 - __main__ - INFO - 成功执行 git add
+2026-02-23 19:39:39,778 - __main__ - INFO - 成功提交: Auto-commit: motion_correction.cpp - 2026-02-23 19:39:39
+2026-02-23 19:39:46,933 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 19:44:07,168 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\src\_alg_includes.cpp
+2026-02-23 19:44:07,296 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+?? src/_alg_includes.cpp
+
+2026-02-23 19:44:07,412 - __main__ - INFO - 成功执行 git add
+2026-02-23 19:44:07,591 - __main__ - INFO - 成功提交: Auto-commit: _alg_includes.cpp - 2026-02-23 19:44:07
+2026-02-23 19:44:52,882 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Recv failure: Connection was reset
+
+2026-02-23 19:44:52,882 - __main__ - INFO - 尝试先拉取最新更改...
