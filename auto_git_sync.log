@@ -1730,3 +1730,10 @@ error: Please commit or stash them.
 2026-02-23 21:31:45,024 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-23 21:31:45,152 - __main__ - INFO - 成功执行 git add
+2026-02-23 21:31:45,337 - __main__ - INFO - 成功提交: Auto-commit: _alg_includes.cpp - 2026-02-23 21:31:45
+2026-02-23 21:31:49,452 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 21:32:04,699 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\system\system_state.cpp
+2026-02-23 21:32:04,817 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
