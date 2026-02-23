@@ -1737,3 +1737,10 @@ error: Please commit or stash them.
 2026-02-23 21:32:04,817 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-23 21:32:04,947 - __main__ - INFO - 成功执行 git add
+2026-02-23 21:32:05,134 - __main__ - INFO - 成功提交: Auto-commit: system_state.cpp - 2026-02-23 21:32:04
+2026-02-23 21:32:08,500 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 21:32:14,769 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\.pioignore
+2026-02-23 21:32:14,959 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
