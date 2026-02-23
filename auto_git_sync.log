@@ -1726,3 +1726,7 @@ error: Please commit or stash them.
 2026-02-23 21:15:02,602 - __main__ - INFO - 成功执行 git add
 2026-02-23 21:15:02,787 - __main__ - INFO - 成功提交: Auto-commit: hr_algorithm.h - 2026-02-23 21:15:02
 2026-02-23 21:15:06,301 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 21:31:44,913 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\src\_alg_includes.cpp
+2026-02-23 21:31:45,024 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
