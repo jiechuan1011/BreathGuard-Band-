@@ -274,7 +274,7 @@ String generateJSONData() {
     uint8_t hr = state->hr_bpm;
     uint8_t spo2 = state->spo2_value;
     uint8_t snr_x10 = state->hr_snr_db_x10;
-    uint8_t correlation = state->hr_correlation_quality;
+    uint8_t correlation = state->correlation_quality;
     float acetone = readAcetoneConcentration(); // 腕带返回-1
     
     // 读取电池电量
