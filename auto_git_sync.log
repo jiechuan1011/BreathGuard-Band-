@@ -1046,3 +1046,17 @@ error: Please commit or stash them.
 2026-02-23 20:17:50,658 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-23 20:17:50,766 - __main__ - INFO - 成功执行 git add
+2026-02-23 20:17:50,940 - __main__ - INFO - 成功提交: Auto-commit: scheduler.cpp - 2026-02-23 20:17:50
+2026-02-23 20:18:09,941 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 20:18:09,941 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\system\wrist_scheduler.cpp
+2026-02-23 20:18:10,048 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-23 20:18:10,175 - __main__ - INFO - 成功执行 git add
+2026-02-23 20:18:10,363 - __main__ - INFO - 成功提交: Auto-commit: wrist_scheduler.cpp - 2026-02-23 20:18:10
+2026-02-23 20:18:13,428 - __main__ - INFO - 成功推送到远程仓库
+2026-02-23 20:23:59,006 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\utils\debug.h
+2026-02-23 20:23:59,128 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
