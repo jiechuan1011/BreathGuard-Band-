@@ -175,6 +175,29 @@ static void scheduler_update() {
 void setup() {
     // 串口初始化
     Serial.begin(115200);
+    delay(200);
+
+    #if defined(DEVICE_ROLE_WRIST)
+    Serial.println("[BOOT] role=WRIST");
+    #elif defined(DEVICE_ROLE_DETECTOR)
+    Serial.println("[BOOT] role=DETECTOR");
+    #else
+    Serial.println("[BOOT] role=UNKNOWN");
+    #endif
+
+    /* PSRAM 初始化检查 */
+    if (!psramInit() || ESP.getPsramSize() == 0) {
+        Serial.println("[ERROR] PSRAM initialization failed!");
+        while (1) { delay(1000); }
+    } else {
+        Serial.printf("[INFO] PSRAM OK, size=%u bytes\n", ESP.getPsramSize());
+    }
+
+    /* 打印关键引脚映射 */
+    Serial.printf("[PINS] I2C_SCL=%d SDA=%d AMO_SCLK=%d MOSI=%d CS=%d DC=%d RST=%d BAT_ADC=%d\n",
+        PIN_I2C_SCL, PIN_I2C_SDA, PIN_AMOLED_SCLK, PIN_AMOLED_MOSI, PIN_AMOLED_CS,
+        PIN_AMOLED_DC, PIN_AMOLED_RST, PIN_BAT_ADC);
+
     delay(500);
     
     while (!Serial && millis() < 3000);
