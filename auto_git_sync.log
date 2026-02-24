@@ -1974,3 +1974,19 @@ error: Please commit or stash them.
 2026-02-24 00:07:41,766 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-24 00:07:41,886 - __main__ - INFO - 成功执行 git add
+2026-02-24 00:07:42,108 - __main__ - INFO - 成功提交: Auto-commit: platformio.ini - 2026-02-24 00:07:41
+2026-02-24 00:07:46,799 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 00:07:46,800 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\lib\algorithm\include\hr_algorithm.h
+2026-02-24 00:07:47,010 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-24 00:07:47,314 - __main__ - INFO - 成功执行 git add
+2026-02-24 00:07:47,694 - __main__ - INFO - 成功提交: Auto-commit: hr_algorithm.h - 2026-02-24 00:07:47
+2026-02-24 00:07:51,757 - __main__ - ERROR - git push 失败: fatal: the remote end hung up unexpectedly
+error: failed to push some refs to 'https://github.com/jiechuan1011/BreathGuard-Band-.git'
+
+2026-02-24 00:07:51,758 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-24 00:07:51,866 - __main__ - ERROR - git pull 失败: 
+2026-02-24 00:07:51,866 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\lib\algorithm\src\hr_algorithm.cpp
+2026-02-24 00:07:51,921 - __main__ - INFO - 没有未提交的更改

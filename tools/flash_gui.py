@@ -1,0 +1,164 @@
+# flash_gui.py
+# -*- coding: utf-8 -*-
+"""
+糖尿病初筛系统 - 一键烧录工具 v1.0
+
+依赖: Python 自带 tkinter, 以及 pyserial (pip install pyserial)
+保存位置: 工程根目录 (包含 src/config.h)
+
+功能:
+ - 选择腕带/检测模块, 自动修改 src/config.h
+ - 下拉选择 COM 端口, 可刷新
+ - 开始烧录后执行 pio run ... upload 命令
+ - 显示实时日志, 进度条和完成提示
+"""
+
+import os
+import threading
+import subprocess
+import tkinter as tk
+from tkinter import ttk, messagebox, scrolledtext
+from serial.tools import list_ports
+
+# 全局变量
+ROLE_WRIST = "DEVICE_ROLE_WRIST"
+ROLE_DETECTOR = "DEVICE_ROLE_DETECTOR"
+CONFIG_PATH = os.path.join(os.getcwd(), "src", "config.h")
+
+
+def modify_config(role_macro: str):
+    """
+    将 config.h 中的 DEVICE_ROLE_* 宏设置为指定角色。
+    保留其他行不变。
+    """
+    try:
+        with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+    except Exception as e:
+        raise IOError(f"无法读取配置文件: {e}")
+
+    out_lines = []
+    found = False
+    for ln in lines:
+        if ln.strip().startswith("#define DEVICE_ROLE_"):
+            if role_macro in ln:
+                out_lines.append(f"#define {role_macro}\n")
+            else:
+                # 注释掉其他角色
+                out_lines.append(f"//{ln}" if not ln.strip().startswith("//") else ln)
+            found = True
+        else:
+            out_lines.append(ln)
+    if not found:
+        # 如果未定义则追加
+        out_lines.append(f"#define {role_macro}\n")
+    try:
+        with open(CONFIG_PATH, "w", encoding="utf-8") as f:
+            f.writelines(out_lines)
+    except Exception as e:
+        raise IOError(f"保存配置文件失败: {e}")
+
+
+class FlashGUI(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("糖尿病初筛系统 - 一键烧录工具 v1.0")
+        self.geometry("700x500")
+
+        # 角色选择
+        self.role_var = tk.StringVar(value=ROLE_WRIST)
+        role_frame = ttk.LabelFrame(self, text="设备角色")
+        role_frame.pack(fill="x", padx=10, pady=5)
+        ttk.Radiobutton(role_frame, text="腕带主控", variable=self.role_var,
+                        value=ROLE_WRIST).pack(side="left", padx=10, pady=5)
+        ttk.Radiobutton(role_frame, text="检测模块", variable=self.role_var,
+                        value=ROLE_DETECTOR).pack(side="left", padx=10, pady=5)
+
+        # COM 选择
+        port_frame = ttk.Frame(self)
+        port_frame.pack(fill="x", padx=10, pady=5)
+        ttk.Label(port_frame, text="串口:").pack(side="left")
+        self.port_cb = ttk.Combobox(port_frame, width=20, state="readonly")
+        self.port_cb.pack(side="left", padx=5)
+        ttk.Button(port_frame, text="刷新", command=self.refresh_ports).pack(side="left")
+        self.refresh_ports()
+
+        # 开始按钮
+        self.start_btn = ttk.Button(self, text="🚀 开始烧录", command=self.start_flash)
+        self.start_btn.pack(fill="x", padx=10, pady=10)
+
+        # 进度条
+        self.progress = ttk.Progressbar(self, mode="indeterminate")
+        self.progress.pack(fill="x", padx=10, pady=5)
+
+        # 日志窗口
+        self.log_text = scrolledtext.ScrolledText(self, state="disabled", height=20)
+        self.log_text.pack(fill="both", expand=True, padx=10, pady=5)
+
+    def log(self, msg: str):
+        """在日志窗口追加一行文本"""
+        self.log_text.configure(state="normal")
+        self.log_text.insert(tk.END, msg + "\n")
+        self.log_text.see(tk.END)
+        self.log_text.configure(state="disabled")
+
+    def refresh_ports(self):
+        """列出可用串口"""
+        ports = [p.device for p in list_ports.comports()]
+        self.port_cb['values'] = ports
+        if ports:
+            self.port_cb.current(0)
+
+    def start_flash(self):
+        port = self.port_cb.get()
+        if not port:
+            messagebox.showwarning("提示", "请先选择一个 COM 端口。")
+            return
+
+        role = self.role_var.get()
+        try:
+            modify_config(role)
+            self.log(f"已设置角色: {role}")
+        except Exception as e:
+            messagebox.showerror("错误", str(e))
+            return
+
+        # 禁用控件
+        self.start_btn.config(state="disabled")
+        self.progress.start(10)
+        self.log("开始执行烧录命令...")
+
+        t = threading.Thread(target=self.run_pio, args=(port,), daemon=True)
+        t.start()
+
+    def run_pio(self, port: str):
+        cmd = ["pio", "run", "-e", "esp32s3_final", "-t", "upload", "--upload-port", port]
+        try:
+            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+                                    stderr=subprocess.STDOUT, text=True, cwd=os.getcwd())
+        except Exception as e:
+            self.log(f"启动命令失败: {e}")
+            self.after(0, self.finish, False)
+            return
+
+        # 读取输出
+        for line in proc.stdout:
+            self.after(0, self.log, line.rstrip())
+
+        proc.wait()
+        success = proc.returncode == 0
+        self.after(0, self.finish, success)
+
+    def finish(self, success: bool):
+        """命令结束后的处理"""
+        self.progress.stop()
+        self.start_btn.config(state="normal")
+        if success:
+            messagebox.showinfo("完成", "烧录完成！")
+        else:
+            messagebox.showerror("失败", "烧录失败，请查看日志。")
+
+
+if __name__ == "__main__":
+    app = FlashGUI()
+    app.mainloop()
