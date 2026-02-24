@@ -3045,3 +3045,38 @@ remove the file manually to continue.
 
 2026-02-24 10:20:44,421 - __main__ - INFO - 成功执行 git add
 2026-02-24 10:20:44,730 - __main__ - INFO - 成功提交: Auto-commit: base_library.zip - 2026-02-24 10:20:44
+2026-02-24 10:20:48,139 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:21:09,278 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\config\config.h
+2026-02-24 10:21:09,278 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\config\config.h
+2026-02-24 10:21:09,404 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M tools/build/flash_gui/Analysis-00.toc
+?? tools/build/flash_gui/EXE-00.toc
+?? tools/build/flash_gui/PKG-00.toc
+?? tools/build/flash_gui/PYZ-00.pyz
+?? tools/build/flash_gui/PYZ-00.toc
+?? tools/build/flash_gui/flash_gui.pkg
+?? tools/build/flash_gui/localpycs/
+?? tools/dist/
+
+2026-02-24 10:21:09,415 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M tools/build/flash_gui/Analysis-00.toc
+?? tools/build/flash_gui/EXE-00.toc
+?? tools/build/flash_gui/PKG-00.toc
+?? tools/build/flash_gui/PYZ-00.pyz
+?? tools/build/flash_gui/PYZ-00.toc
+?? tools/build/flash_gui/flash_gui.pkg
+?? tools/build/flash_gui/localpycs/
+?? tools/dist/
+
+2026-02-24 10:21:09,547 - __main__ - ERROR - git add 失败: fatal: Unable to create 'D:/大创/Diabetes_Screening_System/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+
+2026-02-24 10:21:10,109 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:21:10,353 - __main__ - INFO - 成功提交: Auto-commit: config.h - 2026-02-24 10:21:10
