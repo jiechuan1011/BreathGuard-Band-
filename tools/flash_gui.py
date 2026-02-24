@@ -4,15 +4,14 @@
 糖尿病初筛系统 - 一键烧录工具 v1.0
 
 依赖: Python 自带 tkinter, 以及 pyserial (pip install pyserial)
-保存位置: 工程根目录 (包含 src/config.h)
+保存位置: 工程根目录 (包含 config/config.h)
 
 功能:
- - 选择腕带/检测模块, 自动修改 src/config.h
+ - 选择腕带/检测模块, 自动修改 config/config.h
  - 下拉选择 COM 端口, 可刷新
  - 开始烧录后执行 pio run ... upload 命令
  - 显示实时日志, 进度条和完成提示
 """
-
 import os
 import sys
 import threading
@@ -35,7 +34,8 @@ if getattr(sys, 'frozen', False):
 else:
     project_root = os.getcwd()
 
-CONFIG_PATH = os.path.join(project_root, "src", "config.h")
+# 注意: 配置文件实际位于项目根的 config 目录中，而不是 src。
+CONFIG_PATH = os.path.join(project_root, "config", "config.h")
 
 # 调试输出路径，方便定位错误
 print(f"[DEBUG] project_root = {project_root}")
