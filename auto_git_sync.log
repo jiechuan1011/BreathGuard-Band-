@@ -2370,3 +2370,10 @@ error: Please commit or stash them.
 
 2026-02-24 10:01:25,861 - __main__ - INFO - 成功执行 git add
 2026-02-24 10:01:26,051 - __main__ - INFO - 成功提交: Auto-commit: build.bat - 2026-02-24 10:01:25
+2026-02-24 10:01:29,929 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:01:38,627 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\build.bat
+2026-02-24 10:01:38,745 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-24 10:01:38,866 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:01:39,074 - __main__ - INFO - 成功提交: Auto-commit: build.bat - 2026-02-24 10:01:38
