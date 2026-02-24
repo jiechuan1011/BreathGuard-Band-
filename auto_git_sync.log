@@ -3762,3 +3762,19 @@ error: Please commit or stash them.
 
 2026-02-24 10:51:16,610 - __main__ - INFO - 成功执行 git add
 2026-02-24 10:51:16,811 - __main__ - INFO - 成功提交: Auto-commit: STEP11_STEP12_COMPLETE_GUIDE.md - 2026-02-24 10:51:16
+2026-02-24 10:51:27,502 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:51:27,502 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\system\error_handler.cpp
+2026-02-24 10:51:27,624 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-24 10:51:27,752 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:51:27,951 - __main__ - INFO - 成功提交: Auto-commit: error_handler.cpp - 2026-02-24 10:51:27
+2026-02-24 10:51:31,396 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 11:35:19,625 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\scripts\dist\AutoGitSync_GUI.exe
+2026-02-24 11:35:19,628 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\scripts\dist\AutoGitSync_GUI.exe
+2026-02-24 11:35:19,801 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-24 11:35:19,802 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
