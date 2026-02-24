@@ -155,8 +155,9 @@ class FlashGUI(tk.Tk):
     def run_pio(self, port: str):
         cmd = ["pio", "run", "-e", "esp32s3_final", "-t", "upload", "--upload-port", port]
         try:
+            # ensure PlatformIO is run from project root so pio.ini can be located
             proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
-                                    stderr=subprocess.STDOUT, text=True, cwd=os.getcwd())
+                                    stderr=subprocess.STDOUT, text=True, cwd=project_root)
         except Exception as e:
             self.log(f"启动命令失败: {e}")
             self.after(0, self.finish, False)
