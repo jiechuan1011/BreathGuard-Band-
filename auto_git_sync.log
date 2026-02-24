@@ -2407,3 +2407,16 @@ error: Please commit or stash them.
 2026-02-24 10:01:52,270 - __main__ - INFO - 成功执行 git add
 2026-02-24 10:01:52,664 - __main__ - INFO - 成功提交: Auto-commit: base_library.zip - 2026-02-24 10:01:52
 2026-02-24 10:01:55,914 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:02:29,537 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\flash_gui.py
+2026-02-24 10:02:29,680 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M tools/build/flash_gui/PYZ-00.pyz
+ M tools/flash_gui.py
+?? tools/build/flash_gui/EXE-00.toc
+?? tools/build/flash_gui/PKG-00.toc
+?? tools/build/flash_gui/PYZ-00.toc
+?? tools/build/flash_gui/flash_gui.pkg
+?? tools/dist/
+
+2026-02-24 10:02:30,432 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:02:30,698 - __main__ - INFO - 成功提交: Auto-commit: flash_gui.py - 2026-02-24 10:02:30

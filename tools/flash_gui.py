@@ -56,7 +56,7 @@ def modify_config(role_macro: str):
         with open(CONFIG_PATH, "r", encoding="utf-8") as f:
             lines = f.readlines()
     except Exception as e:
-        raise IOError(f"无法读取配置文件: {e}")
+        raise IOError(f"无法读取配置文件 {CONFIG_PATH}: {e}")
 
     out_lines = []
     found = False
@@ -77,7 +77,7 @@ def modify_config(role_macro: str):
         with open(CONFIG_PATH, "w", encoding="utf-8") as f:
             f.writelines(out_lines)
     except Exception as e:
-        raise IOError(f"保存配置文件失败: {e}")
+        raise IOError(f"保存配置文件 {CONFIG_PATH} 失败: {e}")
 
 
 class FlashGUI(tk.Tk):
