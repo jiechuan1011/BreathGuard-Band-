@@ -14,6 +14,7 @@
 """
 
 import os
+import sys
 import threading
 import subprocess
 import tkinter as tk
