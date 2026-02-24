@@ -3280,3 +3280,8 @@ error: Please commit or stash them.
 2026-02-24 10:34:13,236 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-24 10:34:13,410 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:34:13,670 - __main__ - INFO - 成功提交: Auto-commit: platformio.ini - 2026-02-24 10:34:13
+2026-02-24 10:34:31,776 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Failed to connect to github.com port 443 after 21096 ms: Could not connect to server
+
+2026-02-24 10:34:31,776 - __main__ - INFO - 尝试先拉取最新更改...
