@@ -2994,3 +2994,7 @@ remove the file manually to continue.
  M auto_git_sync.log
  D tools/dist/flash_gui.exe
 
+2026-02-24 10:20:35,237 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:20:35,248 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:20:35,382 - __main__ - ERROR - git commit 失败: 
+2026-02-24 10:20:35,460 - __main__ - INFO - 成功提交: Auto-commit: dist - 2026-02-24 10:20:35
