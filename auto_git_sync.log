@@ -3080,3 +3080,21 @@ remove the file manually to continue.
 
 2026-02-24 10:21:10,109 - __main__ - INFO - 成功执行 git add
 2026-02-24 10:21:10,353 - __main__ - INFO - 成功提交: Auto-commit: config.h - 2026-02-24 10:21:10
+2026-02-24 10:21:19,914 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:21:19,914 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\config\config.h
+2026-02-24 10:21:20,024 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-24 10:21:20,141 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:21:20,325 - __main__ - INFO - 成功提交: Auto-commit: config.h - 2026-02-24 10:21:20
+2026-02-24 10:21:24,276 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:23:01,268 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\config\config.h
+2026-02-24 10:23:01,269 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\config\config.h
+2026-02-24 10:23:01,394 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M config/config.h
+
+2026-02-24 10:23:01,397 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M config/config.h
+
