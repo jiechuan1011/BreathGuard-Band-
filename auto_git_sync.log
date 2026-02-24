@@ -2964,3 +2964,18 @@ remove the file manually to continue.
 2026-02-24 10:19:46,706 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-24 10:19:46,821 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:19:46,865 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:19:47,001 - __main__ - ERROR - git commit 失败: 
+2026-02-24 10:19:47,046 - __main__ - INFO - 成功提交: Auto-commit: flash_gui.py - 2026-02-24 10:19:46
+2026-02-24 10:19:50,308 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:19:54,271 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\flash_gui.py
+2026-02-24 10:19:54,271 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\flash_gui.py
+2026-02-24 10:19:54,439 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M tools/flash_gui.py
+
+2026-02-24 10:19:54,439 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M tools/flash_gui.py
+

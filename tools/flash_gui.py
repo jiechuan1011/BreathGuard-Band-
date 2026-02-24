@@ -206,16 +206,23 @@ class FlashGUI(tk.Tk):
 
         proc.wait()
         success = proc.returncode == 0
-        self.after(0, self.finish, success)
+        self.after(0, self.finish, success, target)
 
-    def finish(self, success: bool):
+    def finish(self, success: bool, target: str = "upload"):
         """命令结束后的处理"""
         self.progress.stop()
         self.start_btn.config(state="normal")
+        self.erase_btn.config(state="normal")
         if success:
-            messagebox.showinfo("完成", "烧录完成！")
+            if target == "upload":
+                messagebox.showinfo("完成", "烧录完成！")
+            else:
+                messagebox.showinfo("完成", "擦除完成！")
         else:
-            messagebox.showerror("失败", "烧录失败，请查看日志。")
+            if target == "upload":
+                messagebox.showerror("失败", "烧录失败，请查看日志。")
+            else:
+                messagebox.showerror("失败", "擦除失败，请查看日志。")
 
 
 if __name__ == "__main__":
