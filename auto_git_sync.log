@@ -2435,3 +2435,28 @@ error: Please commit or stash them.
 
 2026-02-24 10:02:47,750 - __main__ - INFO - 成功执行 git add
 2026-02-24 10:02:48,015 - __main__ - INFO - 成功提交: Auto-commit: flash_gui.py - 2026-02-24 10:02:47
+2026-02-24 10:02:51,050 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:03:02,230 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\build\flash_gui\Analysis-00.toc
+2026-02-24 10:03:02,375 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ D tools/build/flash_gui/Analysis-00.toc
+ D tools/build/flash_gui/EXE-00.toc
+ D tools/build/flash_gui/PKG-00.toc
+ D tools/build/flash_gui/PYZ-00.pyz
+ D tools/build/flash_gui/PYZ-00.toc
+ D tools/build/flash_gui/base_library.zip
+ D tools/build/flash_gui/flash_gui.pkg
+ D tools/build/flash_gui/localpycs/pyimod01_archive.pyc
+ D tools/build/flash_gui/localpycs/pyimod02_importers.pyc
+ D tools/build/flash_gui/localpycs/pyimod03_ctypes.pyc
+ D tools/build/flash_gui/localpycs/pyimod04_pywin32.pyc
+ D tools/build/flash_gui/localpycs/struct.pyc
+ D tools/build/flash_gui/warn-flash_gui.txt
+ D tools/build/flash_gui/xref-flash_gui.html
+ D tools/dist/flash_gui.exe
+
+2026-02-24 10:03:02,489 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:03:02,750 - __main__ - INFO - 成功提交: Auto-commit: Analysis-00.toc - 2026-02-24 10:03:02
+2026-02-24 10:03:30,806 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Recv failure: Connection was reset
+
+2026-02-24 10:03:30,807 - __main__ - INFO - 尝试先拉取最新更改...
