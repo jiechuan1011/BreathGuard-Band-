@@ -2924,3 +2924,7 @@ error: Please commit or stash them.
  M auto_git_sync.log
  M config/config.h
 
+2026-02-24 10:18:26,683 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:18:26,806 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:18:26,957 - __main__ - INFO - 成功提交: Auto-commit: config.h - 2026-02-24 10:18:26
+2026-02-24 10:18:26,963 - __main__ - ERROR - git commit 失败: 
