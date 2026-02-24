@@ -2979,3 +2979,18 @@ remove the file manually to continue.
  M auto_git_sync.log
  M tools/flash_gui.py
 
+2026-02-24 10:19:54,593 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:19:54,637 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:19:54,778 - __main__ - ERROR - git commit 失败: 
+2026-02-24 10:19:54,794 - __main__ - INFO - 成功提交: Auto-commit: flash_gui.py - 2026-02-24 10:19:54
+2026-02-24 10:19:57,997 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:20:34,961 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\dist
+2026-02-24 10:20:34,961 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\dist
+2026-02-24 10:20:35,102 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ D tools/dist/flash_gui.exe
+
+2026-02-24 10:20:35,120 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ D tools/dist/flash_gui.exe
+
