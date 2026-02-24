@@ -3778,3 +3778,7 @@ error: Please commit or stash them.
 2026-02-24 11:35:19,802 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-24 11:35:19,956 - __main__ - INFO - 成功执行 git add
+2026-02-24 11:35:19,965 - __main__ - INFO - 成功执行 git add
+2026-02-24 11:35:20,154 - __main__ - ERROR - git commit 失败: 
+2026-02-24 11:35:20,241 - __main__ - INFO - 成功提交: Auto-commit: AutoGitSync_GUI.exe - 2026-02-24 11:35:19
