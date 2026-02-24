@@ -156,12 +156,20 @@ class FlashGUI(tk.Tk):
     def run_pio(self, port: str):
         # try to locate the pio executable on PATH
         pio_exe = shutil.which("pio") or shutil.which("platformio")
-        if not pio_exe:
-            self.log("未找到 'pio' 命令，请确认 PlatformIO 已安装并添加到 PATH。")
-            self.after(0, self.finish, False)
-            return
+        cmd = None
+        if pio_exe:
+            cmd = [pio_exe, "run", "-e", "esp32s3_final", "-t", "upload", "--upload-port", port]
+        else:
+            # fallback: run via python -m platformio if python is available
+            python_exe = shutil.which("python") or shutil.which("python3")
+            if python_exe:
+                cmd = [python_exe, "-m", "platformio", "run", "-e", "esp32s3_final",
+                       "-t", "upload", "--upload-port", port]
+            else:
+                self.log("未找到 'pio' 命令，也无法定位 Python 解释器，无法进行烧录。")
+                self.after(0, self.finish, False)
+                return
 
-        cmd = [pio_exe, "run", "-e", "esp32s3_final", "-t", "upload", "--upload-port", port]
         try:
             # ensure PlatformIO is run from project root so pio.ini can be located
             proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
