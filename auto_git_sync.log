@@ -3782,3 +3782,12 @@ error: Please commit or stash them.
 2026-02-24 11:35:19,965 - __main__ - INFO - 成功执行 git add
 2026-02-24 11:35:20,154 - __main__ - ERROR - git commit 失败: 
 2026-02-24 11:35:20,241 - __main__ - INFO - 成功提交: Auto-commit: AutoGitSync_GUI.exe - 2026-02-24 11:35:19
+2026-02-24 11:35:23,881 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 11:58:01,854 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\scripts\dist\AutoGitSync_Full.exe
+2026-02-24 11:58:01,854 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\scripts\dist\AutoGitSync_Full.exe
+2026-02-24 11:58:02,041 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-24 11:58:02,041 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
