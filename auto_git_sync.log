@@ -2764,3 +2764,23 @@ error: Please commit or stash them.
 2026-02-24 10:13:56,010 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Failed to connect to github.com port 443 after 21107 ms: Could not connect to server
 
 2026-02-24 10:13:56,010 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-24 10:13:57,957 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-02-24 10:13:57,957 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\flash_gui.py
+2026-02-24 10:13:58,244 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M tools/dist/flash_gui.exe
+
+2026-02-24 10:13:58,589 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:13:59,013 - __main__ - INFO - 成功提交: Auto-commit: flash_gui.py - 2026-02-24 10:13:58
+2026-02-24 10:14:20,637 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Failed to connect to github.com port 443 after 21107 ms: Could not connect to server
+
+2026-02-24 10:14:20,637 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-24 10:14:21,414 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-02-24 10:14:21,414 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\build\flash_gui\Analysis-00.toc
+2026-02-24 10:14:21,537 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
