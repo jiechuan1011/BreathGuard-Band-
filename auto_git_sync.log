@@ -1990,3 +1990,15 @@ error: failed to push some refs to 'https://github.com/jiechuan1011/BreathGuard-
 2026-02-24 00:07:51,866 - __main__ - ERROR - git pull 失败: 
 2026-02-24 00:07:51,866 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\lib\algorithm\src\hr_algorithm.cpp
 2026-02-24 00:07:51,921 - __main__ - INFO - 没有未提交的更改
+2026-02-24 09:50:56,222 - __main__ - INFO - watchdog 库已安装
+2026-02-24 09:51:03,023 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\scripts\dist\AutoGitSync_GUI.exe
+2026-02-24 09:51:03,162 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M src/_alg_includes.cpp
+?? tools/
+
+2026-02-24 09:51:03,296 - __main__ - INFO - 成功执行 git add
+2026-02-24 09:51:03,518 - __main__ - INFO - 成功提交: Auto-commit: AutoGitSync_GUI.exe - 2026-02-24 09:51:03
+2026-02-24 09:51:33,634 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Recv failure: Connection was reset
+
+2026-02-24 09:51:33,634 - __main__ - INFO - 尝试先拉取最新更改...
