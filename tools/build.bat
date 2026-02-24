@@ -19,6 +19,10 @@ echo.
 REM 2. 切换到当前脚本所在目录（tools）
 cd /d "%~dp0"
 
+REM 清理旧的打包目录，避免使用缓存exe
+if exist build rd /s /q build
+if exist dist rd /s /q dist
+
 REM 3. 使用 PyInstaller 生成单文件窗口程序。模块名区分大小写。
 python -m PyInstaller --onefile --windowed flash_gui.py
 
