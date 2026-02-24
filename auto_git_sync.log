@@ -2998,3 +2998,50 @@ remove the file manually to continue.
 2026-02-24 10:20:35,248 - __main__ - INFO - 成功执行 git add
 2026-02-24 10:20:35,382 - __main__ - ERROR - git commit 失败: 
 2026-02-24 10:20:35,460 - __main__ - INFO - 成功提交: Auto-commit: dist - 2026-02-24 10:20:35
+2026-02-24 10:20:39,254 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:20:44,135 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\build\flash_gui\base_library.zip
+2026-02-24 10:20:44,136 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\build\flash_gui\base_library.zip
+2026-02-24 10:20:44,265 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ D tools/build/flash_gui/Analysis-00.toc
+ D tools/build/flash_gui/EXE-00.toc
+ D tools/build/flash_gui/PKG-00.toc
+ D tools/build/flash_gui/PYZ-00.pyz
+ D tools/build/flash_gui/PYZ-00.toc
+ M tools/build/flash_gui/base_library.zip
+ D tools/build/flash_gui/flash_gui.pkg
+ D tools/build/flash_gui/localpycs/pyimod01_archive.pyc
+ D tools/build/flash_gui/localpycs/pyimod02_importers.pyc
+ D tools/build/flash_gui/localpycs/pyimod03_ctypes.pyc
+ D tools/build/flash_gui/localpycs/pyimod04_pywin32.pyc
+ D tools/build/flash_gui/localpycs/struct.pyc
+ D tools/build/flash_gui/warn-flash_gui.txt
+ D tools/build/flash_gui/xref-flash_gui.html
+
+2026-02-24 10:20:44,272 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ D tools/build/flash_gui/Analysis-00.toc
+ D tools/build/flash_gui/EXE-00.toc
+ D tools/build/flash_gui/PKG-00.toc
+ D tools/build/flash_gui/PYZ-00.pyz
+ D tools/build/flash_gui/PYZ-00.toc
+ M tools/build/flash_gui/base_library.zip
+ D tools/build/flash_gui/flash_gui.pkg
+ D tools/build/flash_gui/localpycs/pyimod01_archive.pyc
+ D tools/build/flash_gui/localpycs/pyimod02_importers.pyc
+ D tools/build/flash_gui/localpycs/pyimod03_ctypes.pyc
+ D tools/build/flash_gui/localpycs/pyimod04_pywin32.pyc
+ D tools/build/flash_gui/localpycs/struct.pyc
+ D tools/build/flash_gui/warn-flash_gui.txt
+ D tools/build/flash_gui/xref-flash_gui.html
+
+2026-02-24 10:20:44,409 - __main__ - ERROR - git add 失败: fatal: Unable to create 'D:/大创/Diabetes_Screening_System/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+
+2026-02-24 10:20:44,421 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:20:44,730 - __main__ - INFO - 成功提交: Auto-commit: base_library.zip - 2026-02-24 10:20:44
