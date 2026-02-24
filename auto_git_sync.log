@@ -3791,3 +3791,35 @@ error: Please commit or stash them.
 2026-02-24 11:58:02,041 - __main__ - INFO - 检测到未提交的更改:
  M auto_git_sync.log
 
+2026-02-24 11:58:02,215 - __main__ - ERROR - git add 失败: fatal: Unable to create 'D:/大创/Diabetes_Screening_System/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+
+2026-02-24 11:58:02,227 - __main__ - INFO - 成功执行 git add
+2026-02-24 11:58:02,804 - __main__ - INFO - 成功提交: Auto-commit: AutoGitSync_Full.exe - 2026-02-24 11:58:02
+2026-02-24 11:58:07,473 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 18:30:51,193 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\scripts\dist\AutoGitSync_GUI.exe
+2026-02-24 18:30:51,193 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\scripts\dist\AutoGitSync_GUI.exe
+2026-02-24 18:30:51,392 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-24 18:30:51,392 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-24 18:30:51,542 - __main__ - ERROR - git add 失败: fatal: Unable to create 'D:/大创/Diabetes_Screening_System/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+
+2026-02-24 18:30:51,551 - __main__ - INFO - 成功执行 git add
+2026-02-24 18:30:51,809 - __main__ - INFO - 成功提交: Auto-commit: AutoGitSync_GUI.exe - 2026-02-24 18:30:51
+2026-02-24 18:31:43,754 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Recv failure: Connection was reset
+
+2026-02-24 18:31:43,754 - __main__ - INFO - 尝试先拉取最新更改...
