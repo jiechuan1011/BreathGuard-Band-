@@ -3498,3 +3498,15 @@ error: Please commit or stash them.
 
 2026-02-24 10:37:34,893 - __main__ - INFO - 成功执行 git add
 2026-02-24 10:37:35,113 - __main__ - INFO - 成功提交: Auto-commit: main_esp32s3_final.cpp - 2026-02-24 10:37:34
+2026-02-24 10:37:52,836 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:37:52,837 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\lib\system\src\system_state.cpp
+2026-02-24 10:37:52,956 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-24 10:37:53,082 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:37:53,280 - __main__ - INFO - 成功提交: Auto-commit: system_state.cpp - 2026-02-24 10:37:53
+2026-02-24 10:37:54,610 - __main__ - ERROR - git push 失败: To https://github.com/jiechuan1011/BreathGuard-Band-.git
+ ! [remote rejected] main -> main (cannot lock ref 'refs/heads/main': is at 0e218c5b50669eabe516c12adc95e2ab95b27e66 but expected 8ce4b3091f6458a3ddd8b090496ee65fa5313d28)
+error: failed to push some refs to 'https://github.com/jiechuan1011/BreathGuard-Band-.git'
+
+2026-02-24 10:37:54,610 - __main__ - INFO - 尝试先拉取最新更改...
