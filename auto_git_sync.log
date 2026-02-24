@@ -3510,3 +3510,22 @@ error: Please commit or stash them.
 error: failed to push some refs to 'https://github.com/jiechuan1011/BreathGuard-Band-.git'
 
 2026-02-24 10:37:54,610 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-24 10:37:55,228 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-02-24 10:37:55,228 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\src\main_esp32s3_final.cpp
+2026-02-24 10:37:55,342 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-24 10:37:55,489 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:37:55,680 - __main__ - INFO - 成功提交: Auto-commit: main_esp32s3_final.cpp - 2026-02-24 10:37:55
+2026-02-24 10:37:56,274 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:37:59,251 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:45:31,008 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\utils\debug.h
+2026-02-24 10:45:31,008 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\utils\debug.h
+2026-02-24 10:45:31,130 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-24 10:45:31,143 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
