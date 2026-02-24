@@ -195,4 +195,5 @@
 #endif
 #endif // DEVICE_ROLE_DETECTOR
 
-#endif // CONFIG_H
+#endif // CONFIG_H#define DEVICE_ROLE_WRIST
+//#define DEVICE_ROLE_WRIST
