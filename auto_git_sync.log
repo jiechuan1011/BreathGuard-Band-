@@ -2907,3 +2907,20 @@ error: Please commit or stash them.
 
 2026-02-24 10:18:05,547 - __main__ - INFO - 成功执行 git add
 2026-02-24 10:18:05,749 - __main__ - INFO - 成功提交: Auto-commit: base_library.zip - 2026-02-24 10:18:05
+2026-02-24 10:18:18,826 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:18:18,827 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\build\flash_gui\base_library.zip
+2026-02-24 10:18:18,943 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-24 10:18:19,058 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:18:19,244 - __main__ - INFO - 成功提交: Auto-commit: base_library.zip - 2026-02-24 10:18:19
+2026-02-24 10:18:22,414 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:18:26,400 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\config\config.h
+2026-02-24 10:18:26,555 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M config/config.h
+
+2026-02-24 10:18:26,558 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M config/config.h
+
