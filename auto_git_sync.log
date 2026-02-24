@@ -2344,3 +2344,12 @@ error: Please commit or stash them.
 
 2026-02-24 10:00:54,741 - __main__ - INFO - 成功执行 git add
 2026-02-24 10:00:54,998 - __main__ - INFO - 成功提交: Auto-commit: warn-flash_gui.txt - 2026-02-24 10:00:54
+2026-02-24 10:01:00,612 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:01:00,612 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\build\flash_gui\warn-flash_gui.txt
+2026-02-24 10:01:00,740 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+?? tools/build/flash_gui/EXE-00.toc
+?? tools/build/flash_gui/PKG-00.toc
+?? tools/build/flash_gui/flash_gui.pkg
+?? tools/dist/
+
