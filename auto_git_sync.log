@@ -2928,3 +2928,11 @@ error: Please commit or stash them.
 2026-02-24 10:18:26,806 - __main__ - INFO - 成功执行 git add
 2026-02-24 10:18:26,957 - __main__ - INFO - 成功提交: Auto-commit: config.h - 2026-02-24 10:18:26
 2026-02-24 10:18:26,963 - __main__ - ERROR - git commit 失败: 
+2026-02-24 10:18:32,139 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:18:32,139 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\config\config.h
+2026-02-24 10:18:32,270 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-24 10:18:32,394 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:18:32,593 - __main__ - INFO - 成功提交: Auto-commit: config.h - 2026-02-24 10:18:32
+2026-02-24 10:18:36,056 - __main__ - INFO - 成功推送到远程仓库

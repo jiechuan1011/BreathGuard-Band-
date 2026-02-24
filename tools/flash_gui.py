@@ -105,9 +105,13 @@ class FlashGUI(tk.Tk):
         ttk.Button(port_frame, text="刷新", command=self.refresh_ports).pack(side="left")
         self.refresh_ports()
 
-        # 开始按钮
-        self.start_btn = ttk.Button(self, text="🚀 开始烧录", command=self.start_flash)
-        self.start_btn.pack(fill="x", padx=10, pady=10)
+        # 操作按钮: 烧录与擦除
+        button_frame = ttk.Frame(self)
+        button_frame.pack(fill="x", padx=10, pady=10)
+        self.start_btn = ttk.Button(button_frame, text="🚀 开始烧录", command=self.start_flash)
+        self.start_btn.pack(side="left", expand=True, fill="x", padx=5)
+        self.erase_btn = ttk.Button(button_frame, text="🧹 擦除 FLASH", command=self.start_erase)
+        self.erase_btn.pack(side="left", expand=True, fill="x", padx=5)
 
         # 进度条
         self.progress = ttk.Progressbar(self, mode="indeterminate")
@@ -147,24 +151,41 @@ class FlashGUI(tk.Tk):
 
         # 禁用控件
         self.start_btn.config(state="disabled")
+        self.erase_btn.config(state="disabled")
         self.progress.start(10)
         self.log("开始执行烧录命令...")
 
-        t = threading.Thread(target=self.run_pio, args=(port,), daemon=True)
+        t = threading.Thread(target=self.run_pio, args=(port, "upload"), daemon=True)
         t.start()
 
-    def run_pio(self, port: str):
+    def start_erase(self):
+        # erase doesn't technically need a COM port, but we use the selected one if present
+        port = self.port_cb.get()
+        # disable controls
+        self.start_btn.config(state="disabled")
+        self.erase_btn.config(state="disabled")
+        self.progress.start(10)
+        self.log("开始擦除 Flash...")
+
+        t = threading.Thread(target=self.run_pio, args=(port, "erase"), daemon=True)
+        t.start()
+
+    def run_pio(self, port: str, target: str = "upload"):
         # try to locate the pio executable on PATH
         pio_exe = shutil.which("pio") or shutil.which("platformio")
         cmd = None
         if pio_exe:
-            cmd = [pio_exe, "run", "-e", "esp32s3_final", "-t", "upload", "--upload-port", port]
+            cmd = [pio_exe, "run", "-e", "esp32s3_final", "-t", target]
+            if port:
+                cmd += ["--upload-port", port]
         else:
             # fallback: run via python -m platformio if python is available
             python_exe = shutil.which("python") or shutil.which("python3")
             if python_exe:
                 cmd = [python_exe, "-m", "platformio", "run", "-e", "esp32s3_final",
-                       "-t", "upload", "--upload-port", port]
+                       "-t", target]
+                if port:
+                    cmd += ["--upload-port", port]
             else:
                 self.log("未找到 'pio' 命令，也无法定位 Python 解释器，无法进行烧录。")
                 self.after(0, self.finish, False)
