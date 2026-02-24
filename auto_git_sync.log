@@ -2698,3 +2698,14 @@ error: Please commit or stash them.
 ?? tools/build/flash_gui/localpycs/
 ?? tools/dist/
 
+2026-02-24 10:11:14,648 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:11:14,910 - __main__ - INFO - 成功提交: Auto-commit: flash_gui.exe - 2026-02-24 10:11:14
+2026-02-24 10:11:25,035 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:11:25,035 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\config\config.h
+2026-02-24 10:11:25,167 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M config/config.h
+
+2026-02-24 10:11:25,296 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:11:25,506 - __main__ - INFO - 成功提交: Auto-commit: config.h - 2026-02-24 10:11:25
+2026-02-24 10:11:28,847 - __main__ - INFO - 成功推送到远程仓库

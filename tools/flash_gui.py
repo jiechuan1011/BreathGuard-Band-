@@ -16,6 +16,7 @@ import os
 import sys
 import threading
 import subprocess
+import shutil
 import tkinter as tk
 from tkinter import ttk, messagebox, scrolledtext
 from serial.tools import list_ports
@@ -153,7 +154,14 @@ class FlashGUI(tk.Tk):
         t.start()
 
     def run_pio(self, port: str):
-        cmd = ["pio", "run", "-e", "esp32s3_final", "-t", "upload", "--upload-port", port]
+        # try to locate the pio executable on PATH
+        pio_exe = shutil.which("pio") or shutil.which("platformio")
+        if not pio_exe:
+            self.log("未找到 'pio' 命令，请确认 PlatformIO 已安装并添加到 PATH。")
+            self.after(0, self.finish, False)
+            return
+
+        cmd = [pio_exe, "run", "-e", "esp32s3_final", "-t", "upload", "--upload-port", port]
         try:
             # ensure PlatformIO is run from project root so pio.ini can be located
             proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,

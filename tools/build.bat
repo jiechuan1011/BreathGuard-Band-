@@ -9,7 +9,7 @@ echo.
 
 REM 1. 安装必要的 Python 包
 python -m pip install --upgrade pip
-python -m pip install pyserial pyinstaller
+python -m pip install pyserial pyinstaller platformio
 echo.
 
 REM 查看 pyinstaller 模块是否可见
