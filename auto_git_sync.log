@@ -2384,3 +2384,26 @@ error: Please commit or stash them.
 
 2026-02-24 10:01:44,416 - __main__ - INFO - 成功执行 git add
 2026-02-24 10:01:44,642 - __main__ - INFO - 成功提交: Auto-commit: build.bat - 2026-02-24 10:01:44
+2026-02-24 10:01:48,829 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:01:51,937 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\build\flash_gui\base_library.zip
+2026-02-24 10:01:52,096 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ D tools/build/flash_gui/Analysis-00.toc
+ D tools/build/flash_gui/EXE-00.toc
+ D tools/build/flash_gui/PKG-00.toc
+ D tools/build/flash_gui/PYZ-00.pyz
+ D tools/build/flash_gui/PYZ-00.toc
+ M tools/build/flash_gui/base_library.zip
+ D tools/build/flash_gui/flash_gui.pkg
+ D tools/build/flash_gui/localpycs/pyimod01_archive.pyc
+ D tools/build/flash_gui/localpycs/pyimod02_importers.pyc
+ D tools/build/flash_gui/localpycs/pyimod03_ctypes.pyc
+ D tools/build/flash_gui/localpycs/pyimod04_pywin32.pyc
+ D tools/build/flash_gui/localpycs/struct.pyc
+ D tools/build/flash_gui/warn-flash_gui.txt
+ D tools/build/flash_gui/xref-flash_gui.html
+ D tools/dist/flash_gui.exe
+
+2026-02-24 10:01:52,270 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:01:52,664 - __main__ - INFO - 成功提交: Auto-commit: base_library.zip - 2026-02-24 10:01:52
+2026-02-24 10:01:55,914 - __main__ - INFO - 成功推送到远程仓库

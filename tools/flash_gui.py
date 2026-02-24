@@ -30,12 +30,21 @@ ROLE_DETECTOR = "DEVICE_ROLE_DETECTOR"
 #  - 冻结为 exe 时根据 exe 所在位置计算项目根目录
 if getattr(sys, 'frozen', False):
     exe_dir = os.path.dirname(os.path.abspath(sys.executable))
-    # exe 在 tools\dist 目录 -> 项目根位于上上级
+    # exe 通常位于 tools\dist，项目根在上上级
     project_root = os.path.abspath(os.path.join(exe_dir, '..', '..'))
 else:
     project_root = os.getcwd()
 
 CONFIG_PATH = os.path.join(project_root, "src", "config.h")
+
+# 调试输出路径，方便定位错误
+print(f"[DEBUG] project_root = {project_root}")
+print(f"[DEBUG] CONFIG_PATH = {CONFIG_PATH}")
+
+# 如果文件不存在，也在程序启动时提示
+if not os.path.isfile(CONFIG_PATH):
+    print(f"[DEBUG] 配置文件不存在: {CONFIG_PATH}")
+
 
 
 def modify_config(role_macro: str):
