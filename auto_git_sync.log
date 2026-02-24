@@ -3261,3 +3261,22 @@ error: Please commit or stash them.
 2026-02-24 10:34:09,290 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Failed to connect to github.com port 443 after 21105 ms: Could not connect to server
 
 2026-02-24 10:34:09,290 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-24 10:34:09,961 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-02-24 10:34:09,962 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\platformio.ini
+2026-02-24 10:34:10,093 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-24 10:34:10,226 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:34:10,427 - __main__ - INFO - 成功提交: Auto-commit: platformio.ini - 2026-02-24 10:34:10
+2026-02-24 10:34:12,417 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Failed to connect to github.com port 443 after 21104 ms: Could not connect to server
+
+2026-02-24 10:34:12,417 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-24 10:34:13,092 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-02-24 10:34:13,093 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\platformio.ini
+2026-02-24 10:34:13,236 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
