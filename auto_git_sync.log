@@ -2300,3 +2300,11 @@ error: Please commit or stash them.
 
 2026-02-24 10:00:31,205 - __main__ - INFO - 成功执行 git add
 2026-02-24 10:00:31,419 - __main__ - INFO - 成功提交: Auto-commit: flash_gui.py - 2026-02-24 10:00:31
+2026-02-24 10:00:35,218 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 10:00:36,788 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\dist\flash_gui.exe
+2026-02-24 10:00:36,912 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ D tools/dist/flash_gui.exe
+
+2026-02-24 10:00:37,028 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:00:37,263 - __main__ - INFO - 成功提交: Auto-commit: flash_gui.exe - 2026-02-24 10:00:37
