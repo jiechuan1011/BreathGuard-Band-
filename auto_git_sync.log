@@ -2232,3 +2232,14 @@ error: Please commit or stash them.
 ?? tools/build/flash_gui/xref-flash_gui.html
 ?? tools/dist/
 
+2026-02-24 09:57:49,745 - __main__ - INFO - 成功执行 git add
+2026-02-24 09:57:50,038 - __main__ - INFO - 成功提交: Auto-commit: base_library.zip - 2026-02-24 09:57:49
+2026-02-24 09:57:59,543 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 09:57:59,543 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\build\flash_gui\warn-flash_gui.txt
+2026-02-24 09:57:59,661 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-24 09:57:59,823 - __main__ - INFO - 成功执行 git add
+2026-02-24 09:58:00,064 - __main__ - INFO - 成功提交: Auto-commit: warn-flash_gui.txt - 2026-02-24 09:57:59
+2026-02-24 09:58:03,206 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 09:59:00,676 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\flash_gui.py

@@ -23,7 +23,18 @@ from serial.tools import list_ports
 # 全局变量
 ROLE_WRIST = "DEVICE_ROLE_WRIST"
 ROLE_DETECTOR = "DEVICE_ROLE_DETECTOR"
-CONFIG_PATH = os.path.join(os.getcwd(), "src", "config.h")
+
+# config.h 文件路径根据运行方式调整：
+#  - 脚本模式下使用当前工作目录
+#  - 冻结为 exe 时根据 exe 所在位置计算项目根目录
+if getattr(sys, 'frozen', False):
+    exe_dir = os.path.dirname(os.path.abspath(sys.executable))
+    # exe 在 tools\dist 目录 -> 项目根位于上上级
+    project_root = os.path.abspath(os.path.join(exe_dir, '..', '..'))
+else:
+    project_root = os.getcwd()
+
+CONFIG_PATH = os.path.join(project_root, "src", "config.h")
 
 
 def modify_config(role_macro: str):
