@@ -3251,3 +3251,13 @@ error: Please commit or stash them.
 
 2026-02-24 10:33:47,693 - __main__ - INFO - 成功执行 git add
 2026-02-24 10:33:47,897 - __main__ - INFO - 成功提交: Auto-commit: main.cpp - 2026-02-24 10:33:47
+2026-02-24 10:33:50,427 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\platformio.ini
+2026-02-24 10:33:50,575 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M platformio.ini
+
+2026-02-24 10:33:50,734 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:33:50,967 - __main__ - INFO - 成功提交: Auto-commit: platformio.ini - 2026-02-24 10:33:50
+2026-02-24 10:34:09,290 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Failed to connect to github.com port 443 after 21105 ms: Could not connect to server
+
+2026-02-24 10:34:09,290 - __main__ - INFO - 尝试先拉取最新更改...
