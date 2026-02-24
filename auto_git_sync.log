@@ -2186,3 +2186,11 @@ error: Please commit or stash them.
 
 2026-02-24 09:57:00,497 - __main__ - INFO - 成功执行 git add
 2026-02-24 09:57:00,704 - __main__ - INFO - 成功提交: Auto-commit: build_flash_gui.bat - 2026-02-24 09:57:00
+2026-02-24 09:57:04,677 - __main__ - INFO - 成功推送到远程仓库
+2026-02-24 09:57:17,460 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\build.bat
+2026-02-24 09:57:17,599 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+?? tools/build.bat
+
+2026-02-24 09:57:17,729 - __main__ - INFO - 成功执行 git add
+2026-02-24 09:57:17,938 - __main__ - INFO - 成功提交: Auto-commit: build.bat - 2026-02-24 09:57:17
