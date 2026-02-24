@@ -3130,3 +3130,28 @@ remove the file manually to continue.
 2026-02-24 10:25:57,920 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Recv failure: Connection was reset
 
 2026-02-24 10:25:57,920 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-24 10:25:58,594 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-02-24 10:25:58,595 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\tools\flash_gui.py
+2026-02-24 10:25:58,719 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-24 10:25:58,840 - __main__ - INFO - 成功执行 git add
+2026-02-24 10:25:59,050 - __main__ - INFO - 成功提交: Auto-commit: flash_gui.py - 2026-02-24 10:25:58
+2026-02-24 10:26:26,949 - __main__ - ERROR - git push 失败: fatal: unable to access 'https://github.com/jiechuan1011/BreathGuard-Band-.git/': Recv failure: Connection was reset
+
+2026-02-24 10:26:26,949 - __main__ - INFO - 尝试先拉取最新更改...
+2026-02-24 10:26:27,645 - __main__ - ERROR - git pull 失败: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+2026-02-24 10:31:08,778 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\.gitignore
+2026-02-24 10:31:08,778 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\.gitignore
+2026-02-24 10:31:08,908 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+?? logs/
+
+2026-02-24 10:31:08,923 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+?? logs/
+
