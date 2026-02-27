@@ -3851,3 +3851,29 @@ error: Please commit or stash them.
 error: Please commit or stash them.
 
 2026-02-27 11:56:58,106 - __main__ - INFO - watchdog 库已安装
+2026-02-27 11:57:26,949 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\.gitignore
+2026-02-27 11:57:27,081 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+ M config/config.h
+ D tools/build/flash_gui/Analysis-00.toc
+ D tools/build/flash_gui/EXE-00.toc
+ D tools/build/flash_gui/PKG-00.toc
+ D tools/build/flash_gui/PYZ-00.pyz
+ D tools/build/flash_gui/PYZ-00.toc
+ D tools/build/flash_gui/base_library.zip
+ D tools/build/flash_gui/flash_gui.pkg
+ D tools/build/flash_gui/localpycs/pyimod01_archive.pyc
+ D tools/build/flash_gui/localpycs/pyimod02_importers.pyc
+ D tools/build/flash_gui/localpycs/pyimod03_ctypes.pyc
+ D tools/build/flash_gui/localpycs/pyimod04_pywin32.pyc
+ D tools/build/flash_gui/localpycs/struct.pyc
+ D tools/build/flash_gui/warn-flash_gui.txt
+ D tools/build/flash_gui/xref-flash_gui.html
+ D tools/dist/flash_gui.exe
+?? build/
+?? dist/
+?? port_tester.spec
+?? port_tester_tk.spec
+?? "tools/dist/\344\270\200\351\224\256\347\203\247\345\275\225\345\267\245\345\205\267.exe"
+?? tools/port_tester/
+
