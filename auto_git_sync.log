@@ -3877,3 +3877,15 @@ error: Please commit or stash them.
 ?? "tools/dist/\344\270\200\351\224\256\347\203\247\345\275\225\345\267\245\345\205\267.exe"
 ?? tools/port_tester/
 
+2026-02-27 11:57:28,315 - __main__ - INFO - 成功执行 git add
+2026-02-27 11:57:28,827 - __main__ - INFO - 成功提交: Auto-commit: .gitignore - 2026-02-27 11:57:28
+2026-02-27 11:57:36,901 - __main__ - INFO - 成功推送到远程仓库
+2026-02-27 13:12:20,696 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\scripts\dist\AutoGitSync_GUI.exe
+2026-02-27 13:12:21,090 - __main__ - INFO - 检测到未提交的更改:
+ M auto_git_sync.log
+
+2026-02-27 13:12:21,210 - __main__ - INFO - 成功执行 git add
+2026-02-27 13:12:21,411 - __main__ - INFO - 成功提交: Auto-commit: AutoGitSync_GUI.exe - 2026-02-27 13:12:21
+2026-02-27 13:12:24,536 - __main__ - INFO - 成功推送到远程仓库
+2026-03-01 10:03:11,273 - __main__ - INFO - watchdog 库已安装
+2026-03-01 10:05:47,452 - __main__ - INFO - 检测到文件变化: D:\大创\Diabetes_Screening_System\scripts\auto_git_sync_gui.py

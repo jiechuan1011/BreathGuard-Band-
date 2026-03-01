@@ -69,6 +69,8 @@ class SyncGUI:
         self.btn_start.pack(side=tk.LEFT, padx=(0, 5))
         self.btn_stop = ttk.Button(btn_frame, text="停止同步", command=self._stop_sync, state=tk.DISABLED)
         self.btn_stop.pack(side=tk.LEFT, padx=(0, 5))
+        self.btn_manual = ttk.Button(btn_frame, text="手动提交", command=self._manual_commit)
+        self.btn_manual.pack(side=tk.LEFT, padx=(0, 5))
         ttk.Button(btn_frame, text="清空日志", command=self._clear_log).pack(side=tk.LEFT)
 
         # 日志区域
@@ -172,6 +174,81 @@ class SyncGUI:
             if messagebox.askokcancel("退出", "同步正在运行，确定要退出并停止同步吗？"):
                 self.process.terminate()
         self.root.destroy()
+
+    # ---------- manual commit functionality ----------
+    def _manual_commit(self):
+        path = self.repo_path.get().strip()
+        if not path or not os.path.isdir(path):
+            messagebox.showwarning("请选择目录", "请先选择有效的 Git 仓库目录。")
+            return
+        if not os.path.exists(os.path.join(path, ".git")):
+            messagebox.showerror("不是 Git 仓库", f"该目录不是 Git 仓库：\n{path}")
+            return
+
+        # run commit in background thread
+        self._log("\n>>> 手动提交: 开始\n")
+        threading.Thread(target=self._run_manual_commit, args=(path,), daemon=True).start()
+
+    def _run_manual_commit(self, repo_path):
+        """在指定仓库执行 git add/commit/push 并将输出写入日志。"""
+        def log(msg):
+            self.output_queue.put(msg)
+
+        try:
+            orig = os.getcwd()
+            os.chdir(repo_path)
+
+            # 状态检查
+            status = subprocess.run(['git', 'status', '--porcelain'],
+                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                     text=True, encoding='utf-8')
+            if not status.stdout.strip():
+                log("没有未提交的更改\n")
+                os.chdir(orig)
+                return
+            log(f"检测到未提交的更改:\n{status.stdout}\n")
+
+            # git add .
+            add = subprocess.run(['git', 'add', '.'],
+                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                 text=True, encoding='utf-8')
+            if add.returncode != 0:
+                log(f"git add 失败: {add.stderr}\n")
+                os.chdir(orig)
+                return
+            log("git add 成功\n")
+
+            # commit
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            commit_msg = f"Manual commit: {timestamp}"
+            commit = subprocess.run(['git', 'commit', '-m', commit_msg],
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                    text=True, encoding='utf-8')
+            if commit.returncode != 0:
+                if "nothing to commit" in commit.stdout.lower():
+                    log("没有需要提交的更改\n")
+                else:
+                    log(f"git commit 失败: {commit.stderr}\n")
+                os.chdir(orig)
+                return
+            log(f"提交成功: {commit_msg}\n")
+
+            # push
+            push = subprocess.run(['git', 'push', 'origin', 'main'],
+                                  stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                  text=True, encoding='utf-8')
+            if push.returncode != 0:
+                log(f"git push 失败: {push.stderr}\n")
+            else:
+                log("推送成功\n")
+
+            os.chdir(orig)
+        except Exception as e:
+            log(f"手动提交异常: {e}\n")
+            try:
+                os.chdir(orig)
+            except:
+                pass
 
 
 def main():

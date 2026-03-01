@@ -208,6 +208,10 @@ bool test_oled_display() {
 // 测试MAX30102传感器
 bool test_max30102_sensor() {
     // 检查MAX30102地址是否响应
+    // 检查丙酮传感器 ADC 引脚（如果定义）
+    #ifdef PIN_ACETONE_ADC
+    validate_pin_configuration(PIN_ACETONE_ADC, PIN_FUNC_ADC);
+    #endif
     Wire.beginTransmission(I2C_ADDR_MAX30102);
     uint8_t error = Wire.endTransmission();
     
@@ -225,8 +229,14 @@ bool test_ble_module() {
 bool test_gas_sensor() {
 #ifdef DEVICE_ROLE_DETECTOR
     // 检测模块：检查气体传感器
-    return validate_pin_configuration(PIN_GAS_ADC, PIN_FUNC_ADC) &&
-           validate_pin_configuration(PIN_GAS_HEATER, PIN_FUNC_PWM);
+    bool ok = validate_pin_configuration(PIN_GAS_ADC, PIN_FUNC_ADC) &&
+              validate_pin_configuration(PIN_GAS_HEATER, PIN_FUNC_PWM);
+    
+    // 可选的AO3400门控
+    #ifdef PIN_AO3400_GATE
+    ok &= validate_pin_configuration(PIN_AO3400_GATE, PIN_FUNC_DIGITAL_OUTPUT);
+    #endif
+    return ok;
 #else
     // 腕带主控：没有气体传感器
     return true;
@@ -235,7 +245,11 @@ bool test_gas_sensor() {
 
 // 测试电池监控
 bool test_battery_monitor() {
-    return validate_pin_configuration(PIN_BAT_ADC, PIN_FUNC_ADC);
+    bool ok = validate_pin_configuration(PIN_BAT_ADC, PIN_FUNC_ADC);
+    #ifdef PIN_BAT_FET_GATE
+    ok &= validate_pin_configuration(PIN_BAT_FET_GATE, PIN_FUNC_DIGITAL_OUTPUT);
+    #endif
+    return ok;
 }
 
 // 测试按键

@@ -86,4 +86,10 @@ bool gas_is_warmed_up();                           // 检查预热是否完成
 float gas_get_heater_duty_cycle();                 // 获取当前加热PWM占空比（0-100%）
 uint32_t gas_get_warmup_remaining();               // 获取剩余预热时间（ms）
 
+#ifdef PIN_AO3400_GATE
+// 使用AO3400门控时的辅助接口
+void gas_set_ao3400_gate(bool on);                  // 将门控引脚设置为高/低
+bool gas_get_ao3400_gate();                         // 读取门控引脚状态
+#endif
+
 #endif

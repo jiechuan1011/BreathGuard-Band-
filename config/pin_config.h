@@ -21,7 +21,9 @@
 
 // 电源管理引脚
 #define PIN_BAT_ADC     2   // 电池电压ADC（ESP32-C3 GPIO2）
-#define PIN_CHARGE_STAT 6   // 充电状态检测（可选）
+#define PIN_CHARGE_STAT 6   // 充电状态检测（可选，TP4056 STAT引脚，例如ESP32 GPIO6）
+// 新硬件：充电MOSFET门控通过100Ω电阻连接到GPIO16
+#define PIN_BAT_FET_GATE 16  // 控制Z3OC1T8219731(M1)的门（ESP32-S3 GPIO16）
 
 // 用户交互引脚
 #define PIN_BTN1        7   // 按键1（切换/确认）
@@ -43,7 +45,15 @@
 // 震动电机反馈
 #define PIN_VIBRATE      12  // 震动电机控制
 
+// 新增：充电MOSFET门控
+#define PIN_BAT_FET_GATE 16  // 通过100Ω电阻连接到GPIO16，控制充电开/关
+
 // BLE模块（ESP32-C3内置，无需额外引脚）
+
+// 冲突检查
+#if PIN_BAT_FET_GATE == PIN_SDA || PIN_BAT_FET_GATE == PIN_SCL || PIN_BAT_FET_GATE == PIN_BAT_ADC
+#warning "警告：充电MOSFET门控引脚与其他通用引脚冲突，请确认"
+#endif
 
 #endif // DEVICE_ROLE_WRIST
 
@@ -62,11 +72,17 @@
 #define PIN_AD623_REF   A1  // 参考电压设置（ESP32-C3 GPIO1）
 #define PIN_AD623_OUT   A2  // 运放输出（ESP32-C3 GPIO2，注意冲突）
 
+// 丙酮传感器 ADC 输入（通过AD623和RC滤波）
+#define PIN_ACETONE_ADC A2  // 与PIN_AD623_OUT相同，用于模拟读数，可视为别名
+
 // 状态指示灯
 #define PIN_LED_STATUS  13  // 状态指示灯（ESP32-C3 GPIO13）
 
 // 加热电流监测
 #define PIN_HEATER_CURR A3  // 加热电流监测ADC（ESP32-C3 GPIO3）
+
+// AO3400 Q2 门控引脚
+#define PIN_AO3400_GATE 11  // 连接到U1引脚11，通过1kΩ电阻驱动Q2门
 
 #endif // DEVICE_ROLE_DETECTOR
 
@@ -81,6 +97,10 @@
 
 #if PIN_AD623_OUT == PIN_BAT_ADC
 #warning "警告：AD623输出引脚与电池ADC引脚冲突，建议调整"
+#endif
+
+#if PIN_AO3400_GATE == PIN_BAT_ADC || PIN_AO3400_GATE == PIN_GAS_HEATER || PIN_AO3400_GATE == PIN_LED_STATUS
+#warning "警告：AO3400门控引脚与其他功能引脚冲突，检查硬件设计"
 #endif
 #endif // DEVICE_ROLE_DETECTOR
 

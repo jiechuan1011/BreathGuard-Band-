@@ -24,12 +24,21 @@
 #include <esp_sleep.h>
 #include "algorithm/hr_algorithm.h"
 #include "drivers/gas_driver.h"
+#include "config/pin_config.h"  // 统一引脚配置
 
 // ==================== 引脚定义（ESP32-C3） ====================
+#ifndef PIN_SDA
 #define PIN_SDA           4   // I2C SDA（MAX30102）
+#endif
+#ifndef PIN_SCL
 #define PIN_SCL           5   // I2C SCL（MAX30102）
+#endif
+#ifndef PIN_GAS_HEATER
 #define PIN_GAS_HEATER    8   // MQ-138 加热 MOSFET 栅极（高电平开启）
-#define PIN_ACETONE_ADC   2   // AD623 输出 → RC 滤波 → ADC（ESP32-C3 ADC1）
+#endif
+#ifndef PIN_ACETONE_ADC
+#define PIN_ACETONE_ADC   PIN_AD623_OUT  // AD623 输出 → RC 滤波 → ADC（ESP32-C3 ADC1）
+#endif
 
 // ==================== BLE 自定义 128bit UUID ====================
 #define BLE_DEVICE_NAME       "DiabetesSensor"

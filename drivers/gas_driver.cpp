@@ -24,6 +24,13 @@ bool gas_init() {
     // 初始化ADC引脚
     pinMode(PIN_GAS_ADC, INPUT);
     
+    // 如果使用AO3400门控，则默认开启
+#ifdef PIN_AO3400_GATE
+    pinMode(PIN_AO3400_GATE, OUTPUT);
+    digitalWrite(PIN_AO3400_GATE, HIGH);
+    GAS_DEBUG_PRINTLN("[GAS] AO3400门控引脚已配置并设为高电平");
+#endif
+
     // 初始化加热控制引脚（PWM）
 #ifdef PIN_GAS_HEATER
     pinMode(PIN_GAS_HEATER, OUTPUT);
@@ -128,6 +135,18 @@ uint32_t gas_get_warmup_remaining() {
     
     return GAS_WARMUP_MS - elapsed;
 }
+
+#ifdef PIN_AO3400_GATE
+// 控制AO3400门控引脚的状态，传入true设置高电平（开启），false设置低电平（关闭）
+void gas_set_ao3400_gate(bool on) {
+    digitalWrite(PIN_AO3400_GATE, on ? HIGH : LOW);
+}
+
+// 读取AO3400门控引脚的当前逻辑状态
+bool gas_get_ao3400_gate() {
+    return digitalRead(PIN_AO3400_GATE) == HIGH;
+}
+#endif
 
 // ================= 私有函数实现 =================
 
