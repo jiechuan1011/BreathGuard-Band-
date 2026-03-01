@@ -27,6 +27,25 @@ def run_pyinstaller(script_name: str, exe_name: str, add_data: list = None, hidd
         print(f"错误: 找不到脚本 {script_path}")
         return False
 
+    # 先确保旧的 exe 不存在（可能被上次构建锁定）
+    target_exe = DIST_DIR / f"{exe_name}.exe"
+    if target_exe.exists():
+        print(f"检测到旧的 {target_exe.name}，尝试删除...")
+        for i in range(5):
+            try:
+                target_exe.unlink()
+                print("  已删除旧文件")
+                break
+            except PermissionError:
+                # 说明可能 exe 正在运行或被占用
+                print("  无法删除，文件可能正在使用中。请关闭运行中的程序再重试。")
+                if i < 4:
+                    import time
+                    time.sleep(0.2)
+                else:
+                    print("多次尝试仍无法清除旧文件，打包中止。")
+                    return False
+
     cmd = [
         sys.executable, "-m", "PyInstaller",
         "--onefile",
